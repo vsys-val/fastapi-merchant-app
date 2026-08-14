@@ -43,6 +43,18 @@ Na página ou resposta referente a um produto, a aplicação deverá apresentar 
 
 A avaliação pessoal será mais relevante para a decisão do usuário por ser exibida separadamente e com destaque. Ela não alterará matematicamente a média da comunidade.
 
+## Identificação dos produtos
+
+Cada produto deverá possuir:
+
+- nome obrigatório;
+- marca obrigatória;
+- código de barras opcional.
+
+Quando informado, o código de barras deverá ser único. Ele ajudará a localizar rapidamente um item e a evitar registros duplicados, mas não será obrigatório porque alguns produtos não possuem código próprio.
+
+O código representa o item comercial. Versões, sabores, tamanhos ou embalagens diferentes podem possuir códigos diferentes.
+
 ## Jornadas identificadas
 
 1. O usuário cria uma conta e entra na aplicação.
@@ -61,6 +73,8 @@ A avaliação pessoal será mais relevante para a decisão do usuário por ser e
 | Visibilidade | Avaliações de outros usuários são visíveis |
 | Apresentação das notas | Nota pessoal e média da comunidade separadas |
 | Peso da opinião pessoal | Destaque próprio, sem alterar a média comunitária |
+| Identificação do produto | Nome e marca obrigatórios; código de barras opcional |
+| Unicidade do código de barras | Único quando informado |
 
 ## Artefatos planejados
 
@@ -79,8 +93,7 @@ Antes da implementação, serão produzidos:
 
 ## Questões em aberto
 
-- Como identificar produtos iguais?
-- Quais informações serão obrigatórias no cadastro de um produto?
+- Quais outras informações serão obrigatórias ou opcionais no cadastro de um produto?
 - Como funcionará a escala e o conteúdo de uma avaliação?
 - Um usuário poderá alterar ou excluir sua avaliação?
 - Haverá apenas uma avaliação atual por usuário e produto ou um histórico?
