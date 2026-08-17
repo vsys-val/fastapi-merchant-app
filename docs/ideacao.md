@@ -57,6 +57,8 @@ Quando informado, o código de barras deverá ser único. Ele ajudará a localiz
 
 O código representa o item comercial. Versões, sabores, tamanhos ou embalagens diferentes podem possuir códigos diferentes.
 
+Qualquer usuário autenticado poderá cadastrar um produto que ainda não exista no catálogo. A API deverá validar os campos obrigatórios e impedir a repetição de um código de barras já cadastrado.
+
 ## Estrutura da avaliação
 
 Não haverá uma nota geral escolhida manualmente pelo usuário. A avaliação será estruturada para reduzir respostas impulsivas e tornar o motivo da experiência mais claro.
@@ -152,6 +154,7 @@ Para reduzir o impacto de enganos, a API validará os valores recebidos e permit
 | Peso da opinião pessoal | Destaque próprio, sem alterar os indicadores comunitários |
 | Identificação do produto | Nome e marca obrigatórios; código de barras opcional |
 | Unicidade do código de barras | Único quando informado |
+| Cadastro de produtos | Permitido a qualquer usuário autenticado |
 | Nota geral manual | Não haverá |
 | Principal resumo da avaliação | Intenção de recompra: sim, talvez ou não |
 | Critérios universais | Qualidade percebida, atendimento às expectativas e custo-benefício |
@@ -185,5 +188,4 @@ Antes da implementação, serão produzidos:
 
 - Quais outras informações serão obrigatórias ou opcionais no cadastro de um produto?
 - Um usuário poderá excluir sua avaliação?
-- Como produtos ainda não cadastrados entrarão no catálogo?
 - Quais filtros e formas de pesquisa estarão no MVP?
