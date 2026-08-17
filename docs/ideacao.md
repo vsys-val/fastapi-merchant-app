@@ -71,6 +71,8 @@ Se identificar um produto já existente, a API deverá rejeitar a duplicação e
 
 Qualquer usuário autenticado poderá cadastrar um produto que ainda não exista no catálogo.
 
+O usuário que cadastrou o produto poderá corrigir seus dados enquanto nenhuma avaliação de outro usuário estiver associada a ele. Depois que outro usuário avaliar o produto, seus dados de identificação ficarão bloqueados para edições comuns. Um fluxo administrativo de correção ou mesclagem de duplicatas fica fora do MVP.
+
 ## Estrutura da avaliação
 
 Não haverá uma nota geral escolhida manualmente pelo usuário. A avaliação será estruturada para reduzir respostas impulsivas e tornar o motivo da experiência mais claro.
@@ -171,6 +173,9 @@ Para reduzir o impacto de enganos, a API validará os valores recebidos e permit
 | Prevenção de duplicidade | Código de barras ou combinação normalizada dos dados de identificação |
 | Catálogo | Um registro canônico compartilhado por todos os usuários |
 | Cadastro de produtos | Permitido a qualquer usuário autenticado |
+| Edição de produtos | Criador pode editar até existir avaliação de outro usuário |
+| Produto utilizado pela comunidade | Dados de identificação bloqueados |
+| Correção administrativa e mesclagem | Fora do MVP |
 | Nota geral manual | Não haverá |
 | Principal resumo da avaliação | Intenção de recompra: sim, talvez ou não |
 | Critérios universais | Qualidade percebida, atendimento às expectativas e custo-benefício |
