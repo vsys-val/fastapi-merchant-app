@@ -13,6 +13,8 @@ Ao comprar produtos em supermercados e mercearias, uma pessoa pode esquecer expe
 
 Criar uma aplicação que permita registrar e consultar experiências com produtos comprados em supermercados e mercearias, ajudando o usuário a tomar decisões de compra mais conscientes.
 
+O escopo não se limita a alimentos e bebidas. Ele inclui também produtos de limpeza, higiene, utilidades domésticas e outros itens normalmente encontrados nesses estabelecimentos.
+
 ## Contextos principais de uso
 
 ### Durante a compra
@@ -90,6 +92,8 @@ Cada motivo será estruturado pela combinação de:
 
 Uma avaliação poderá conter vários aspectos. O mesmo aspecto não poderá ser repetido dentro da mesma avaliação com percepções iguais ou conflitantes.
 
+A lista de aspectos deverá ser abrangente o suficiente para diferentes categorias. Nem todo aspecto será aplicável a todo produto; o usuário selecionará somente os relevantes para aquela experiência.
+
 A avaliação poderá conter também um comentário opcional. Os motivos exatos ainda serão definidos. Critérios específicos por categoria ficam fora do MVP.
 
 Para a comunidade, a aplicação poderá apresentar a proporção de usuários em cada intenção de recompra e os indicadores agregados de cada critério definido.
@@ -123,6 +127,7 @@ Para reduzir o impacto de enganos, a API validará os valores recebidos e permit
 | Tema | Decisão |
 |---|---|
 | Momento de uso | Durante a compra e depois do consumo |
+| Categorias de produtos | Alimentos, bebidas, limpeza, higiene, utilidades domésticas e outros itens de mercado |
 | Escopo de usuários | Vários usuários |
 | Autenticação | Cadastro e login no MVP |
 | Visibilidade | Avaliações de outros usuários são visíveis |
