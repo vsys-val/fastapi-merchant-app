@@ -36,12 +36,12 @@ O MVP será pensado para vários usuários e deverá possuir:
 
 As avaliações poderão ser vistas por outros usuários.
 
-Na página ou resposta referente a um produto, a aplicação deverá apresentar separadamente:
+Ao consultar um produto, a aplicação deverá apresentar separadamente:
 
-- **Sua nota:** avaliação feita pelo usuário autenticado;
-- **Média da comunidade:** média das avaliações feitas pelos usuários.
+- **Sua experiência:** avaliação feita pelo usuário autenticado, com destaque;
+- **Experiência da comunidade:** indicadores agregados das avaliações dos usuários.
 
-A avaliação pessoal será mais relevante para a decisão do usuário por ser exibida separadamente e com destaque. Ela não alterará matematicamente a média da comunidade.
+A avaliação pessoal não alterará matematicamente os indicadores da comunidade.
 
 ## Identificação dos produtos
 
@@ -55,12 +55,40 @@ Quando informado, o código de barras deverá ser único. Ele ajudará a localiz
 
 O código representa o item comercial. Versões, sabores, tamanhos ou embalagens diferentes podem possuir códigos diferentes.
 
+## Estrutura da avaliação
+
+Não haverá uma nota geral escolhida manualmente pelo usuário. A avaliação será estruturada para reduzir respostas impulsivas e tornar o motivo da experiência mais claro.
+
+O principal resumo será a **intenção de recompra**, com três respostas:
+
+- compraria novamente;
+- talvez comprasse novamente;
+- não compraria novamente.
+
+A avaliação também poderá conter critérios separados, motivos predefinidos e um comentário opcional. Os critérios e motivos exatos ainda serão definidos.
+
+Para a comunidade, a aplicação poderá apresentar a proporção de usuários em cada intenção de recompra e os indicadores agregados de cada critério definido.
+
+## Responsabilidades da API e da interface
+
+A API não possui telas. Ela será responsável por:
+
+- receber os dados enviados por uma interface;
+- validar valores obrigatórios e formatos;
+- aplicar as regras de negócio;
+- salvar e consultar informações;
+- devolver respostas e erros claros.
+
+Uma futura interface web ou móvel poderá mostrar uma tela de confirmação antes de enviar a avaliação. Essa confirmação não faz parte da API.
+
+Para reduzir o impacto de enganos, a API validará os valores recebidos e permitirá a edição da avaliação conforme a regra que ainda será definida.
+
 ## Jornadas identificadas
 
 1. O usuário cria uma conta e entra na aplicação.
 2. No mercado, pesquisa um produto.
 3. Consulta sua própria avaliação, quando existente.
-4. Consulta a média e as avaliações da comunidade.
+4. Consulta os indicadores e as avaliações da comunidade.
 5. Em casa, cadastra ou atualiza sua experiência com o produto.
 
 ## Decisões confirmadas
@@ -71,10 +99,13 @@ O código representa o item comercial. Versões, sabores, tamanhos ou embalagens
 | Escopo de usuários | Vários usuários |
 | Autenticação | Cadastro e login no MVP |
 | Visibilidade | Avaliações de outros usuários são visíveis |
-| Apresentação das notas | Nota pessoal e média da comunidade separadas |
-| Peso da opinião pessoal | Destaque próprio, sem alterar a média comunitária |
+| Apresentação das avaliações | Experiência pessoal e indicadores da comunidade separados |
+| Peso da opinião pessoal | Destaque próprio, sem alterar os indicadores comunitários |
 | Identificação do produto | Nome e marca obrigatórios; código de barras opcional |
 | Unicidade do código de barras | Único quando informado |
+| Nota geral manual | Não haverá |
+| Principal resumo da avaliação | Intenção de recompra: sim, talvez ou não |
+| Tela de confirmação | Responsabilidade de uma futura interface, não da API |
 
 ## Artefatos planejados
 
@@ -94,7 +125,8 @@ Antes da implementação, serão produzidos:
 ## Questões em aberto
 
 - Quais outras informações serão obrigatórias ou opcionais no cadastro de um produto?
-- Como funcionará a escala e o conteúdo de uma avaliação?
+- Quais critérios separados farão parte da avaliação?
+- Quais motivos predefinidos poderão ser selecionados?
 - Um usuário poderá alterar ou excluir sua avaliação?
 - Haverá apenas uma avaliação atual por usuário e produto ou um histórico?
 - Como produtos ainda não cadastrados entrarão no catálogo?
