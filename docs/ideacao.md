@@ -57,6 +57,17 @@ Cada produto deverá possuir:
 - categoria obrigatória, escolhida de uma lista controlada;
 - código de barras opcional.
 
+As categorias disponíveis no MVP serão:
+
+- alimentos;
+- bebidas;
+- limpeza;
+- higiene pessoal;
+- utilidades domésticas;
+- outros.
+
+Cada categoria será representada por um valor controlado pela API.
+
 Quando informado, o código de barras deverá ser único. Ele ajudará a localizar rapidamente um item e a evitar registros duplicados, mas não será obrigatório porque alguns produtos não possuem código próprio.
 
 O código representa o item comercial. Versões, variantes, tamanhos ou embalagens diferentes podem possuir códigos diferentes.
@@ -181,6 +192,7 @@ A busca textual por nome e marca deverá aceitar correspondências parciais. A c
 | Peso da opinião pessoal | Destaque próprio, sem alterar os indicadores comunitários |
 | Identificação do produto | Nome, marca, variante, quantidade, unidade, categoria e código de barras opcional |
 | Categoria do produto | Obrigatória e escolhida de uma lista controlada |
+| Categorias disponíveis | Alimentos, bebidas, limpeza, higiene pessoal, utilidades domésticas e outros |
 | Variante | Opcional |
 | Quantidade e unidade | Obrigatórias |
 | Unicidade do código de barras | Único quando informado |
