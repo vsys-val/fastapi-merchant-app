@@ -65,7 +65,13 @@ O principal resumo será a **intenção de recompra**, com três respostas:
 - talvez comprasse novamente;
 - não compraria novamente.
 
-A avaliação também poderá conter critérios separados, motivos predefinidos e um comentário opcional. Os critérios e motivos exatos ainda serão definidos.
+A avaliação também conterá três critérios universais, aplicáveis a qualquer categoria de produto:
+
+- qualidade percebida;
+- atendimento às expectativas;
+- custo-benefício.
+
+Ela poderá conter ainda motivos predefinidos e um comentário opcional. A forma de responder aos critérios e os motivos exatos ainda serão definidos. Critérios específicos por categoria ficam fora do MVP.
 
 Para a comunidade, a aplicação poderá apresentar a proporção de usuários em cada intenção de recompra e os indicadores agregados de cada critério definido.
 
@@ -107,6 +113,8 @@ Para reduzir o impacto de enganos, a API validará os valores recebidos e permit
 | Unicidade do código de barras | Único quando informado |
 | Nota geral manual | Não haverá |
 | Principal resumo da avaliação | Intenção de recompra: sim, talvez ou não |
+| Critérios universais | Qualidade percebida, atendimento às expectativas e custo-benefício |
+| Critérios por categoria | Fora do MVP |
 | Tela de confirmação | Responsabilidade de uma futura interface, não da API |
 | Avaliações por usuário e produto | Uma avaliação atual, editável |
 | Histórico de avaliações | Fora do MVP |
@@ -130,7 +138,7 @@ Antes da implementação, serão produzidos:
 ## Questões em aberto
 
 - Quais outras informações serão obrigatórias ou opcionais no cadastro de um produto?
-- Quais critérios separados farão parte da avaliação?
+- Qual será a escala de resposta dos critérios universais?
 - Quais motivos predefinidos poderão ser selecionados?
 - Um usuário poderá excluir sua avaliação?
 - Como produtos ainda não cadastrados entrarão no catálogo?
