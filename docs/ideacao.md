@@ -51,13 +51,25 @@ Cada produto deverá possuir:
 
 - nome obrigatório;
 - marca obrigatória;
+- variante opcional, como sabor ou fragrância;
+- quantidade obrigatória;
+- unidade obrigatória, como g, kg, ml, L ou unidade;
 - código de barras opcional.
 
 Quando informado, o código de barras deverá ser único. Ele ajudará a localizar rapidamente um item e a evitar registros duplicados, mas não será obrigatório porque alguns produtos não possuem código próprio.
 
-O código representa o item comercial. Versões, sabores, tamanhos ou embalagens diferentes podem possuir códigos diferentes.
+O código representa o item comercial. Versões, variantes, tamanhos ou embalagens diferentes podem possuir códigos diferentes.
 
-Qualquer usuário autenticado poderá cadastrar um produto que ainda não exista no catálogo. A API deverá validar os campos obrigatórios e impedir a repetição de um código de barras já cadastrado.
+O catálogo será compartilhado: avaliações de diferentes usuários deverão apontar para o mesmo registro canônico de produto.
+
+Antes de criar um produto, a API deverá procurar duplicidade:
+
+1. pelo código de barras, quando informado;
+2. pela combinação normalizada de nome, marca, variante, quantidade e unidade.
+
+Se identificar um produto já existente, a API deverá rejeitar a duplicação e indicar conflito com o registro canônico.
+
+Qualquer usuário autenticado poderá cadastrar um produto que ainda não exista no catálogo.
 
 ## Estrutura da avaliação
 
@@ -152,8 +164,12 @@ Para reduzir o impacto de enganos, a API validará os valores recebidos e permit
 | Visibilidade | Avaliações de outros usuários são visíveis |
 | Apresentação das avaliações | Experiência pessoal e indicadores da comunidade separados |
 | Peso da opinião pessoal | Destaque próprio, sem alterar os indicadores comunitários |
-| Identificação do produto | Nome e marca obrigatórios; código de barras opcional |
+| Identificação do produto | Nome, marca, variante, quantidade, unidade e código de barras opcional |
+| Variante | Opcional |
+| Quantidade e unidade | Obrigatórias |
 | Unicidade do código de barras | Único quando informado |
+| Prevenção de duplicidade | Código de barras ou combinação normalizada dos dados de identificação |
+| Catálogo | Um registro canônico compartilhado por todos os usuários |
 | Cadastro de produtos | Permitido a qualquer usuário autenticado |
 | Nota geral manual | Não haverá |
 | Principal resumo da avaliação | Intenção de recompra: sim, talvez ou não |
