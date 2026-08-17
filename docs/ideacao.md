@@ -131,7 +131,9 @@ A avaliação poderá conter também um comentário opcional. Os motivos exatos 
 
 Para a comunidade, a aplicação poderá apresentar a proporção de usuários em cada intenção de recompra e os indicadores agregados de cada critério definido.
 
-Cada usuário terá no máximo uma avaliação atual para cada produto. A avaliação poderá ser editada, e a nova versão substituirá os valores anteriores. O MVP não armazenará um histórico de avaliações.
+Cada usuário terá no máximo uma avaliação atual para cada produto. A avaliação poderá ser editada, e a nova versão substituirá os valores anteriores. O usuário também poderá excluir a própria avaliação. O MVP não armazenará um histórico de avaliações.
+
+As avaliações serão a fonte da verdade dos indicadores comunitários. No MVP, esses indicadores serão calculados sob demanda ao consultar cada produto. Ao editar ou excluir uma avaliação, não será necessário recalcular toda a plataforma: a consulta seguinte daquele produto já refletirá o conjunto atual de avaliações.
 
 ## Responsabilidades da API e da interface
 
@@ -188,6 +190,8 @@ Para reduzir o impacto de enganos, a API validará os valores recebidos e permit
 | Tela de confirmação | Responsabilidade de uma futura interface, não da API |
 | Avaliações por usuário e produto | Uma avaliação atual, editável |
 | Histórico de avaliações | Fora do MVP |
+| Exclusão de avaliação | O usuário pode excluir a própria avaliação |
+| Atualização dos indicadores | Calculados sob demanda a partir das avaliações existentes |
 | Unicidade da avaliação | A combinação de usuário e produto deverá ser única |
 
 ## Artefatos planejados
@@ -208,5 +212,4 @@ Antes da implementação, serão produzidos:
 ## Questões em aberto
 
 - Quais outras informações serão obrigatórias ou opcionais no cadastro de um produto?
-- Um usuário poderá excluir sua avaliação?
 - Quais filtros e formas de pesquisa estarão no MVP?
