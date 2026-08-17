@@ -36,7 +36,7 @@ O MVP será pensado para vários usuários e deverá possuir:
 
 ## Visibilidade das avaliações
 
-As avaliações poderão ser vistas por outros usuários.
+As avaliações poderão ser vistas por outros usuários. Cada avaliação comunitária exibirá o nome público de seu autor. Dados usados para autenticação, como o e-mail, não serão expostos.
 
 Ao consultar um produto, a aplicação deverá apresentar separadamente:
 
@@ -188,6 +188,8 @@ A busca textual por nome e marca deverá aceitar correspondências parciais. A c
 | Escopo de usuários | Vários usuários |
 | Autenticação | Cadastro e login no MVP |
 | Visibilidade | Avaliações de outros usuários são visíveis |
+| Autoria das avaliações | Nome público do autor será exibido |
+| Privacidade do login | E-mail e outros dados de autenticação não serão públicos |
 | Apresentação das avaliações | Experiência pessoal e indicadores da comunidade separados |
 | Peso da opinião pessoal | Destaque próprio, sem alterar os indicadores comunitários |
 | Identificação do produto | Nome, marca, variante, quantidade, unidade, categoria e código de barras opcional |
