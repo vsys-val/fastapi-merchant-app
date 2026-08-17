@@ -66,7 +66,7 @@ As categorias disponíveis no MVP serão:
 - utilidades domésticas;
 - outros.
 
-Cada categoria será representada por um valor controlado pela API.
+Cada categoria será representada por um valor controlado pela API. Cada produto pertencerá a exatamente uma categoria principal no MVP. A associação com várias categorias fica fora do escopo inicial.
 
 Quando informado, o código de barras deverá ser único. Ele ajudará a localizar rapidamente um item e a evitar registros duplicados, mas não será obrigatório porque alguns produtos não possuem código próprio.
 
@@ -193,6 +193,7 @@ A busca textual por nome e marca deverá aceitar correspondências parciais. A c
 | Identificação do produto | Nome, marca, variante, quantidade, unidade, categoria e código de barras opcional |
 | Categoria do produto | Obrigatória e escolhida de uma lista controlada |
 | Categorias disponíveis | Alimentos, bebidas, limpeza, higiene pessoal, utilidades domésticas e outros |
+| Categorias por produto | Uma única categoria principal |
 | Variante | Opcional |
 | Quantidade e unidade | Obrigatórias |
 | Unicidade do código de barras | Único quando informado |
