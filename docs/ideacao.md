@@ -94,6 +94,23 @@ Uma avaliação poderá conter vários aspectos. O mesmo aspecto não poderá se
 
 A lista de aspectos deverá ser abrangente o suficiente para diferentes categorias. Nem todo aspecto será aplicável a todo produto; o usuário selecionará somente os relevantes para aquela experiência.
 
+Os aspectos disponíveis no MVP serão:
+
+- sabor;
+- cheiro ou fragrância;
+- textura ou consistência;
+- eficácia ou desempenho;
+- quantidade ou rendimento;
+- facilidade de uso ou preparo;
+- embalagem;
+- durabilidade ou conservação;
+- composição ou ingredientes;
+- segurança ou tolerância;
+- preço;
+- outro.
+
+Quando o aspecto **outro** for selecionado, o comentário explicativo será obrigatório.
+
 A avaliação poderá conter também um comentário opcional. Os motivos exatos ainda serão definidos. Critérios específicos por categoria ficam fora do MVP.
 
 Para a comunidade, a aplicação poderá apresentar a proporção de usuários em cada intenção de recompra e os indicadores agregados de cada critério definido.
@@ -142,6 +159,8 @@ Para reduzir o impacto de enganos, a API validará os valores recebidos e permit
 | Escala dos critérios | Três respostas semânticas específicas para cada critério |
 | Motivo da avaliação | Pelo menos um motivo predefinido obrigatório |
 | Formato dos motivos | Aspecto do produto combinado com percepção positiva ou negativa |
+| Aspectos disponíveis | Lista abrangente para alimentos, bebidas, limpeza, higiene e outros produtos |
+| Aspecto “outro” | Permitido, mas exige comentário |
 | Tela de confirmação | Responsabilidade de uma futura interface, não da API |
 | Avaliações por usuário e produto | Uma avaliação atual, editável |
 | Histórico de avaliações | Fora do MVP |
@@ -165,7 +184,6 @@ Antes da implementação, serão produzidos:
 ## Questões em aberto
 
 - Quais outras informações serão obrigatórias ou opcionais no cadastro de um produto?
-- Quais aspectos predefinidos poderão ser selecionados?
 - Um usuário poderá excluir sua avaliação?
 - Como produtos ainda não cadastrados entrarão no catálogo?
 - Quais filtros e formas de pesquisa estarão no MVP?
