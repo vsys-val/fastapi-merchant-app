@@ -81,7 +81,9 @@ Cada critério terá três respostas semânticas:
 
 A API trabalhará com valores controlados e documentados, evitando números sem significado explícito.
 
-A avaliação poderá conter ainda motivos predefinidos e um comentário opcional. Os motivos exatos ainda serão definidos. Critérios específicos por categoria ficam fora do MVP.
+Toda avaliação deverá possuir pelo menos um motivo predefinido. Essa exigência dá contexto à decisão e reduz o risco de avaliações acidentais ou vazias.
+
+A avaliação poderá conter também um comentário opcional. Os motivos exatos ainda serão definidos. Critérios específicos por categoria ficam fora do MVP.
 
 Para a comunidade, a aplicação poderá apresentar a proporção de usuários em cada intenção de recompra e os indicadores agregados de cada critério definido.
 
@@ -126,6 +128,7 @@ Para reduzir o impacto de enganos, a API validará os valores recebidos e permit
 | Critérios universais | Qualidade percebida, atendimento às expectativas e custo-benefício |
 | Critérios por categoria | Fora do MVP |
 | Escala dos critérios | Três respostas semânticas específicas para cada critério |
+| Motivo da avaliação | Pelo menos um motivo predefinido obrigatório |
 | Tela de confirmação | Responsabilidade de uma futura interface, não da API |
 | Avaliações por usuário e produto | Uma avaliação atual, editável |
 | Histórico de avaliações | Fora do MVP |
