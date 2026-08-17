@@ -149,6 +149,16 @@ Uma futura interface web ou móvel poderá mostrar uma tela de confirmação ant
 
 Para reduzir o impacto de enganos, a API validará os valores recebidos e permitirá a edição da avaliação conforme a regra que ainda será definida.
 
+## Pesquisa de produtos
+
+No MVP, o catálogo poderá ser pesquisado por:
+
+- nome;
+- marca;
+- código de barras.
+
+A busca textual por nome e marca deverá aceitar correspondências parciais. A consulta por código de barras buscará uma correspondência exata. Filtros por variante e categoria ficam fora do escopo inicial e poderão ser adicionados posteriormente.
+
 ## Jornadas identificadas
 
 1. O usuário cria uma conta e entra na aplicação.
@@ -175,6 +185,8 @@ Para reduzir o impacto de enganos, a API validará os valores recebidos e permit
 | Prevenção de duplicidade | Código de barras ou combinação normalizada dos dados de identificação |
 | Catálogo | Um registro canônico compartilhado por todos os usuários |
 | Cadastro de produtos | Permitido a qualquer usuário autenticado |
+| Pesquisa de produtos | Por nome, marca ou código de barras |
+| Filtros avançados | Variante e categoria fora do MVP |
 | Edição de produtos | Criador pode editar até existir avaliação de outro usuário |
 | Produto utilizado pela comunidade | Dados de identificação bloqueados |
 | Correção administrativa e mesclagem | Fora do MVP |
@@ -212,4 +224,3 @@ Antes da implementação, serão produzidos:
 ## Questões em aberto
 
 - Quais outras informações serão obrigatórias ou opcionais no cadastro de um produto?
-- Quais filtros e formas de pesquisa estarão no MVP?
