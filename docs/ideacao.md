@@ -69,6 +69,8 @@ A avaliação também poderá conter critérios separados, motivos predefinidos 
 
 Para a comunidade, a aplicação poderá apresentar a proporção de usuários em cada intenção de recompra e os indicadores agregados de cada critério definido.
 
+Cada usuário terá no máximo uma avaliação atual para cada produto. A avaliação poderá ser editada, e a nova versão substituirá os valores anteriores. O MVP não armazenará um histórico de avaliações.
+
 ## Responsabilidades da API e da interface
 
 A API não possui telas. Ela será responsável por:
@@ -106,6 +108,9 @@ Para reduzir o impacto de enganos, a API validará os valores recebidos e permit
 | Nota geral manual | Não haverá |
 | Principal resumo da avaliação | Intenção de recompra: sim, talvez ou não |
 | Tela de confirmação | Responsabilidade de uma futura interface, não da API |
+| Avaliações por usuário e produto | Uma avaliação atual, editável |
+| Histórico de avaliações | Fora do MVP |
+| Unicidade da avaliação | A combinação de usuário e produto deverá ser única |
 
 ## Artefatos planejados
 
@@ -127,7 +132,6 @@ Antes da implementação, serão produzidos:
 - Quais outras informações serão obrigatórias ou opcionais no cadastro de um produto?
 - Quais critérios separados farão parte da avaliação?
 - Quais motivos predefinidos poderão ser selecionados?
-- Um usuário poderá alterar ou excluir sua avaliação?
-- Haverá apenas uma avaliação atual por usuário e produto ou um histórico?
+- Um usuário poderá excluir sua avaliação?
 - Como produtos ainda não cadastrados entrarão no catálogo?
 - Quais filtros e formas de pesquisa estarão no MVP?
