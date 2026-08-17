@@ -83,6 +83,13 @@ A API trabalhará com valores controlados e documentados, evitando números sem 
 
 Toda avaliação deverá possuir pelo menos um motivo predefinido. Essa exigência dá contexto à decisão e reduz o risco de avaliações acidentais ou vazias.
 
+Cada motivo será estruturado pela combinação de:
+
+- um aspecto do produto, como embalagem ou sabor;
+- uma percepção positiva ou negativa.
+
+Uma avaliação poderá conter vários aspectos. O mesmo aspecto não poderá ser repetido dentro da mesma avaliação com percepções iguais ou conflitantes.
+
 A avaliação poderá conter também um comentário opcional. Os motivos exatos ainda serão definidos. Critérios específicos por categoria ficam fora do MVP.
 
 Para a comunidade, a aplicação poderá apresentar a proporção de usuários em cada intenção de recompra e os indicadores agregados de cada critério definido.
@@ -129,6 +136,7 @@ Para reduzir o impacto de enganos, a API validará os valores recebidos e permit
 | Critérios por categoria | Fora do MVP |
 | Escala dos critérios | Três respostas semânticas específicas para cada critério |
 | Motivo da avaliação | Pelo menos um motivo predefinido obrigatório |
+| Formato dos motivos | Aspecto do produto combinado com percepção positiva ou negativa |
 | Tela de confirmação | Responsabilidade de uma futura interface, não da API |
 | Avaliações por usuário e produto | Uma avaliação atual, editável |
 | Histórico de avaliações | Fora do MVP |
@@ -152,7 +160,7 @@ Antes da implementação, serão produzidos:
 ## Questões em aberto
 
 - Quais outras informações serão obrigatórias ou opcionais no cadastro de um produto?
-- Quais motivos predefinidos poderão ser selecionados?
+- Quais aspectos predefinidos poderão ser selecionados?
 - Um usuário poderá excluir sua avaliação?
 - Como produtos ainda não cadastrados entrarão no catálogo?
 - Quais filtros e formas de pesquisa estarão no MVP?
