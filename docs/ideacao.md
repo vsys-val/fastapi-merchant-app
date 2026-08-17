@@ -54,6 +54,7 @@ Cada produto deverá possuir:
 - variante opcional, como sabor ou fragrância;
 - quantidade obrigatória;
 - unidade obrigatória, como g, kg, ml, L ou unidade;
+- categoria obrigatória, escolhida de uma lista controlada;
 - código de barras opcional.
 
 Quando informado, o código de barras deverá ser único. Ele ajudará a localizar rapidamente um item e a evitar registros duplicados, mas não será obrigatório porque alguns produtos não possuem código próprio.
@@ -178,7 +179,8 @@ A busca textual por nome e marca deverá aceitar correspondências parciais. A c
 | Visibilidade | Avaliações de outros usuários são visíveis |
 | Apresentação das avaliações | Experiência pessoal e indicadores da comunidade separados |
 | Peso da opinião pessoal | Destaque próprio, sem alterar os indicadores comunitários |
-| Identificação do produto | Nome, marca, variante, quantidade, unidade e código de barras opcional |
+| Identificação do produto | Nome, marca, variante, quantidade, unidade, categoria e código de barras opcional |
+| Categoria do produto | Obrigatória e escolhida de uma lista controlada |
 | Variante | Opcional |
 | Quantidade e unidade | Obrigatórias |
 | Unicidade do código de barras | Único quando informado |
