@@ -71,7 +71,17 @@ A avaliação também conterá três critérios universais, aplicáveis a qualqu
 - atendimento às expectativas;
 - custo-benefício.
 
-Ela poderá conter ainda motivos predefinidos e um comentário opcional. A forma de responder aos critérios e os motivos exatos ainda serão definidos. Critérios específicos por categoria ficam fora do MVP.
+Cada critério terá três respostas semânticas:
+
+| Critério | Respostas |
+|---|---|
+| Qualidade percebida | baixa, adequada ou alta |
+| Atendimento às expectativas | não atendeu, atendeu ou superou |
+| Custo-benefício | ruim, justo ou bom |
+
+A API trabalhará com valores controlados e documentados, evitando números sem significado explícito.
+
+A avaliação poderá conter ainda motivos predefinidos e um comentário opcional. Os motivos exatos ainda serão definidos. Critérios específicos por categoria ficam fora do MVP.
 
 Para a comunidade, a aplicação poderá apresentar a proporção de usuários em cada intenção de recompra e os indicadores agregados de cada critério definido.
 
@@ -115,6 +125,7 @@ Para reduzir o impacto de enganos, a API validará os valores recebidos e permit
 | Principal resumo da avaliação | Intenção de recompra: sim, talvez ou não |
 | Critérios universais | Qualidade percebida, atendimento às expectativas e custo-benefício |
 | Critérios por categoria | Fora do MVP |
+| Escala dos critérios | Três respostas semânticas específicas para cada critério |
 | Tela de confirmação | Responsabilidade de uma futura interface, não da API |
 | Avaliações por usuário e produto | Uma avaliação atual, editável |
 | Histórico de avaliações | Fora do MVP |
@@ -138,7 +149,6 @@ Antes da implementação, serão produzidos:
 ## Questões em aberto
 
 - Quais outras informações serão obrigatórias ou opcionais no cadastro de um produto?
-- Qual será a escala de resposta dos critérios universais?
 - Quais motivos predefinidos poderão ser selecionados?
 - Um usuário poderá excluir sua avaliação?
 - Como produtos ainda não cadastrados entrarão no catálogo?
