@@ -35,42 +35,52 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 | RN01 | Cada usuário deve possuir um identificador interno único. |
 | RN02 | O nome público pode se repetir entre usuários. |
 | RN03 | O e-mail deve ser único e não pode ser exibido publicamente. |
-| RN04 | A senha original nunca deve ser armazenada; somente seu hash seguro. |
-| RN05 | Consultas são públicas, mas operações que alteram dados exigem autenticação. |
+| RN04 | Consultas são públicas, mas operações que alteram dados exigem autenticação. |
 
 ### Produtos
 
 | ID | Regra |
 |---|---|
-| RN06 | Todo produto deve possuir nome, marca, quantidade, unidade e categoria. |
-| RN07 | A variante e o código de barras são opcionais. |
-| RN08 | Cada produto deve pertencer a exatamente uma categoria principal. |
-| RN09 | As categorias do MVP são: alimentos, bebidas, limpeza, higiene pessoal, utilidades domésticas e outros. |
-| RN10 | Quando informado, o código de barras deve ser único. |
-| RN11 | O catálogo deve manter um registro canônico compartilhado para cada produto. |
-| RN12 | A API deve procurar duplicidade pelo código de barras ou pela combinação normalizada de nome, marca, variante, quantidade e unidade. |
-| RN13 | Uma tentativa de cadastrar produto duplicado deve ser rejeitada como conflito e indicar o registro existente. |
-| RN14 | O criador pode editar os dados do produto somente enquanto nenhum outro usuário o tiver avaliado. |
-| RN15 | Nome e marca devem aceitar pesquisa textual parcial; código de barras exige correspondência exata. |
+| RN05 | Todo produto deve possuir nome, marca, quantidade, unidade e categoria. |
+| RN06 | A variante e o código de barras são opcionais. |
+| RN07 | Cada produto deve pertencer a exatamente uma categoria principal. |
+| RN08 | As categorias do MVP são: alimentos, bebidas, limpeza, higiene pessoal, utilidades domésticas e outros. |
+| RN09 | Quando informado, o código de barras deve ser único. |
+| RN10 | O catálogo deve manter um registro canônico compartilhado para cada produto. |
+| RN11 | A API deve procurar duplicidade pelo código de barras ou pela combinação normalizada de nome, marca, variante, quantidade e unidade. |
+| RN12 | Uma tentativa de cadastrar produto duplicado deve ser rejeitada como conflito e indicar o registro existente. |
+| RN13 | O criador pode editar os dados do produto somente enquanto nenhum outro usuário o tiver avaliado. |
+| RN14 | Nome e marca devem aceitar pesquisa textual parcial; código de barras exige correspondência exata. |
 
 ### Avaliações
 
 | ID | Regra |
 |---|---|
-| RN16 | Cada usuário pode manter no máximo uma avaliação atual por produto. |
-| RN17 | A intenção de recompra é obrigatória e aceita: compraria novamente, talvez comprasse ou não compraria novamente. |
-| RN18 | Qualidade percebida, atendimento às expectativas e custo-benefício são obrigatórios. |
-| RN19 | Qualidade aceita: baixa, adequada ou alta. |
-| RN20 | Expectativa aceita: não atendeu, atendeu ou superou. |
-| RN21 | Custo-benefício aceita: ruim, justo ou bom. |
-| RN22 | Toda avaliação deve possuir pelo menos um motivo estruturado como aspecto e percepção positiva ou negativa. |
-| RN23 | Um aspecto não pode aparecer mais de uma vez na mesma avaliação. |
-| RN24 | Os aspectos disponíveis são: sabor, cheiro ou fragrância, textura ou consistência, eficácia ou desempenho, quantidade ou rendimento, facilidade de uso ou preparo, embalagem, durabilidade ou conservação, composição ou ingredientes, segurança ou tolerância, preço e outro. |
-| RN25 | O aspecto “outro” exige comentário explicativo. Nos demais casos, o comentário é opcional. |
-| RN26 | Somente o autor pode editar ou excluir sua avaliação. |
-| RN27 | A avaliação pessoal deve ser apresentada separadamente dos indicadores comunitários. |
-| RN28 | Os indicadores comunitários devem ser calculados a partir das avaliações existentes no momento da consulta. |
-| RN29 | O MVP mantém apenas a avaliação atual e não armazena histórico de versões. |
+| RN15 | Cada usuário pode manter no máximo uma avaliação atual por produto. |
+| RN16 | A intenção de recompra é obrigatória e aceita: compraria novamente, talvez comprasse ou não compraria novamente. |
+| RN17 | Qualidade percebida, atendimento às expectativas e custo-benefício são obrigatórios. |
+| RN18 | Qualidade aceita: baixa, adequada ou alta. |
+| RN19 | Expectativa aceita: não atendeu, atendeu ou superou. |
+| RN20 | Custo-benefício aceita: ruim, justo ou bom. |
+| RN21 | Toda avaliação deve possuir pelo menos um motivo estruturado como aspecto e percepção positiva ou negativa. |
+| RN22 | Um aspecto não pode aparecer mais de uma vez na mesma avaliação. |
+| RN23 | Os aspectos disponíveis são: sabor, cheiro ou fragrância, textura ou consistência, eficácia ou desempenho, quantidade ou rendimento, facilidade de uso ou preparo, embalagem, durabilidade ou conservação, composição ou ingredientes, segurança ou tolerância, preço e outro. |
+| RN24 | O aspecto “outro” exige comentário explicativo. Nos demais casos, o comentário é opcional. |
+| RN25 | Somente o autor pode editar ou excluir sua avaliação. |
+| RN26 | A avaliação pessoal deve ser apresentada separadamente dos indicadores comunitários. |
+| RN27 | Os indicadores comunitários devem ser calculados a partir das avaliações existentes no momento da consulta. |
+| RN28 | O MVP mantém apenas a avaliação atual e não armazena histórico de versões. |
+
+## Requisitos não funcionais
+
+| ID | Requisito |
+|---|---|
+| RNF01 | As senhas devem ser protegidas por um algoritmo de hash apropriado para senhas e nunca armazenadas em texto puro. |
+| RNF02 | Dados sensíveis, como e-mail, hash de senha e token de acesso, não devem aparecer em respostas públicas. |
+| RNF03 | A API deve oferecer documentação interativa gerada a partir do contrato OpenAPI. |
+| RNF04 | O repositório deve possuir instruções claras para instalar, executar e testar a aplicação. |
+| RNF05 | Entradas inválidas devem produzir respostas de erro claras e códigos HTTP adequados. |
+| RNF06 | As regras críticas de autenticação, unicidade e autorização devem possuir testes automatizados. |
 
 ## Fora do escopo inicial
 
