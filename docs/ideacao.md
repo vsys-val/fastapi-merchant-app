@@ -27,7 +27,9 @@ Em casa, após experimentar o produto, o usuário registra sua experiência para
 
 ## Público e acesso
 
-O MVP será pensado para vários usuários e deverá possuir:
+O MVP será pensado para vários usuários. Cada conta terá nome público, e-mail e senha. O login será realizado com e-mail e senha. O e-mail deverá ser único e não será exibido publicamente. A senha não será armazenada diretamente: somente uma representação segura produzida por hash.
+
+O MVP deverá possuir:
 
 - cadastro;
 - login;
@@ -187,6 +189,9 @@ A busca textual por nome e marca deverá aceitar correspondências parciais. A c
 | Categorias de produtos | Alimentos, bebidas, limpeza, higiene, utilidades domésticas e outros itens de mercado |
 | Escopo de usuários | Vários usuários |
 | Autenticação | Cadastro e login no MVP |
+| Login | E-mail e senha |
+| Unicidade do e-mail | Um e-mail por conta |
+| Armazenamento da senha | Somente hash seguro; nunca a senha original |
 | Visibilidade | Avaliações de outros usuários são visíveis |
 | Autoria das avaliações | Nome público do autor será exibido e poderá se repetir |
 | Identificação interna do usuário | `id` único gerado pelo sistema |
