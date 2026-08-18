@@ -36,6 +36,15 @@ O MVP deverá possuir:
 - avaliações associadas ao autor;
 - proteção das operações que exigem autenticação.
 
+## Acesso público e autenticado
+
+A consulta de produtos e avaliações será pública e não exigirá login. Operações que alteram dados exigirão autenticação, incluindo:
+
+- cadastrar ou editar produtos;
+- criar, editar ou excluir a própria avaliação.
+
+A API deverá verificar a identidade e a autorização do usuário antes de executar essas operações.
+
 ## Visibilidade das avaliações
 
 As avaliações poderão ser vistas por outros usuários. Cada avaliação comunitária exibirá o nome público de seu autor. O nome público não precisará ser único: pessoas diferentes poderão escolher o mesmo nome. Cada conta será identificada internamente por um `id` único gerado pelo sistema. Dados usados para autenticação, como o e-mail, não serão expostos.
@@ -189,6 +198,8 @@ A busca textual por nome e marca deverá aceitar correspondências parciais. A c
 | Categorias de produtos | Alimentos, bebidas, limpeza, higiene, utilidades domésticas e outros itens de mercado |
 | Escopo de usuários | Vários usuários |
 | Autenticação | Cadastro e login no MVP |
+| Consultas públicas | Produtos e avaliações podem ser consultados sem login |
+| Operações protegidas | Cadastro e edição de produtos; criação, edição e exclusão de avaliações |
 | Login | E-mail e senha |
 | Unicidade do e-mail | Um e-mail por conta |
 | Armazenamento da senha | Somente hash seguro; nunca a senha original |
