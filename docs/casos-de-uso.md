@@ -12,6 +12,73 @@ Este documento descreve como os atores interagem com a API para alcançar objeti
 - **Fluxo de exceção:** situação que impede a conclusão do objetivo.
 - **Pós-condição:** estado garantido depois de uma conclusão bem-sucedida.
 
+## UC01 — Cadastrar conta
+
+### Objetivo
+
+Permitir que um visitante crie uma conta para acessar as operações protegidas da API.
+
+### Ator principal
+
+**Visitante.**
+
+### Gatilho
+
+O visitante decide criar uma conta.
+
+### Requisitos e regras relacionados
+
+- **RF01:** cadastrar uma conta com nome público, e-mail e senha;
+- **RN01:** cada usuário possui um identificador interno único;
+- **RN02:** o nome público pode se repetir;
+- **RN03:** o e-mail deve ser único e privado;
+- **RNF01:** a senha deve ser armazenada somente como hash seguro.
+
+### Pré-condições
+
+1. O e-mail informado ainda não pertence a outra conta.
+2. O visitante possui nome público, e-mail e senha para enviar.
+
+### Fluxo principal
+
+1. O visitante informa nome público, e-mail e senha.
+2. O visitante envia os dados de cadastro.
+3. A API valida os campos obrigatórios, o formato do e-mail e a política da senha.
+4. A API verifica que o e-mail ainda não está cadastrado.
+5. A API produz um hash seguro da senha.
+6. O sistema gera um identificador único e salva a conta.
+7. A API confirma o sucesso da operação sem devolver a senha nem seu hash.
+
+### Fluxos de exceção
+
+**E1 — Dados obrigatórios ausentes**
+
+1. A API identifica um campo obrigatório ausente.
+2. A operação é rejeitada e nenhuma conta é salva.
+3. A API indica o campo que deve ser preenchido.
+
+**E2 — Formato de e-mail inválido**
+
+1. A API identifica que o e-mail não possui formato válido.
+2. A operação é rejeitada e nenhuma conta é salva.
+3. A API associa uma mensagem clara de validação ao campo `email`.
+
+**E3 — E-mail já cadastrado**
+
+1. A API encontra uma conta associada ao e-mail.
+2. A operação é rejeitada para preservar a unicidade do e-mail.
+3. A API informa que não foi possível criar outra conta com esse e-mail.
+
+**E4 — Senha fora da política**
+
+1. A API identifica que a senha não atende à política de segurança.
+2. A operação é rejeitada e nenhuma conta é salva.
+3. A API informa quais critérios da senha não foram atendidos.
+
+### Pós-condição de sucesso
+
+Uma nova conta fica armazenada com identificador único, nome público, e-mail único e hash da senha. A senha original não é armazenada nem devolvida.
+
 ## UC04 — Pesquisar produto
 
 ### Objetivo
