@@ -12,6 +12,60 @@ Este documento descreve como os atores interagem com a API para alcançar objeti
 - **Fluxo de exceção:** situação que impede a conclusão do objetivo.
 - **Pós-condição:** estado garantido depois de uma conclusão bem-sucedida.
 
+## UC04 — Pesquisar produto
+
+### Objetivo
+
+Permitir que um visitante ou usuário autenticado encontre produtos do catálogo por nome, marca ou código de barras.
+
+### Atores
+
+- **Visitante.**
+- **Usuário autenticado.**
+
+### Gatilho
+
+O ator deseja localizar um produto no catálogo.
+
+### Requisitos e regras relacionados
+
+- **RF03:** permitir a consulta pública de produtos;
+- **RF04:** pesquisar por nome, marca ou código de barras;
+- **RN14:** nome e marca usam correspondência parcial; código de barras usa correspondência exata.
+
+### Pré-condições
+
+Nenhuma autenticação é necessária.
+
+### Fluxo principal
+
+1. O ator informa um nome, uma marca ou um código de barras.
+2. O ator envia a pesquisa.
+3. A API identifica o tipo de pesquisa recebido.
+4. Para nome ou marca, a API procura correspondências parciais.
+5. Para código de barras, a API procura uma correspondência exata.
+6. A API devolve uma lista contendo zero ou mais produtos encontrados.
+
+### Fluxos alternativos
+
+**A1 — Pesquisa por nome ou marca**
+
+1. A API realiza uma busca textual por correspondência parcial.
+2. O caso de uso continua no passo 6 do fluxo principal.
+
+**A2 — Pesquisa por código de barras**
+
+1. A API realiza uma busca por correspondência exata.
+2. O caso de uso continua no passo 6 do fluxo principal.
+
+### Resultado sem correspondências
+
+A ausência de produtos compatíveis não é um erro. A API conclui a operação com sucesso e devolve uma lista vazia.
+
+### Pós-condição de sucesso
+
+Nenhum dado é alterado. O ator recebe uma lista com zero ou mais produtos compatíveis com a pesquisa.
+
 ## UC08 — Cadastrar avaliação
 
 ### Objetivo
