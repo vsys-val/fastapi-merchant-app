@@ -79,6 +79,64 @@ O visitante decide criar uma conta.
 
 Uma nova conta fica armazenada com identificador único, nome público, e-mail único e hash da senha. A senha original não é armazenada nem devolvida.
 
+## UC02 — Realizar login
+
+### Objetivo
+
+Permitir que uma pessoa com conta válida se autentique e receba um token temporário para acessar operações protegidas.
+
+### Ator principal
+
+**Visitante com conta cadastrada.**
+
+### Gatilho
+
+O visitante decide entrar na aplicação.
+
+### Requisitos e regras relacionados
+
+- **RF02:** autenticar por e-mail e senha e fornecer um token de acesso;
+- **RN04:** operações que alteram dados exigem autenticação;
+- **RNF01:** senhas são verificadas por meio de hash seguro;
+- **RNF02:** senha, hash e token não devem aparecer em respostas públicas.
+
+### Pré-condições
+
+1. O visitante possui uma conta cadastrada.
+2. A conta contém um e-mail único e um hash de senha válido.
+
+### Fluxo principal
+
+1. O visitante informa e-mail e senha.
+2. O visitante envia as credenciais.
+3. A API localiza a conta pelo e-mail.
+4. A API usa uma função segura para verificar a senha recebida contra o hash armazenado.
+5. A API gera um token de acesso temporário associado à identidade do usuário.
+6. A API devolve o token e seu tipo, sem devolver a senha nem o hash.
+7. Nas requisições protegidas seguintes, o cliente envia o token para que a API identifique o usuário.
+
+### Fluxos de exceção
+
+**E1 — Credenciais ausentes ou inválidas**
+
+1. A API identifica que o e-mail ou a senha não foi informado corretamente.
+2. A autenticação é rejeitada e nenhum token é emitido.
+3. A API retorna uma mensagem genérica de credenciais inválidas.
+
+**E2 — E-mail inexistente ou senha incorreta**
+
+1. A API não localiza a conta ou a verificação da senha falha.
+2. A autenticação é rejeitada e nenhum token é emitido.
+3. A API retorna “E-mail ou senha inválidos”, sem revelar qual credencial falhou.
+
+### Expiração do token
+
+O token de acesso não é permanente. Depois de expirar, deixa de autorizar requisições protegidas e o usuário precisa realizar login novamente. O uso de `refresh token` fica fora do MVP.
+
+### Pós-condição de sucesso
+
+O usuário possui um token de acesso válido por tempo limitado e pode apresentá-lo nas operações protegidas da API.
+
 ## UC04 — Pesquisar produto
 
 ### Objetivo
