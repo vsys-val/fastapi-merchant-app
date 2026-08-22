@@ -191,6 +191,76 @@ A ausência de produtos compatíveis não é um erro. A API conclui a operação
 
 Nenhum dado é alterado. O ator recebe uma lista com zero ou mais produtos compatíveis com a pesquisa.
 
+## UC05 — Consultar detalhes de um produto
+
+### Objetivo
+
+Permitir que um visitante ou usuário autenticado consulte os dados de um produto, suas avaliações públicas e seus indicadores comunitários, com personalização quando houver autenticação válida.
+
+### Atores
+
+- **Visitante.**
+- **Usuário autenticado.**
+
+### Gatilho
+
+O ator deseja consultar um produto específico do catálogo.
+
+### Requisitos e regras relacionados
+
+- **RF03:** permitir a consulta pública de produtos;
+- **RF05:** retornar dados do produto, informações comunitárias e a avaliação pessoal separadamente;
+- **RF11:** consultar avaliações comunitárias;
+- **RF12:** fornecer indicadores comunitários;
+- **RN26:** apresentar a avaliação pessoal separadamente;
+- **RN27:** calcular os indicadores a partir das avaliações existentes.
+
+### Pré-condições
+
+Nenhuma autenticação é obrigatória. O ator deve informar o identificador do produto que deseja consultar.
+
+### Fluxo principal
+
+1. O ator solicita os detalhes de um produto pelo identificador.
+2. Quando houver token, a API valida a autenticação e identifica o usuário.
+3. A API procura o produto pelo identificador.
+4. A API reúne os dados do produto.
+5. A API consulta as avaliações públicas e calcula os indicadores comunitários atuais.
+6. Quando houver usuário autenticado, a API procura sua avaliação para o produto.
+7. A API devolve os dados do produto, as informações comunitárias e o campo `your_review`.
+8. Se o usuário autenticado possuir uma avaliação, ela é devolvida separadamente em `your_review`.
+
+### Fluxos alternativos
+
+**A1 — Consulta sem token**
+
+1. O visitante solicita os detalhes sem enviar token.
+2. A API realiza a consulta pública.
+3. O campo `your_review` é devolvido como `null`.
+
+**A2 — Usuário autenticado sem avaliação pessoal**
+
+1. A API valida o token, mas não encontra avaliação daquele usuário para o produto.
+2. O campo `your_review` é devolvido como `null`.
+
+### Fluxos de exceção
+
+**E1 — Token enviado, mas inválido ou expirado**
+
+1. A API identifica que o token apresentado não é válido.
+2. A requisição é rejeitada, em vez de ser tratada silenciosamente como consulta de visitante.
+3. A API informa que é necessário realizar uma nova autenticação.
+
+**E2 — Produto inexistente**
+
+1. A API não encontra o identificador solicitado.
+2. A consulta do recurso específico não pode ser concluída.
+3. A API informa que o produto não foi encontrado.
+
+### Pós-condição de sucesso
+
+Nenhum dado é alterado. O ator recebe os detalhes do produto e as informações comunitárias; quando aplicável, recebe também sua avaliação pessoal separadamente.
+
 ## UC08 — Cadastrar avaliação
 
 ### Objetivo
