@@ -261,6 +261,82 @@ Nenhuma autenticação é obrigatória. O ator deve informar o identificador do 
 
 Nenhum dado é alterado. O ator recebe os detalhes do produto e as informações comunitárias; quando aplicável, recebe também sua avaliação pessoal separadamente.
 
+## UC06 — Cadastrar produto
+
+### Objetivo
+
+Permitir que um usuário autenticado acrescente ao catálogo compartilhado um produto que ainda não possui registro canônico.
+
+### Ator principal
+
+**Usuário autenticado.**
+
+### Gatilho
+
+O usuário não encontra no catálogo o produto que deseja consultar ou avaliar.
+
+### Requisitos e regras relacionados
+
+- **RF06:** cadastrar um produto ausente no catálogo;
+- **RN05–RN08:** campos obrigatórios, opcionais e categoria controlada;
+- **RN09:** código de barras único quando informado;
+- **RN10–RN12:** catálogo canônico, prevenção e rejeição de duplicidade.
+
+### Pré-condições
+
+1. O usuário está autenticado com token válido.
+2. O produto ainda não possui um registro canônico no catálogo.
+
+### Fluxo principal
+
+1. O usuário informa nome, marca, quantidade, unidade e categoria.
+2. Opcionalmente, informa variante e código de barras.
+3. O usuário envia os dados do produto.
+4. A API identifica o usuário autenticado.
+5. A API valida os campos obrigatórios, formatos, unidade e categoria.
+6. Quando houver código de barras, a API procura uma correspondência exata.
+7. A API também procura duplicidade pela combinação normalizada de nome, marca, variante, quantidade e unidade.
+8. Não havendo duplicidade, a API cria o produto e registra seu criador.
+9. A API confirma o sucesso e devolve o produto criado.
+
+### Fluxo alternativo
+
+**A1 — Produto sem código de barras ou variante**
+
+1. O usuário omite um ou ambos os campos opcionais.
+2. A API realiza a verificação de duplicidade com os dados de identificação disponíveis.
+3. O caso de uso continua no passo 8 do fluxo principal.
+
+### Fluxos de exceção
+
+**E1 — Usuário não autenticado**
+
+1. A API não identifica um token válido.
+2. A operação é rejeitada e nenhum produto é criado.
+3. A API informa que a autenticação é necessária.
+
+**E2 — Dados obrigatórios ausentes ou inválidos**
+
+1. A API identifica um campo obrigatório ausente ou um valor inválido.
+2. A operação é rejeitada e nenhum produto é criado.
+3. A API informa quais dados precisam ser corrigidos.
+
+**E3 — Código de barras já utilizado**
+
+1. A API encontra um produto com o mesmo código de barras.
+2. A criação é rejeitada como conflito.
+3. A API indica o produto canônico existente.
+
+**E4 — Produto equivalente já existente**
+
+1. A API encontra correspondência pela identidade normalizada do produto.
+2. A criação é rejeitada como conflito.
+3. A API indica o produto canônico existente para que o usuário possa consultá-lo ou avaliá-lo.
+
+### Pós-condição de sucesso
+
+Um novo produto canônico fica disponível no catálogo compartilhado e vinculado ao usuário que o cadastrou.
+
 ## UC08 — Cadastrar avaliação
 
 ### Objetivo
