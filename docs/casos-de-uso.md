@@ -498,3 +498,69 @@ O usuário decide avaliar um produto selecionado.
 ### Pós-condição de sucesso
 
 Uma avaliação válida fica armazenada e vinculada ao usuário e ao produto. Ela passa a compor as consultas e os indicadores comunitários daquele produto.
+
+## UC09 — Editar avaliação
+
+### Objetivo
+
+Permitir que o autor atualize sua avaliação atual de um produto sem criar uma segunda avaliação nem armazenar histórico no MVP.
+
+### Ator principal
+
+**Usuário autenticado que criou a avaliação.**
+
+### Gatilho
+
+O autor deseja corrigir ou atualizar sua experiência registrada.
+
+### Requisitos e regras relacionados
+
+- **RF09:** permitir que o autor edite a própria avaliação;
+- **RN15:** manter no máximo uma avaliação atual por usuário e produto;
+- **RN16–RN24:** validar novamente todos os campos e motivos;
+- **RN25:** somente o autor pode editar;
+- **RN27:** os indicadores refletem as avaliações atuais;
+- **RN28:** não armazenar histórico de versões no MVP.
+
+### Pré-condições
+
+1. O usuário está autenticado.
+2. A avaliação existe.
+3. O usuário autenticado é o autor da avaliação.
+
+### Fluxo principal
+
+1. O autor solicita a edição da avaliação.
+2. O autor informa os novos valores.
+3. A API identifica o usuário autenticado e confirma sua autoria.
+4. A API valida integralmente intenção de recompra, critérios, motivos e comentário quando obrigatório.
+5. Somente após todas as validações, a API substitui os valores da avaliação atual.
+6. A API confirma o sucesso e devolve a avaliação atualizada.
+
+### Fluxos de exceção
+
+**E1 — Usuário não autenticado**
+
+1. A API não identifica um token válido.
+2. A atualização é rejeitada e a avaliação anterior permanece intacta.
+
+**E2 — Avaliação inexistente**
+
+1. A API não encontra a avaliação solicitada.
+2. A atualização é rejeitada e a API informa que a avaliação não foi encontrada.
+
+**E3 — Usuário não é o autor**
+
+1. A API identifica que a avaliação pertence a outro usuário.
+2. A atualização é rejeitada e nenhum dado é alterado.
+
+**E4 — Novos dados inválidos**
+
+1. A API identifica campos ausentes, valores não permitidos ou motivos inválidos.
+2. A atualização não é aplicada, nem parcialmente.
+3. A avaliação anterior permanece intacta e a API informa o que precisa ser corrigido.
+
+### Pós-condição de sucesso
+
+A combinação usuário–produto continua possuindo uma única avaliação, agora com os novos valores. A versão anterior não é mantida no MVP, e consultas posteriores usam a avaliação atualizada.
+
