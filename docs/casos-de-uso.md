@@ -564,3 +564,65 @@ O autor deseja corrigir ou atualizar sua experiência registrada.
 
 A combinação usuário–produto continua possuindo uma única avaliação, agora com os novos valores. A versão anterior não é mantida no MVP, e consultas posteriores usam a avaliação atualizada.
 
+## UC10 — Excluir avaliação
+
+### Objetivo
+
+Permitir que o autor remova sua avaliação atual sem excluir o produto nem afetar diretamente avaliações de outros usuários.
+
+### Ator principal
+
+**Usuário autenticado que criou a avaliação.**
+
+### Gatilho
+
+O autor decide remover sua avaliação de um produto.
+
+### Requisitos e regras relacionados
+
+- **RF10:** permitir que o autor exclua a própria avaliação;
+- **RN15:** manter no máximo uma avaliação atual por usuário e produto;
+- **RN25:** somente o autor pode excluir;
+- **RN27:** calcular indicadores a partir das avaliações existentes;
+- **RN28:** não armazenar histórico no MVP.
+
+### Pré-condições
+
+1. O usuário está autenticado.
+2. A avaliação existe.
+3. O usuário autenticado é o autor da avaliação.
+
+### Fluxo principal
+
+1. O autor solicita a exclusão da avaliação.
+2. A API identifica o usuário autenticado.
+3. A API localiza a avaliação e confirma sua autoria.
+4. A API exclui somente a avaliação.
+5. A API confirma o sucesso da operação.
+
+### Fluxos de exceção
+
+**E1 — Usuário não autenticado**
+
+1. A API não identifica um token válido.
+2. A exclusão é rejeitada e a avaliação permanece armazenada.
+
+**E2 — Avaliação inexistente**
+
+1. A API não encontra a avaliação solicitada.
+2. A exclusão não é executada e a API informa que a avaliação não foi encontrada.
+
+**E3 — Usuário não é o autor**
+
+1. A API identifica que a avaliação pertence a outro usuário.
+2. A exclusão é rejeitada por falta de autorização.
+3. A avaliação permanece armazenada.
+
+### Pós-condições de sucesso
+
+1. A avaliação do autor deixa de existir.
+2. O produto permanece no catálogo compartilhado.
+3. As avaliações de outros usuários permanecem intactas.
+4. Consultas posteriores calculam os indicadores comunitários usando somente as avaliações restantes.
+5. O usuário poderá cadastrar futuramente uma nova avaliação para o mesmo produto.
+
