@@ -337,6 +337,85 @@ O usuário não encontra no catálogo o produto que deseja consultar ou avaliar.
 
 Um novo produto canônico fica disponível no catálogo compartilhado e vinculado ao usuário que o cadastrou.
 
+## UC07 — Editar produto
+
+### Objetivo
+
+Permitir que o criador corrija os dados de um produto sem comprometer avaliações de outros usuários.
+
+### Ator principal
+
+**Usuário autenticado que cadastrou o produto.**
+
+### Gatilho
+
+O criador identifica que os dados do produto precisam ser corrigidos.
+
+### Requisitos e regras relacionados
+
+- **RF07:** permitir a correção condicionada de um produto;
+- **RN09–RN12:** preservar código de barras único e registro canônico;
+- **RN13:** somente o criador pode editar enquanto nenhum outro usuário tiver avaliado o produto.
+
+### Pré-condições
+
+1. O usuário está autenticado.
+2. O produto existe.
+3. O usuário autenticado é o criador do produto.
+4. Nenhum outro usuário avaliou o produto.
+
+### Fluxo principal
+
+1. O criador solicita a edição do produto.
+2. O criador informa os dados que deseja corrigir.
+3. A API identifica o usuário autenticado.
+4. A API confirma que ele é o criador do produto.
+5. A API verifica que nenhum outro usuário avaliou o produto.
+6. A API valida os novos dados e repete as verificações de unicidade e duplicidade.
+7. A API atualiza o produto.
+8. A API confirma o sucesso e devolve os dados atualizados.
+
+### Fluxo alternativo
+
+**A1 — O criador já avaliou o produto**
+
+1. A API encontra apenas uma avaliação feita pelo próprio criador.
+2. A edição continua permitida, pois nenhum outro usuário é afetado.
+3. O caso de uso continua no passo 6 do fluxo principal.
+
+### Fluxos de exceção
+
+**E1 — Usuário não autenticado**
+
+1. A API não identifica um token válido.
+2. A edição é rejeitada e o produto não é alterado.
+
+**E2 — Produto inexistente**
+
+1. A API não encontra o produto solicitado.
+2. A edição é rejeitada e a API informa que o produto não foi encontrado.
+
+**E3 — Usuário não é o criador**
+
+1. A API identifica que o produto foi cadastrado por outro usuário.
+2. A edição é rejeitada e o produto não é alterado.
+
+**E4 — Produto avaliado por outro usuário**
+
+1. A API encontra pelo menos uma avaliação cujo autor não é o criador do produto.
+2. A edição é rejeitada e os dados originais são preservados.
+3. A API informa que o produto está bloqueado devido ao uso comunitário.
+
+**E5 — Novos dados inválidos ou duplicados**
+
+1. A API detecta campos inválidos, código de barras já utilizado ou produto canônico equivalente.
+2. A edição é rejeitada e os dados anteriores são preservados.
+3. A API informa o conflito ou os campos que precisam ser corrigidos.
+
+### Pós-condição de sucesso
+
+O produto permanece com o mesmo identificador e passa a conter os dados corrigidos. Avaliações existentes do próprio criador continuam vinculadas a ele.
+
 ## UC08 — Cadastrar avaliação
 
 ### Objetivo
