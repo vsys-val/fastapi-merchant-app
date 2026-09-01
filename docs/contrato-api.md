@@ -122,6 +122,45 @@ Valores de entrada aceitos para unidade: `g`, `kg`, `ml`, `L` e `un`. A API norm
 
 Exemplos: `1.5 L` vira `1500 ml` e `2 kg` vira `2000 g`.
 
+### Limites e normalização de texto
+
+- nome público da conta: de 2 a 100 caracteres;
+- nome do produto: de 2 a 120 caracteres;
+- marca: de 1 a 80 caracteres;
+- variante: até 80 caracteres;
+- comentário de avaliação: até 1.000 caracteres.
+
+Os textos aceitam Unicode, inclusive letras acentuadas e nomes como `Açaí`, `Pão de Açúcar` e `Ypê`. Espaços nas extremidades são removidos antes da validação, e valores formados apenas por espaços são inválidos.
+
+### Código de barras e GTIN
+
+`barcode` é opcional e, quando informado, representa o número codificado pelas barras da embalagem. A API armazena o número como texto, não a imagem das barras, para preservar zeros à esquerda.
+
+São aceitos somente:
+
+- GTIN-8;
+- GTIN-12;
+- GTIN-13;
+- GTIN-14.
+
+Regras de validação:
+
+- deve conter somente algarismos;
+- deve possuir 8, 12, 13 ou 14 dígitos;
+- o dígito verificador deve ser matematicamente válido segundo o algoritmo do GTIN;
+- o GTIN deve ser único no catálogo;
+- não há exigência de prefixo `789` ou `790`, pois produtos importados vendidos no Brasil podem usar outros prefixos.
+
+A validação do dígito verificador confirma apenas a consistência estrutural do número. Ela não comprova que o produto existe, que foi cadastrado oficialmente na GS1 ou que nome, marca e quantidade informados correspondem ao GTIN.
+
+Códigos internos de supermercados e etiquetas locais não são tratados como identificadores globais, pois o mesmo número pode representar produtos diferentes em estabelecimentos distintos. Se o produto não possuir um GTIN válido, o cliente deve enviar `barcode: null`. Nesse caso, a prevenção de duplicidade usa a chave de identidade interna formada pelos dados normalizados do produto.
+
+Resultados relacionados:
+
+- formato ou dígito verificador inválido: `422 Unprocessable Content`;
+- GTIN já associado a um produto: `409 Conflict`, incluindo `existing_product_id`;
+- GTIN válido e ainda não utilizado: o cadastro pode prosseguir.
+
 Categorias:
 
 - `food`;
