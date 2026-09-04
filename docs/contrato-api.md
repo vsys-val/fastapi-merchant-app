@@ -381,6 +381,43 @@ Respostas:
 - `409 Conflict`: produto bloqueado pelo uso comunitário ou edição geraria duplicidade;
 - `422 Unprocessable Content`: dados inválidos.
 
+### Excluir produto
+
+`DELETE /products/{product_id}`
+
+Exige autenticação. Apenas o criador pode solicitar a exclusão.
+
+Regras:
+
+- a exclusão é lógica e registra `deleted_at` em UTC;
+- o produto somente pode ser excluído quando não possuir nenhuma avaliação, inclusive do próprio criador;
+- se houver avaliação do criador, ele deve excluí-la explicitamente antes;
+- avaliações de terceiros impedem a exclusão pelo criador;
+- nenhuma avaliação é removida automaticamente;
+- produtos excluídos não aparecem em pesquisas ou listagens;
+- a consulta direta de um produto excluído retorna `404 Not Found`;
+- não existe restauração explícita pelo usuário no MVP;
+- o sucesso retorna `204 No Content`, sem corpo.
+
+Respostas:
+
+- `204 No Content`: exclusão lógica concluída;
+- `401 Unauthorized`: autenticação ausente, inválida ou expirada;
+- `403 Forbidden`: usuário autenticado não é o criador;
+- `404 Not Found`: produto inexistente ou já excluído;
+- `409 Conflict`: o produto possui uma ou mais avaliações.
+
+### Recadastrar produto excluído
+
+Se `POST /products` corresponder, por GTIN ou chave de identidade, a um produto logicamente excluído e sem avaliações:
+
+- o registro anterior é reativado com `deleted_at: null`;
+- o mesmo ID é preservado;
+- os dados válidos e normalizados recebidos passam a representar o produto;
+- o usuário autenticado que realizou o recadastro torna-se o responsável por futuras edições e exclusão;
+- a resposta é `200 OK` com a representação pública completa;
+- um novo registro não é criado.
+
 ## Avaliações
 
 ### Valores controlados
