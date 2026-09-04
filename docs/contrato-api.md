@@ -28,6 +28,7 @@
 | `404 Not Found` | Recurso específico não encontrado |
 | `409 Conflict` | Dados válidos conflitam com um recurso ou com seu estado atual |
 | `422 Unprocessable Content` | Dados ou parâmetros não passaram pela validação |
+| `429 Too Many Requests` | Limite temporário de requisições excedido |
 | `500 Internal Server Error` | Falha inesperada do servidor |
 
 ## Formato de paginação
@@ -55,11 +56,22 @@ Dados de entrada:
 {
   "email": "valerio@example.com",
   "name": "Valério",
-  "password": "senha-segura"
+  "password": "uma senha longa e memorável"
 }
 ```
 
 A senha e seu hash nunca aparecem na resposta.
+
+Regras da conta:
+
+- o e-mail é normalizado com remoção de espaços nas extremidades e conversão para minúsculas;
+- e-mails que diferem apenas por maiúsculas, minúsculas ou espaços nas extremidades representam a mesma conta;
+- a senha deve possuir entre 15 e 128 caracteres;
+- espaços e diferentes tipos de caractere são aceitos, sem composição obrigatória;
+- senhas presentes na lista local de senhas muito comuns são rejeitadas;
+- a senha é armazenada somente como hash Argon2id;
+- o salt exclusivo é gerado e administrado automaticamente pela biblioteca;
+- a senha original nunca é armazenada nem pode ser recuperada a partir do hash.
 
 Respostas:
 
@@ -85,7 +97,8 @@ Resposta de sucesso — `200 OK`:
 ```json
 {
   "access_token": "eyJ...",
-  "token_type": "bearer"
+  "token_type": "bearer",
+  "expires_in": 86400
 }
 ```
 
@@ -96,6 +109,49 @@ Respostas:
 - `422 Unprocessable Content`: formato dos dados inválido.
 
 A falha de autenticação usa a mensagem genérica “E-mail ou senha inválidos”, sem revelar se o e-mail está cadastrado.
+
+Proteção contra tentativas automatizadas:
+
+- máximo de 5 tentativas malsucedidas por conta em uma janela de 15 minutos;
+- máximo de 20 tentativas por endereço IP em uma janela de 1 minuto;
+- o bloqueio é sempre temporário;
+- limite excedido retorna `429 Too Many Requests`;
+- login bem-sucedido zera o contador associado à conta;
+- as respostas permanecem genéricas e não revelam se o e-mail existe.
+
+### Token de acesso
+
+- formato JWT;
+- assinatura `HS256`;
+- chave secreta forte fornecida por variável de ambiente e nunca versionada no código;
+- validade de 24 horas;
+- conteúdo mínimo: `sub` com o ID do usuário, `iat` com o instante de emissão e `exp` com a expiração;
+- nome, e-mail, senha e outros dados privados não são incluídos;
+- não há refresh token nem revogação antecipada no MVP;
+- logout é realizado no cliente pela remoção do token, sem endpoint na API.
+
+### Consultar a própria conta
+
+`GET /users/me`
+
+Exige autenticação.
+
+Resposta de sucesso — `200 OK`:
+
+```json
+{
+  "id": 42,
+  "name": "Valério",
+  "email": "valerio@example.com"
+}
+```
+
+Respostas:
+
+- `200 OK`: conta autenticada encontrada;
+- `401 Unauthorized`: autenticação ausente, inválida ou expirada.
+
+No MVP, a conta é imutável após o cadastro. Não existem endpoints para alteração de nome, e-mail ou senha.
 
 ## Produtos
 
