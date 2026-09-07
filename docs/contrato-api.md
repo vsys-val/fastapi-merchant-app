@@ -16,6 +16,47 @@
 - Avaliações em listas aparecem da mais recente para a mais antiga.
 - Operações compostas são atômicas: ou todos os dados são salvos, ou nenhum é.
 
+## Formato padronizado de erros
+
+Todos os erros, inclusive os produzidos pela validação do FastAPI, usam o mesmo envelope:
+
+```json
+{
+  "error": {
+    "code": "product_not_found",
+    "message": "Produto não encontrado.",
+    "details": null
+  }
+}
+```
+
+Regras:
+
+- `code` é um identificador técnico estável em inglês;
+- `message` é uma mensagem legível em português;
+- `details` vale `null` quando não há informações adicionais;
+- erros de validação usam `code: "validation_error"`;
+- erros de validação podem listar vários campos em `details`;
+- campos aninhados usam caminhos como `reasons[0].aspect`.
+
+Exemplo de validação:
+
+```json
+{
+  "error": {
+    "code": "validation_error",
+    "message": "Os dados enviados são inválidos.",
+    "details": [
+      {
+        "field": "brand",
+        "code": "required",
+        "message": "A marca é obrigatória."
+      }
+    ]
+  }
+}
+```
+
 ## Códigos HTTP adotados
 
 | Código | Significado no projeto |
@@ -209,6 +250,28 @@ Campos públicos:
 
 A chave de identidade e o ID do criador são internos.
 
+### Identidade e prevenção de duplicidade
+
+Quando existe GTIN válido, ele é o identificador principal de duplicidade. Sem GTIN, a chave interna é formada por:
+
+```text
+nome + marca + variante + quantidade normalizada + unidade
+```
+
+A categoria não participa da identidade, pois classificações divergentes não transformam o mesmo item comercial em produtos diferentes.
+
+Para formar a chave:
+
+- nome, marca e variante são convertidos para minúsculas;
+- acentos são removidos;
+- espaços das extremidades são removidos;
+- sequências de espaços são reduzidas a um único espaço;
+- variante vazia e `null` são equivalentes;
+- pontuação é preservada;
+- quantidade e unidade são convertidas para a unidade canônica.
+
+Essa normalização é interna. Os textos originais continuam sendo exibidos na representação pública.
+
 Valores de entrada aceitos para unidade: `g`, `kg`, `ml`, `L` e `un`. A API normaliza e sempre responde com:
 
 - massa em `g`;
@@ -216,6 +279,14 @@ Valores de entrada aceitos para unidade: `g`, `kg`, `ml`, `L` e `un`. A API norm
 - contagem em `un`.
 
 Exemplos: `1.5 L` vira `1500 ml` e `2 kg` vira `2000 g`.
+
+Regras de quantidade:
+
+- deve ser positiva e maior que zero;
+- valores de massa e volume aceitam até 3 casas decimais;
+- contagem em `un` aceita somente números inteiros positivos;
+- validação, conversão e armazenamento usam decimal exato, nunca ponto flutuante binário;
+- zeros decimais sem significado não alteram a identidade: `500`, `500.0` e `500.000` são equivalentes.
 
 ### Limites e normalização de texto
 
