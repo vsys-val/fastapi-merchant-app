@@ -304,9 +304,44 @@ GET /products?name=sorvete&brand=kibon
 GET /products?barcode=7891234567890
 ```
 
+Formato resumido de cada item:
+
+```json
+{
+  "id": 42,
+  "name": "Café torrado e moído",
+  "brand": "Marca X",
+  "variant": null,
+  "quantity": 500,
+  "unit": "g",
+  "category": "food",
+  "barcode": "7891234567895",
+  "community_summary": {
+    "total_reviews": 3,
+    "repurchase_intent": {
+      "yes": 33.3,
+      "maybe": 33.3,
+      "no": 33.3
+    }
+  },
+  "your_repurchase_intent": null
+}
+```
+
+Regras do resumo:
+
+- o token é opcional;
+- a avaliação do usuário autenticado não entra no resumo comunitário;
+- `your_repurchase_intent` sempre existe e vale `null` para visitantes ou usuários que ainda não avaliaram o produto;
+- sem avaliações comunitárias, `total_reviews` vale `0` e todas as porcentagens valem `0`;
+- as porcentagens possuem uma casa decimal;
+- por arredondamento, a soma pode resultar em `99.9` ou `100.1`; nenhuma categoria é ajustada artificialmente;
+- comentários, motivos e demais critérios ficam restritos ao detalhe do produto e aos endpoints de avaliações.
+
 Respostas:
 
 - `200 OK`: página de resultados, inclusive quando vazia;
+- `401 Unauthorized`: token opcional enviado, mas inválido ou expirado;
 - `422 Unprocessable Content`: parâmetros inválidos.
 
 ### Consultar produto específico
@@ -316,7 +351,7 @@ Respostas:
 O token é opcional. A resposta contém:
 
 - dados do produto;
-- distribuição percentual das respostas da comunidade;
+- distribuição percentual das respostas da comunidade, com uma casa decimal e sem ajuste artificial de arredondamento;
 - quantidade total de avaliações consideradas;
 - `your_review`, com a avaliação do usuário autenticado ou `null`.
 
