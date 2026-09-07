@@ -153,6 +153,45 @@ Respostas:
 
 No MVP, a conta é imutável após o cadastro. Não existem endpoints para alteração de nome, e-mail ou senha.
 
+### Listar as próprias avaliações
+
+`GET /users/me/reviews`
+
+Exige autenticação.
+
+Regras:
+
+- resposta paginada, com 20 itens por padrão e máximo de 100;
+- avaliações ordenadas da mais recente para a mais antiga;
+- cada item contém a avaliação completa e um resumo do produto associado;
+- usuário sem avaliações recebe `200 OK` com `items: []`.
+
+Respostas:
+
+- `200 OK`: página de avaliações do usuário;
+- `401 Unauthorized`: autenticação ausente, inválida ou expirada;
+- `422 Unprocessable Content`: paginação inválida.
+
+### Listar os próprios produtos
+
+`GET /users/me/products`
+
+Exige autenticação.
+
+Regras:
+
+- resposta paginada, com 20 itens por padrão e máximo de 100;
+- produtos ordenados do cadastro mais recente para o mais antigo;
+- retorna somente produtos ativos cadastrados pelo usuário;
+- produtos logicamente excluídos não aparecem;
+- usuário sem produtos ativos recebe `200 OK` com `items: []`.
+
+Respostas:
+
+- `200 OK`: página de produtos do usuário;
+- `401 Unauthorized`: autenticação ausente, inválida ou expirada;
+- `422 Unprocessable Content`: paginação inválida.
+
 ## Produtos
 
 ### Representação pública
@@ -226,7 +265,7 @@ Categorias:
 - `household_utilities`;
 - `other`.
 
-### Pesquisar produtos
+### Pesquisar e explorar produtos
 
 `GET /products`
 
@@ -234,23 +273,33 @@ Parâmetros:
 
 | Parâmetro | Regra |
 |---|---|
-| `name` | correspondência parcial por nome |
-| `brand` | correspondência parcial por marca |
+| `name` | correspondência parcial; mínimo de 2 caracteres |
+| `brand` | correspondência parcial; mínimo de 2 caracteres |
+| `category` | uma categoria controlada por consulta |
 | `barcode` | correspondência exata |
 | `page` | página, iniciando em 1 |
 | `page_size` | 20 por padrão; máximo de 100 |
 
 Regras:
 
-- `name` e `brand` podem ser combinados e usam lógica E (`AND`);
-- `barcode` não pode ser combinado com `name` ou `brand`;
-- combinações inválidas e limites de paginação inválidos retornam `422`.
+- sem filtros, retorna o catálogo ativo completo e paginado;
+- `name`, `brand` e `category` podem ser combinados e usam lógica E (`AND`);
+- apenas uma categoria pode ser enviada por consulta;
+- buscas por nome e marca ignoram diferenças entre maiúsculas, minúsculas e acentos;
+- a normalização é usada somente para comparação, preservando o texto original na resposta;
+- `barcode` não pode ser combinado com nenhum outro filtro;
+- produtos logicamente excluídos nunca aparecem;
+- resultados são ordenados por nome, depois por marca e finalmente por `id`;
+- combinações inválidas, valores controlados inválidos e limites de paginação inválidos retornam `422`.
 
 Exemplos:
 
 ```http
+GET /products
 GET /products?name=sorvete
 GET /products?brand=kibon
+GET /products?category=food
+GET /products?name=arroz&category=food
 GET /products?name=sorvete&brand=kibon
 GET /products?barcode=7891234567890
 ```
