@@ -5,6 +5,8 @@
 ## Convenções gerais
 
 - A API troca dados em JSON.
+- Endpoints funcionais usam o prefixo `/api/v1`. Os caminhos apresentados neste documento são relativos a esse prefixo.
+- Endpoints operacionais, como `/health`, ficam fora do versionamento funcional.
 - Valores técnicos controlados são escritos em inglês e a interface é responsável pela tradução.
 - Datas públicas usam ISO 8601 em UTC, por exemplo `2026-08-25T08:30:00Z`.
 - Endpoints de consulta de produtos e avaliações são públicos.
@@ -71,6 +73,7 @@ Exemplo de validação:
 | `422 Unprocessable Content` | Dados ou parâmetros não passaram pela validação |
 | `429 Too Many Requests` | Limite temporário de requisições excedido |
 | `500 Internal Server Error` | Falha inesperada do servidor |
+| `503 Service Unavailable` | Dependência necessária, como o banco de dados, está indisponível |
 
 ## Formato de paginação
 
@@ -232,6 +235,30 @@ Respostas:
 - `200 OK`: página de produtos do usuário;
 - `401 Unauthorized`: autenticação ausente, inválida ou expirada;
 - `422 Unprocessable Content`: paginação inválida.
+
+## Verificação de saúde
+
+### Consultar saúde da aplicação
+
+`GET /health`
+
+Endpoint público e operacional, fora do prefixo `/api/v1`.
+
+Verifica:
+
+- disponibilidade da aplicação;
+- conexão com o banco de dados.
+
+Resposta saudável — `200 OK`:
+
+```json
+{
+  "status": "healthy",
+  "database": "available"
+}
+```
+
+Quando a aplicação responde, mas o banco está indisponível, retorna `503 Service Unavailable` usando o envelope padronizado de erros.
 
 ## Produtos
 
