@@ -2,7 +2,7 @@
 
 ## Situação
 
-Planejamento consolidado. Entrega 1 em andamento na branch `feat/estrutura-inicial`: código de estrutura/configuração preparado, com sintaxe conferida; 7 testes locais passaram. O arquivo de testes ainda não foi publicado por bloqueio do limite automático de uso da conexão GitHub. Entregas 2–8 ainda não implementadas. Banco aprovado: PostgreSQL. Não há necessidade de continuar escolhendo isoladamente cada detalhe técnico para iniciar o desenvolvimento.
+Planejamento consolidado. Entrega 1 em andamento na branch `feat/estrutura-inicial`: código de estrutura/configuração preparado, com sintaxe conferida; 7 testes locais passaram. O arquivo de testes ainda não foi publicado por bloqueio do limite automático de uso da conexão GitHub. Entrega 2 concluída localmente e publicada nesta branch: modelos SQLAlchemy, engine/sessão sob demanda e migração `0001_initial`. A aplicação ainda não executou a migração contra um servidor PostgreSQL real. Entregas 3–8 ainda não implementadas. Banco aprovado: PostgreSQL. Não há necessidade de continuar escolhendo isoladamente cada detalhe técnico para iniciar o desenvolvimento.
 
 Referências: [requisitos](requisitos.md), [casos de uso](casos-de-uso.md), [contrato](contrato-api.md), [modelo](modelo-banco.md) e [testes](matriz-testes.md). Ideação é histórico; mudanças posteriores estão refletidas nesses documentos.
 
