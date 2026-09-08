@@ -1,6 +1,6 @@
 # Contrato da API
 
-> Documento vivo. Este contrato será completado antes da implementação.
+> Contrato consolidado para orientar a implementação do MVP. Consulte também o plano de implementação e a matriz de testes.
 
 ## Convenções gerais
 
@@ -132,7 +132,7 @@ Dados de entrada:
 ```json
 {
   "email": "valerio@example.com",
-  "password": "senha-segura"
+  "password": "uma senha longa e memorável"
 }
 ```
 
@@ -226,7 +226,7 @@ Regras:
 
 - resposta paginada, com 20 itens por padrão e máximo de 100;
 - produtos ordenados do cadastro mais recente para o mais antigo;
-- retorna somente produtos ativos cadastrados pelo usuário;
+- retorna somente produtos ativos sob responsabilidade atual do usuário, incluindo os que ele reativou;
 - produtos logicamente excluídos não aparecem;
 - usuário sem produtos ativos recebe `200 OK` com `items: []`.
 
@@ -323,7 +323,7 @@ Regras de quantidade:
 - variante: até 80 caracteres;
 - comentário de avaliação: até 1.000 caracteres.
 
-Os textos aceitam Unicode, inclusive letras acentuadas e nomes como `Açaí`, `Pão de Açúcar` e `Ypê`. Espaços nas extremidades são removidos antes da validação, e valores formados apenas por espaços são inválidos.
+Os textos aceitam Unicode, inclusive letras acentuadas e nomes como `Açaí`, `Pão de Açúcar` e `Ypê`. Espaços nas extremidades são removidos antes da validação. Campos obrigatórios e comentários enviados apenas com espaços são inválidos; variante vazia é normalizada para `null`. Essa normalização não se aplica à senha: seus espaços são preservados.
 
 ### Código de barras e GTIN
 
@@ -385,7 +385,7 @@ Regras:
 - apenas uma categoria pode ser enviada por consulta;
 - buscas por nome e marca ignoram diferenças entre maiúsculas, minúsculas e acentos;
 - a normalização é usada somente para comparação, preservando o texto original na resposta;
-- `barcode` não pode ser combinado com nenhum outro filtro;
+- `barcode` não pode ser combinado com nenhum outro filtro; `page` e `page_size` continuam permitidos;
 - produtos logicamente excluídos nunca aparecem;
 - resultados são ordenados por nome, depois por marca e finalmente por `id`;
 - combinações inválidas, valores controlados inválidos e limites de paginação inválidos retornam `422`.
@@ -399,7 +399,7 @@ GET /products?brand=kibon
 GET /products?category=food
 GET /products?name=arroz&category=food
 GET /products?name=sorvete&brand=kibon
-GET /products?barcode=7891234567890
+GET /products?barcode=7891234567895
 ```
 
 Formato resumido de cada item:
@@ -524,18 +524,22 @@ Dados de entrada:
 
 O sucesso retorna `201 Created` com todos os dados públicos do produto normalizados.
 
-Quando o produto já existe, a resposta `409 Conflict` inclui uma referência ao registro canônico:
+Quando o produto ativo já existe, a resposta `409 Conflict` inclui uma referência ao registro canônico:
 
 ```json
 {
-  "detail": "Este produto já está cadastrado.",
-  "existing_product_id": 42
+  "error": {
+    "code": "product_conflict",
+    "message": "Este produto já está cadastrado.",
+    "details": {"existing_product_id": 42}
+  }
 }
 ```
 
 Respostas:
 
 - `201 Created`: produto criado;
+- `200 OK`: produto excluído reativado conforme as regras de recadastro;
 - `401 Unauthorized`: autenticação ausente, inválida ou expirada;
 - `409 Conflict`: produto duplicado;
 - `422 Unprocessable Content`: dados inválidos.
@@ -728,3 +732,13 @@ Respostas:
 - `401 Unauthorized`: autenticação ausente, inválida ou expirada;
 - `403 Forbidden`: usuário autenticado não é o autor;
 - `404 Not Found`: avaliação inexistente, inclusive após ela já ter sido excluída.
+
+## Precisões para implementação
+
+- `page` e `page_size` são inteiros maiores ou iguais a 1. Listas por data usam o ID decrescente para desempate.
+- Produto inativo é tratado como inexistente também em edição, exclusão, listagem e criação de avaliações.
+- A chave normalizada continua única mesmo quando há GTIN. Se GTIN e chave apontarem para registros distintos, retornar `409` sem mesclar, reativar ou modificar registros automaticamente.
+- Na reativação, `criador_id` passa a representar o responsável atual. A data original de criação é preservada; a atualização registra a reativação.
+- Como convenção técnica, o limite de três casas decimais é verificado na entrada de massa/volume e na medida canônica, sem arredondamento silencioso.
+- O detalhe inclui distribuições de `repurchase_intent`, `quality`, `expectation` e `value_for_money`. Sem avaliações comunitárias, todas as opções retornam zero.
+- O envelope de erro não deve reproduzir senhas, tokens, consultas SQL ou detalhes internos de exceções.
