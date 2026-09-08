@@ -1,0 +1,143 @@
+@startuml
+title Diagrama conceitual de classes — FastAPI Merchant App
+hide methods
+skinparam classAttributeIconSize 0
+
+class Usuario {
+  id: Identificador
+  nome_publico: Texto
+  email: Email
+  senha_hash: Texto
+}
+
+class Produto {
+  id: Identificador
+  nome: Texto
+  marca: Texto
+  variante: Texto [0..1]
+  quantidade: Decimal
+  unidade: UnidadeMedida
+  categoria: CategoriaProduto
+  codigo_barras: Texto [0..1]
+  criado_em: DataHora
+  atualizado_em: DataHora
+  excluido_em: DataHora [0..1]
+}
+
+class Avaliacao {
+  id: Identificador
+  intencao_recompra: IntencaoRecompra
+  qualidade: QualidadePercebida
+  expectativa: AtendimentoExpectativa
+  custo_beneficio: CustoBeneficio
+  comentario: Texto [0..1]
+  criado_em: DataHora
+  atualizado_em: DataHora
+}
+
+class MotivoAvaliacao {
+  id: Identificador
+  aspecto: AspectoProduto
+  percepcao: Percepcao
+}
+
+enum CategoriaProduto {
+  food
+  beverages
+  cleaning
+  personal_hygiene
+  household_utilities
+  other
+}
+
+enum UnidadeMedida {
+  g
+  ml
+  un
+}
+
+enum IntencaoRecompra {
+  yes
+  maybe
+  no
+}
+
+enum QualidadePercebida {
+  low
+  adequate
+  high
+}
+
+enum AtendimentoExpectativa {
+  not_met
+  met
+  exceeded
+}
+
+enum CustoBeneficio {
+  poor
+  fair
+  good
+}
+
+enum AspectoProduto {
+  taste
+  fragrance
+  texture_consistency
+  effectiveness_performance
+  quantity_yield
+  ease_of_use_preparation
+  packaging
+  durability_preservation
+  composition_ingredients
+  safety_tolerance
+  price
+  other
+}
+
+enum Percepcao {
+  positive
+  negative
+}
+
+Usuario "1" -- "0..*" Produto : responsável atual >
+Usuario "1" -- "0..*" Avaliacao : escreve >
+Produto "1" -- "0..*" Avaliacao : recebe >
+Avaliacao "1" *-- "1..*" MotivoAvaliacao : contém >
+
+Produto --> CategoriaProduto
+Produto --> UnidadeMedida
+Avaliacao --> IntencaoRecompra
+Avaliacao --> QualidadePercebida
+Avaliacao --> AtendimentoExpectativa
+Avaliacao --> CustoBeneficio
+MotivoAvaliacao --> AspectoProduto
+MotivoAvaliacao --> Percepcao
+
+note right of Usuario
+  {email único}
+  A senha original nunca é armazenada.
+end note
+
+note right of Produto
+  {codigo_barras único quando informado}
+  Unidade armazenada: g, ml ou un.
+  Entrada aceita também kg e L.
+  Exclusão lógica somente sem avaliações.
+  {nome + marca + variante + quantidade +
+   unidade formam identidade normalizada}
+end note
+
+note bottom of Avaliacao
+  {(usuario, produto) único}
+  Indicadores comunitários são calculados,
+  não armazenados na avaliação.
+end note
+
+note bottom of MotivoAvaliacao
+  {aspecto único dentro da avaliação}
+  Se aspecto = other, comentário é obrigatório.
+  Motivos são excluídos com a avaliação.
+end note
+
+@enduml

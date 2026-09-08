@@ -1,0 +1,9 @@
+[project]
+name = "fastapi-merchant-app"
+version = "1.0.0"
+description = "API de catálogo compartilhado e avaliações de produtos"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
