@@ -1,6 +1,6 @@
 # Matriz mínima de testes do MVP
 
-Estado: T01–T29 já possuem cobertura automatizada unitária, de serviço e HTTP. O contador atômico e a persistência de produtos, avaliações, motivos e consultas comunitárias/pessoais foram validados no PostgreSQL do Supabase com transações revertidas; a restrição UNIQUE e o tratamento das violações esperadas cobrem a defesa contra duplicação. Testes com transações realmente sobrepostas continuam pendentes para a revisão integrada final. Casos com múltiplos valores usam testes parametrizados quando adequado.
+Estado: T01–T33 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 120 testes e ignora somente os dois casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 122. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
 
 | ID | Cobertura | Cenário e resultado esperado |
 |---|---|---|
@@ -45,3 +45,10 @@ Estado: T01–T29 já possuem cobertura automatizada unitária, de serviço e HT
 - Concorrência: requisições/transações realmente sobrepostas, não apenas chamadas sequenciais.
 - Segurança: relógio controlável para expiração/limitação e inspeção de respostas/logs sem dados reais.
 - Registrar resultado por ID ao implementar. Diagramas e documentação não substituem os testes executáveis.
+
+## Execução da revisão integrada
+
+- `tests/test_end_to_end.py`: jornada cadastro → login/JWT → produto → avaliação → consultas pública e privada → edição → exclusões.
+- `tests/test_operations.py`: saúde 200/503, erro 500 seguro e contrato OpenAPI com Bearer obrigatório/opcional.
+- `tests/test_postgres_concurrency.py`: unicidade sob commits simultâneos e corrida avaliação versus exclusão usando sessões PostgreSQL independentes.
+- `.github/workflows/tests.yml`: Python 3.12, PostgreSQL 17, verificação de dependências e suíte completa.

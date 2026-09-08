@@ -3,12 +3,16 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import logging
 from typing import Any
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
+
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(slots=True)
@@ -110,4 +114,25 @@ def register_exception_handlers(application: FastAPI) -> None:
         return JSONResponse(
             status_code=exception.status_code,
             content={"error": {"code": code, "message": message, "details": None}},
+        )
+
+    @application.exception_handler(Exception)
+    async def unexpected_error_handler(
+        request: Request, exception: Exception
+    ) -> JSONResponse:
+        logger.exception(
+            "Erro inesperado ao processar %s %s",
+            request.method,
+            request.url.path,
+            exc_info=exception,
+        )
+        return JSONResponse(
+            status_code=500,
+            content={
+                "error": {
+                    "code": "internal_error",
+                    "message": "Ocorreu um erro interno inesperado.",
+                    "details": None,
+                }
+            },
         )

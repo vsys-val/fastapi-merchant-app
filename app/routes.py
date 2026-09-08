@@ -26,6 +26,7 @@ from app.schemas import (
     LoginInput,
     Category,
     CommunityReviewPage,
+    ErrorResponse,
     OwnProductPage,
     OwnReviewPage,
     ProductCreate,
@@ -42,7 +43,13 @@ from app.schemas import (
 )
 
 
-router = APIRouter(prefix="/api/v1")
+router = APIRouter(
+    prefix="/api/v1",
+    tags=["API"],
+    responses={
+        500: {"model": ErrorResponse, "description": "Falha interna inesperada."},
+    },
+)
 
 
 @router.post("/users", response_model=UserPublic, status_code=status.HTTP_201_CREATED)

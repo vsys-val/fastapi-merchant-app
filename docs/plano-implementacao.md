@@ -2,7 +2,7 @@
 
 ## Situação
 
-Planejamento consolidado. Entregas 1–7 implementadas e publicadas na branch `feat/estrutura-inicial`: fábrica FastAPI, configuração protegida, SQLAlchemy/Alembic, normalizadores, schemas, envelope de erros, autenticação, mutações de produtos, avaliações transacionais, pesquisa, indicadores comunitários e listas pessoais. A criação detecta GTIN/identidade duplicados, a edição aplica autoria e bloqueio por avaliação de terceiros, e a exclusão lógica permite reativação controlada. O Supabase de desenvolvimento está em `0004_login_rate_limits`; as seis tabelas do schema público têm RLS. A suíte atual possui 115 testes aprovados; os fluxos de produtos, avaliações e consultas foram validados no PostgreSQL com rollback, incluindo unicidade, substituição de motivos, exclusão em cascata, filtros comunitários e listas pessoais. Antes de implantação pública, a aplicação ainda deverá receber um papel PostgreSQL próprio com privilégios mínimos. A entrega 8 ainda não foi implementada.
+Planejamento consolidado. Entregas 1–8 implementadas na branch `feat/estrutura-inicial`: fábrica FastAPI, configuração protegida, SQLAlchemy/Alembic, normalizadores, schemas, envelope seguro de erros, autenticação, produtos, avaliações transacionais, consultas, `/health`, OpenAPI e CI. O Supabase de desenvolvimento está em `0004_login_rate_limits`; as seis tabelas do schema público têm RLS. A suíte possui 120 testes locais aprovados e dois testes de concorrência reservados ao PostgreSQL 17 efêmero do GitHub Actions, totalizando 122. O fluxo cadastro → login → produto → avaliação → consulta está automatizado. Antes de implantação pública, a aplicação ainda deverá receber HTTPS, segredos próprios do ambiente e um papel PostgreSQL com privilégios mínimos.
 
 Referências: [requisitos](requisitos.md), [casos de uso](casos-de-uso.md), [contrato](contrato-api.md), [modelo](modelo-banco.md) e [testes](matriz-testes.md). Ideação é histórico; mudanças posteriores estão refletidas nesses documentos.
 
@@ -36,4 +36,4 @@ Não são funcionalidades novas: o recadastro troca o responsável atual e prese
 
 ## Critério de encerramento
 
-Cada entrega inclui implementação e testes pertinentes, sem postergar toda a validação para o fim. O MVP só estará concluído após aprovação da matriz mínima, documentação executável e demonstração do fluxo cadastro → login → produto → avaliação → consulta. Este documento organiza o trabalho; não afirma que esses testes já foram executados.
+Cada entrega inclui implementação e testes pertinentes, sem postergar toda a validação para o fim. O MVP está concluído quanto ao escopo planejado: a matriz possui cobertura executável, a documentação reproduz a execução e o fluxo cadastro → login → produto → avaliação → consulta foi automatizado. Implantação pública e interface continuam fora deste plano.

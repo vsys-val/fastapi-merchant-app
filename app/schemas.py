@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from decimal import Decimal
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import (
     BaseModel,
@@ -384,3 +384,18 @@ class OwnProductPage(BaseModel):
     page: int
     page_size: int
     total: int
+
+
+class HealthResponse(BaseModel):
+    status: Literal["healthy"] = "healthy"
+    database: Literal["available"] = "available"
+
+
+class ErrorBody(BaseModel):
+    code: str
+    message: str
+    details: Any = None
+
+
+class ErrorResponse(BaseModel):
+    error: ErrorBody

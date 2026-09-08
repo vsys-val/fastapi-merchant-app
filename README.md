@@ -4,7 +4,7 @@ API planejada para catálogo compartilhado de produtos e avaliações de consumi
 
 ## Estado
 
-Planejamento consolidado na branch `docs/casos-de-uso`. Na branch `feat/estrutura-inicial`, as entregas 1–7 estão implementadas: estrutura/configuração, persistência PostgreSQL, validação, autenticação própria, produtos e avaliações. Cadastro, login, JWT, `/users/me`, limitação compartilhada de tentativas e as mutações de produtos, avaliações e motivos, além de pesquisa, detalhes, indicadores comunitários e listas pessoais, estão disponíveis. O banco de desenvolvimento está hospedado no Supabase e migrado até `0004_login_rate_limits`.
+Planejamento consolidado na branch `docs/casos-de-uso`. Na branch `feat/estrutura-inicial`, as entregas 1–8 do MVP estão implementadas: estrutura/configuração, persistência PostgreSQL, validação, autenticação própria, produtos, avaliações, consultas, observabilidade básica e automação de testes. O banco de desenvolvimento está hospedado no Supabase e migrado até `0004_login_rate_limits`.
 
 ## Documentação
 
@@ -18,7 +18,7 @@ Planejamento consolidado na branch `docs/casos-de-uso`. Na branch `feat/estrutur
 - [Matriz mínima de testes](docs/matriz-testes.md)
 - [Plano de implementação](docs/plano-implementacao.md)
 
-## Executar esta primeira etapa
+## Executar o MVP
 
 Use Python 3.12. Execute os comandos na raiz do repositório, na branch `feat/estrutura-inicial`.
 
@@ -54,7 +54,7 @@ Preencha `JWT_SECRET` antes de iniciar:
 .venv/bin/python -m uvicorn app.main:create_app --factory --reload
 ```
 
-Acesse http://127.0.0.1:8000/docs. A documentação interativa expõe autenticação e mutações de produtos. A raiz e `/health` ainda não possuem endpoints. A URL do banco é validada sintaticamente. Para criar ou atualizar as tabelas, com o PostgreSQL em execução, use: `./.venv/bin/python -m alembic upgrade head` (PowerShell: `.\\.venv\\Scripts\\python.exe -m alembic upgrade head`). Para conferir a revisão sem conectar: `./.venv/bin/python -m alembic heads`.
+Acesse http://127.0.0.1:8000/docs. A documentação interativa expõe o contrato completo e a autenticação Bearer. `GET /health` verifica a aplicação e a conexão com o banco; a raiz não possui endpoint. A URL do banco é validada sintaticamente. Para criar ou atualizar as tabelas, com o PostgreSQL em execução, use: `./.venv/bin/python -m alembic upgrade head` (PowerShell: `.\\.venv\\Scripts\\python.exe -m alembic upgrade head`). Para conferir a revisão sem conectar: `./.venv/bin/python -m alembic heads`.
 
 As URLs de banco destinam-se ao ambiente de desenvolvimento. A chave JWT é obrigatória para login e emissão de tokens e deve ser gerada aleatoriamente; comprimento sozinho não garante segurança.
 
@@ -79,11 +79,11 @@ As migrações ativam RLS nas quatro tabelas de negócio, na tabela interna `lim
 
 Em Linux/macOS: `.venv/bin/python -m pytest -q`.
 
-A suíte cobre cadastro, autenticação, privacidade, limites de tentativa, mutações e consultas, incluindo filtros, paginação, indicadores, listas pessoais, normalização, permissões, conflitos, atomicidade, exclusão lógica, reativação e cascata de motivos. Os testes usam valores fictícios e não gravam dados permanentes.
+A suíte cobre cadastro, autenticação, privacidade, limites de tentativa, mutações, consultas, saúde, OpenAPI e uma jornada integrada completa. Dois testes adicionais executam transações realmente concorrentes no PostgreSQL 17 efêmero do GitHub Actions. Os testes usam valores fictícios e não gravam dados permanentes.
 
 ### Validação desta entrega
 
-Sintaxe Python conferida, dependências sem conflitos e 115 testes aprovados. Os fluxos de produtos, avaliações e consultas foram validados no Supabase com transações revertidas, incluindo unicidade, troca integral de motivos, exclusão em cascata, filtros comunitários e listas pessoais. Nenhum dado de teste permaneceu. As faixas de dependências continuam iniciais, sem lock de versões; esse endurecimento será feito antes da implantação.
+Sintaxe Python conferida, dependências diretas fixadas, `pip check` sem conflitos e 120 testes locais aprovados; dois testes PostgreSQL adicionais são executados no CI, totalizando 122. Os fluxos foram validados no Supabase com transações revertidas e a jornada HTTP completa foi automatizada. Nenhum dado de teste permaneceu.
 
 ## Como os arquivos se conectam
 
@@ -103,10 +103,12 @@ Sintaxe Python conferida, dependências sem conflitos e 115 testes aprovados. Os
 | app/products.py | Implementa criação, edição, exclusão lógica e reativação de produtos |
 | app/reviews.py | Implementa criação, edição e exclusão transacional de avaliações e motivos |
 | app/routes.py | Expõe as rotas funcionais sob `/api/v1` |
+| app/health.py | Verifica a aplicação e a conexão com o banco em `/health` |
+| .github/workflows/tests.yml | Executa a suíte com PostgreSQL 17 efêmero no GitHub Actions |
 | alembic/ | Mantém as migrações versionadas do banco |
 | .env.example | Documenta as variáveis necessárias; copiar para .env |
-| requirements.txt | Dependências da aplicação |
-| requirements-dev.txt | Inclui também as ferramentas de teste |
+| requirements.txt | Dependências diretas fixadas da aplicação |
+| requirements-dev.txt | Dependências de teste fixadas |
 | tests/test_bootstrap.py | Verifica a inicialização e a configuração |
 | pyproject.toml | Metadados e configuração do pytest |
 
@@ -114,5 +116,5 @@ Fluxo de inicialização: Uvicorn chama `create_app`, a configuração é valida
 
 Referências técnicas: [primeiros passos do FastAPI](https://fastapi.tiangolo.com/tutorial/first-steps/), [execução com Uvicorn](https://fastapi.tiangolo.com/deployment/manually/) e [configuração com Pydantic Settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
 
-Banco Supabase de desenvolvimento migrado até `0004_login_rate_limits`. RLS, privilégios, contador de login e persistência de produtos e avaliações foram auditados; nenhum dado de teste permaneceu no banco. Próximo passo: implementar `/health`, revisar a OpenAPI e automatizar a validação integrada final.
+Banco Supabase de desenvolvimento migrado até `0004_login_rate_limits`. RLS, privilégios, saúde, contador de login e persistência foram auditados; nenhum dado de teste permaneceu. O backend do MVP está concluído. Antes de uma implantação pública, ainda é necessário configurar HTTPS, segredos do ambiente e um papel PostgreSQL próprio com privilégios mínimos.
 

@@ -31,7 +31,11 @@ from app.security import (
 )
 
 
-bearer_scheme = HTTPBearer(auto_error=False)
+bearer_scheme = HTTPBearer(
+    auto_error=False,
+    scheme_name="BearerAuth",
+    description="JWT emitido por POST /api/v1/auth/login.",
+)
 
 
 def _authentication_error() -> ApiError:
