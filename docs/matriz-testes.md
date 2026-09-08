@@ -1,6 +1,6 @@
 # Matriz mínima de testes do MVP
 
-Estado: T01–T22 já possuem cobertura automatizada unitária, de serviço e HTTP. O contador atômico e a persistência de produtos, avaliações e motivos foram validados no PostgreSQL do Supabase com transações revertidas; a restrição UNIQUE e o tratamento das violações esperadas cobrem a defesa contra duplicação. Testes com transações realmente sobrepostas continuam pendentes para a revisão integrada final. Casos com múltiplos valores usam testes parametrizados quando adequado.
+Estado: T01–T29 já possuem cobertura automatizada unitária, de serviço e HTTP. O contador atômico e a persistência de produtos, avaliações, motivos e consultas comunitárias/pessoais foram validados no PostgreSQL do Supabase com transações revertidas; a restrição UNIQUE e o tratamento das violações esperadas cobrem a defesa contra duplicação. Testes com transações realmente sobrepostas continuam pendentes para a revisão integrada final. Casos com múltiplos valores usam testes parametrizados quando adequado.
 
 | ID | Cobertura | Cenário e resultado esperado |
 |---|---|---|

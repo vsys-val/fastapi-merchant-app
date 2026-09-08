@@ -101,12 +101,12 @@ def login(payload: LoginInput, request: Request, session: Session) -> TokenRespo
     return TokenResponse(access_token=create_access_token(user.id, secret))
 
 
-def get_current_user(
+def _resolve_authenticated_user(
     request: Request,
-    credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme),
-    session: Session = Depends(get_db),
+    credentials: HTTPAuthorizationCredentials,
+    session: Session,
 ) -> User:
-    if credentials is None or credentials.scheme.casefold() != "bearer":
+    if credentials.scheme.casefold() != "bearer":
         raise _authentication_error()
     try:
         user_id = decode_access_token(
@@ -119,6 +119,28 @@ def get_current_user(
     if user is None:
         raise _authentication_error()
     return user
+
+
+def get_optional_user(
+    request: Request,
+    credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme),
+    session: Session = Depends(get_db),
+) -> User | None:
+    if credentials is None:
+        if request.headers.get("Authorization"):
+            raise _authentication_error()
+        return None
+    return _resolve_authenticated_user(request, credentials, session)
+
+
+def get_current_user(
+    request: Request,
+    credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme),
+    session: Session = Depends(get_db),
+) -> User:
+    if credentials is None:
+        raise _authentication_error()
+    return _resolve_authenticated_user(request, credentials, session)
 
 
 def current_user_response(user: User = Depends(get_current_user)) -> UserPublic:

@@ -4,7 +4,7 @@ API planejada para catálogo compartilhado de produtos e avaliações de consumi
 
 ## Estado
 
-Planejamento consolidado na branch `docs/casos-de-uso`. Na branch `feat/estrutura-inicial`, as entregas 1–6 estão implementadas: estrutura/configuração, persistência PostgreSQL, validação, autenticação própria, produtos e avaliações. Cadastro, login, JWT, `/users/me`, limitação compartilhada de tentativas e as mutações de produtos, avaliações e motivos estão disponíveis. O banco de desenvolvimento está hospedado no Supabase e migrado até `0004_login_rate_limits`.
+Planejamento consolidado na branch `docs/casos-de-uso`. Na branch `feat/estrutura-inicial`, as entregas 1–7 estão implementadas: estrutura/configuração, persistência PostgreSQL, validação, autenticação própria, produtos e avaliações. Cadastro, login, JWT, `/users/me`, limitação compartilhada de tentativas e as mutações de produtos, avaliações e motivos, além de pesquisa, detalhes, indicadores comunitários e listas pessoais, estão disponíveis. O banco de desenvolvimento está hospedado no Supabase e migrado até `0004_login_rate_limits`.
 
 ## Documentação
 
@@ -79,11 +79,11 @@ As migrações ativam RLS nas quatro tabelas de negócio, na tabela interna `lim
 
 Em Linux/macOS: `.venv/bin/python -m pytest -q`.
 
-A suíte cobre cadastro, autenticação, privacidade, limites de tentativa e as mutações de produtos e avaliações, incluindo normalização, permissões, conflitos, atomicidade, exclusão lógica, reativação e cascata de motivos. Os testes usam valores fictícios e não gravam dados permanentes.
+A suíte cobre cadastro, autenticação, privacidade, limites de tentativa, mutações e consultas, incluindo filtros, paginação, indicadores, listas pessoais, normalização, permissões, conflitos, atomicidade, exclusão lógica, reativação e cascata de motivos. Os testes usam valores fictícios e não gravam dados permanentes.
 
 ### Validação desta entrega
 
-Sintaxe Python conferida, dependências sem conflitos e 103 testes aprovados. Os fluxos de produtos e avaliações foram validados no Supabase com transações revertidas, incluindo unicidade, troca integral de motivos e exclusão em cascata. Nenhum dado de teste permaneceu. As faixas de dependências continuam iniciais, sem lock de versões; esse endurecimento será feito antes da implantação.
+Sintaxe Python conferida, dependências sem conflitos e 115 testes aprovados. Os fluxos de produtos, avaliações e consultas foram validados no Supabase com transações revertidas, incluindo unicidade, troca integral de motivos, exclusão em cascata, filtros comunitários e listas pessoais. Nenhum dado de teste permaneceu. As faixas de dependências continuam iniciais, sem lock de versões; esse endurecimento será feito antes da implantação.
 
 ## Como os arquivos se conectam
 
@@ -99,6 +99,7 @@ Sintaxe Python conferida, dependências sem conflitos e 103 testes aprovados. Os
 | app/security.py | Aplica política e hash Argon2id de senha e assina/valida JWT |
 | app/auth.py | Implementa cadastro, login e resolução do usuário autenticado |
 | app/rate_limit.py | Mantém limites atômicos de login no PostgreSQL |
+| app/catalog.py | Implementa pesquisa, paginação, detalhes, indicadores e listas pessoais |
 | app/products.py | Implementa criação, edição, exclusão lógica e reativação de produtos |
 | app/reviews.py | Implementa criação, edição e exclusão transacional de avaliações e motivos |
 | app/routes.py | Expõe as rotas funcionais sob `/api/v1` |
@@ -113,5 +114,5 @@ Fluxo de inicialização: Uvicorn chama `create_app`, a configuração é valida
 
 Referências técnicas: [primeiros passos do FastAPI](https://fastapi.tiangolo.com/tutorial/first-steps/), [execução com Uvicorn](https://fastapi.tiangolo.com/deployment/manually/) e [configuração com Pydantic Settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
 
-Banco Supabase de desenvolvimento migrado até `0004_login_rate_limits`. RLS, privilégios, contador de login e persistência de produtos e avaliações foram auditados; nenhum dado de teste permaneceu no banco. Próximo passo: implementar pesquisa, detalhe do produto, comunidade e listas pessoais.
+Banco Supabase de desenvolvimento migrado até `0004_login_rate_limits`. RLS, privilégios, contador de login e persistência de produtos e avaliações foram auditados; nenhum dado de teste permaneceu no banco. Próximo passo: implementar `/health`, revisar a OpenAPI e automatizar a validação integrada final.
 

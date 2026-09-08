@@ -303,3 +303,84 @@ class ReviewPublic(BaseModel):
     comment: str | None
     created_at: datetime
     updated_at: datetime
+
+
+class RepurchaseDistribution(BaseModel):
+    yes: float
+    maybe: float
+    no: float
+
+
+class QualityDistribution(BaseModel):
+    high: float
+    adequate: float
+    low: float
+
+
+class ExpectationDistribution(BaseModel):
+    exceeded: float
+    met: float
+    not_met: float
+
+
+class ValueForMoneyDistribution(BaseModel):
+    good: float
+    fair: float
+    poor: float
+
+
+class ProductListCommunitySummary(BaseModel):
+    total_reviews: int
+    repurchase_intent: RepurchaseDistribution
+
+
+class ProductCommunitySummary(ProductListCommunitySummary):
+    quality: QualityDistribution
+    expectation: ExpectationDistribution
+    value_for_money: ValueForMoneyDistribution
+
+
+class ProductListItem(ProductPublic):
+    community_summary: ProductListCommunitySummary
+    your_repurchase_intent: RepurchaseIntent | None
+
+
+class ProductDetail(ProductPublic):
+    community_summary: ProductCommunitySummary
+    your_review: ReviewPublic | None
+
+
+class CommunityReview(ReviewPublic):
+    author_name: str
+
+
+class OwnReview(ReviewPublic):
+    product: ProductPublic
+
+
+class ProductPage(BaseModel):
+    items: list[ProductListItem]
+    page: int
+    page_size: int
+    total: int
+
+
+class CommunityReviewPage(BaseModel):
+    items: list[CommunityReview]
+    page: int
+    page_size: int
+    total: int
+
+
+class OwnReviewPage(BaseModel):
+    items: list[OwnReview]
+    page: int
+    page_size: int
+    total: int
+
+
+class OwnProductPage(BaseModel):
+    items: list[ProductPublic]
+    page: int
+    page_size: int
+    total: int
