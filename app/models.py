@@ -46,6 +46,7 @@ class Product(Base):
             "'household_utilities', 'other')",
             name="ck_produtos_categoria",
         ),
+        Index("ix_produtos_criador_id", "criador_id"),
         Index("ix_produtos_nome", "nome"),
         Index("ix_produtos_marca", "marca"),
     )
