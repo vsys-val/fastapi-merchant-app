@@ -70,7 +70,7 @@ Quando publicado, o arquivo de testes cobrirá inicialização, ausência e vali
 
 ### Validação desta entrega
 
-Sintaxe Python e TOML conferida. A instalação de dependências foi bloqueada pela rede do ambiente de desenvolvimento do assistente; os testes automatizados ainda não foram executados. As faixas de dependências são iniciais, sem lock de versões. Concluir instalação e testes antes de considerar a entrega 1 aprovada.
+Sintaxe Python e TOML conferida. As dependências foram instaladas no ambiente local e os 7 testes de inicialização passaram. O arquivo de testes ainda não foi publicado na branch porque a conexão GitHub recusou essa operação por limite automático de uso. As faixas de dependências são iniciais, sem lock de versões. Concluir instalação e testes antes de considerar a entrega 1 aprovada.
 
 ## Como os arquivos se conectam
 
