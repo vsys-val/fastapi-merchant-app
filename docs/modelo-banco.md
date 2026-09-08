@@ -9,7 +9,7 @@
 - Produtos usam exclusão lógica; contas não possuem exclusão no escopo inicial.
 - Indicadores comunitários são calculados sob demanda e não são armazenados.
 - RLS habilitado nas quatro tabelas de negócio, sem políticas públicas; clientes acessam os dados pela API FastAPI.
-- A tabela técnica `alembic_version` também usa RLS e não concede privilégios a `anon` ou `authenticated`.
+- As tabelas internas `alembic_version` e `limites_login` também usam RLS e não concedem privilégios a `anon` ou `authenticated`.
 - A conexão de migração permanece privilegiada. Antes de implantação pública, a conexão de execução da API deverá usar um papel PostgreSQL próprio e limitado.
 - Quantidades equivalentes são normalizadas para unidades-base antes da geração da chave de identidade:
   - massa em `g`;
@@ -24,6 +24,17 @@
 | `nome_publico` | TEXT | não | pode se repetir |
 | `email` | TEXT | não | único e normalizado antes de salvar |
 | `senha_hash` | TEXT | não | nunca armazenar a senha original |
+
+## Tabela `limites_login`
+
+| Coluna | Tipo conceitual | Nulo | Regras |
+|---|---|---:|---|
+| `escopo` | TEXT | não | `account` ou `ip`; parte da chave primária |
+| `chave_hash` | CHAR(64) | não | HMAC-SHA-256 do identificador; parte da chave primária |
+| `tentativas` | INTEGER | não | contador positivo atualizado atomicamente |
+| `janela_iniciada_em` | TIMESTAMPTZ | não | início da janela temporária vigente |
+
+A tabela não armazena e-mail nem endereço IP em texto aberto. O `UPSERT` reinicia uma janela expirada ou incrementa a vigente em uma única instrução, evitando perda de contagem entre workers concorrentes.
 
 ## Tabela `produtos`
 

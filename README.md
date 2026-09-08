@@ -4,7 +4,7 @@ API planejada para catálogo compartilhado de produtos e avaliações de consumi
 
 ## Estado
 
-Planejamento consolidado na branch `docs/casos-de-uso`. Na branch `feat/estrutura-inicial`, as entregas de estrutura/configuração e persistência PostgreSQL estão implementadas e publicadas. A base de normalização, schemas de entrada e envelope padronizado de erros também está disponível. O banco de desenvolvimento está hospedado no Supabase e migrado até `0003_secure_alembic`.
+Planejamento consolidado na branch `docs/casos-de-uso`. Na branch `feat/estrutura-inicial`, as entregas 1–4 estão implementadas: estrutura/configuração, persistência PostgreSQL, validação e autenticação própria da API. Cadastro, login, JWT, `/users/me` e limitação compartilhada de tentativas estão disponíveis. O banco de desenvolvimento está hospedado no Supabase e migrado até `0004_login_rate_limits`.
 
 ## Documentação
 
@@ -69,7 +69,7 @@ O Supabase fornece o PostgreSQL hospedado; a aplicação continua acessando o ba
 5. Guarde as URLs apenas no `.env` ou em segredos do ambiente. Não envie a senha pelo chat nem faça commit do arquivo.
 6. Execute `.\\.venv\\Scripts\\python.exe -m alembic upgrade head` no PowerShell.
 
-As migrações ativam RLS nas quatro tabelas de negócio e na tabela técnica `alembic_version`. Não existem políticas para os papéis públicos do Supabase; além disso, `anon` e `authenticated` não possuem privilégios sobre `alembic_version`. O acesso de usuários continuará passando pelos endpoints e pelo JWT da nossa API.
+As migrações ativam RLS nas quatro tabelas de negócio, na tabela interna `limites_login` e na tabela técnica `alembic_version`. Não existem políticas para os papéis públicos do Supabase; `anon` e `authenticated` também não possuem privilégios sobre as duas tabelas internas. O acesso de usuários passa pelos endpoints e pelo JWT da nossa API.
 
 ### Testes
 
@@ -79,11 +79,11 @@ As migrações ativam RLS nas quatro tabelas de negócio e na tabela técnica `a
 
 Em Linux/macOS: `.venv/bin/python -m pytest -q`.
 
-A suíte cobre inicialização, configuração, proteção de segredos, normalização de unidades, precisão decimal, GTIN, chave de identidade, semântica de PATCH e envelope de erros. Os testes usam valores fictícios e não gravam dados permanentes.
+A suíte cobre também cadastro, normalização de e-mail, política e hash Argon2id de senha, JWT, autenticação Bearer, privacidade e limites de tentativa. Os testes usam valores fictícios e não gravam dados permanentes.
 
 ### Validação desta entrega
 
-Sintaxe Python conferida, dependências sem conflitos e 36 testes aprovados. A migração foi validada em SQL offline e no Supabase. As faixas de dependências continuam iniciais, sem lock de versões; esse endurecimento será feito antes da implantação.
+Sintaxe Python conferida, dependências sem conflitos e 68 testes aprovados. A migração `0004_login_rate_limits` foi validada em SQL offline e no Supabase com teste transacional revertido. As faixas de dependências continuam iniciais, sem lock de versões; esse endurecimento será feito antes da implantação.
 
 ## Como os arquivos se conectam
 
@@ -96,6 +96,10 @@ Sintaxe Python conferida, dependências sem conflitos e 36 testes aprovados. A m
 | app/validation.py | Normaliza textos, medidas, GTIN e chaves de identidade |
 | app/schemas.py | Define e valida os corpos de criação e PATCH |
 | app/errors.py | Padroniza o envelope público de erros |
+| app/security.py | Aplica política e hash Argon2id de senha e assina/valida JWT |
+| app/auth.py | Implementa cadastro, login e resolução do usuário autenticado |
+| app/rate_limit.py | Mantém limites atômicos de login no PostgreSQL |
+| app/routes.py | Expõe as rotas funcionais sob `/api/v1` |
 | alembic/ | Mantém as migrações versionadas do banco |
 | .env.example | Documenta as variáveis necessárias; copiar para .env |
 | requirements.txt | Dependências da aplicação |
@@ -107,5 +111,5 @@ Fluxo de inicialização: Uvicorn chama `create_app`, a configuração é valida
 
 Referências técnicas: [primeiros passos do FastAPI](https://fastapi.tiangolo.com/tutorial/first-steps/), [execução com Uvicorn](https://fastapi.tiangolo.com/deployment/manually/) e [configuração com Pydantic Settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
 
-Banco Supabase de desenvolvimento migrado até `0003_secure_alembic`. RLS e privilégios da tabela técnica foram auditados, e a conexão de migração continuou funcional. Próximo passo: conectar repositórios e endpoints aos modelos, começando pelo cadastro e autenticação.
+Banco Supabase de desenvolvimento migrado até `0004_login_rate_limits`. RLS, privilégios e comportamento atômico do contador foram auditados; nenhum dado de teste permaneceu no banco. Próximo passo: implementar criação, edição, exclusão lógica e reativação de produtos.
 

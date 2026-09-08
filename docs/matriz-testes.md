@@ -1,6 +1,6 @@
 # Matriz mínima de testes do MVP
 
-Estado: cenários planejados, ainda não executados. Casos com múltiplos valores devem virar testes parametrizados. Integração usa PostgreSQL isolado.
+Estado: T01–T07 já possuem cobertura automatizada unitária, de serviço e HTTP; o contador atômico foi validado no PostgreSQL do Supabase com transação revertida. Os cenários completos de integração e concorrência continuam pendentes para a revisão final. Casos com múltiplos valores usam testes parametrizados quando adequado.
 
 | ID | Cobertura | Cenário e resultado esperado |
 |---|---|---|
