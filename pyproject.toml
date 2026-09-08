@@ -1,1 +1,9 @@
-[project]\nname = "fastapi-merchant-app"\nversion = "0.1.0"\ndescription = "API de catálogo compartilhado e avaliações de produtos"\nrequires-python = ">=3.12"\n\n[tool.pytest.ini_options]\ntestpaths = ["tests"]\npythonpath = ["."]\n
+[project]
+name = "fastapi-merchant-app"
+version = "0.1.0"
+description = "API de catálogo compartilhado e avaliações de produtos"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
