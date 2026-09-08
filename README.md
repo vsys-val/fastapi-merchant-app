@@ -4,7 +4,7 @@ API planejada para catálogo compartilhado de produtos e avaliações de consumi
 
 ## Estado
 
-Planejamento consolidado na branch `docs/casos-de-uso`. Estrutura inicial em `feat/estrutura-inicial`: fábrica da aplicação FastAPI, configuração por ambiente e testes de inicialização. Banco definido: PostgreSQL; conexão e migrações ainda não implementadas.
+Planejamento consolidado na branch `docs/casos-de-uso`. Estrutura inicial em `feat/estrutura-inicial`: fábrica da aplicação FastAPI e configuração por ambiente. Os testes de inicialização foram preparados localmente e passaram; a publicação do arquivo de testes foi bloqueada pelo limite automático de uso da conexão GitHub. Banco definido: PostgreSQL; conexão e migrações ainda não implementadas.
 
 ## Documentação
 
@@ -66,7 +66,7 @@ O exemplo de DATABASE_URL é somente para desenvolvimento e será ajustado à in
 
 Em Linux/macOS: `.venv/bin/python -m pytest -q`.
 
-Os testes cobrem inicialização, ausência e validade de configuração, prioridade das variáveis de ambiente e ausência de segredos na mensagem de erro/representação. Usam valores fictícios, diretório temporário e nenhum banco.
+Quando publicado, o arquivo de testes cobrirá inicialização, ausência e validade de configuração, prioridade das variáveis de ambiente e ausência de segredos na mensagem de erro/representação. A execução local atual passou em 7 cenários; o arquivo ainda precisa ser adicionado à branch. Usam valores fictícios, diretório temporário e nenhum banco.
 
 ### Validação desta entrega
 
