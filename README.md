@@ -54,7 +54,7 @@ Preencha `JWT_SECRET` antes de iniciar:
 .venv/bin/python -m uvicorn app.main:create_app --factory --reload
 ```
 
-Acesse http://127.0.0.1:8000/docs. Nesta etapa, a documentação abre sem operações de negócio. A raiz e `/health` ainda não possuem endpoints. A URL do banco é validada sintaticamente, mas nenhuma conexão é aberta e nenhuma tabela é criada.
+Acesse http://127.0.0.1:8000/docs. Nesta etapa, a documentação abre sem operações de negócio. A raiz e `/health` ainda não possuem endpoints. A URL do banco é validada sintaticamente. Para criar ou atualizar as tabelas, com o PostgreSQL em execução, use: `./.venv/bin/python -m alembic upgrade head` (PowerShell: `.\\.venv\\Scripts\\python.exe -m alembic upgrade head`). Para conferir a revisão sem conectar: `./.venv/bin/python -m alembic heads`.
 
 O exemplo de DATABASE_URL é somente para desenvolvimento e será ajustado à instância PostgreSQL na próxima entrega. A chave JWT já é exigida para preparar a configuração, mas login e emissão de tokens ainda não existem. Uma chave longa deve ser gerada aleatoriamente: comprimento sozinho não garante segurança.
 
@@ -78,6 +78,9 @@ Sintaxe Python e TOML conferida. A instalação de dependências foi bloqueada p
 |---|---|
 | app/main.py | Cria a aplicação que o servidor Uvicorn recebe |
 | app/config.py | Lê e valida a configuração local/ambiente; protege a exibição de segredos |
+| app/database.py | Cria engine e sessões PostgreSQL sob demanda |
+| app/models.py | Mapeia as quatro tabelas e suas restrições |
+| alembic/ | Mantém a migração inicial do banco |
 | .env.example | Documenta as variáveis necessárias; copiar para .env |
 | requirements.txt | Dependências da aplicação |
 | requirements-dev.txt | Inclui também as ferramentas de teste |
@@ -88,5 +91,5 @@ Fluxo de inicialização: Uvicorn chama `create_app`, a configuração é valida
 
 Referências técnicas: [primeiros passos do FastAPI](https://fastapi.tiangolo.com/tutorial/first-steps/), [execução com Uvicorn](https://fastapi.tiangolo.com/deployment/manually/) e [configuração com Pydantic Settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
 
-Próximo passo: concluir a validação da base e implementar conexão PostgreSQL, modelos e migração inicial.
+Próximo passo: conectar os repositórios e endpoints aos modelos, começando pelo cadastro e autenticação.
 
