@@ -17,6 +17,7 @@ class ApiError(Exception):
     code: str
     message: str
     details: Any = None
+    headers: dict[str, str] | None = None
 
 
 def _field_path(location: tuple[Any, ...]) -> str:
@@ -86,6 +87,7 @@ def register_exception_handlers(application: FastAPI) -> None:
     async def api_error_handler(_request: Request, exception: ApiError) -> JSONResponse:
         return JSONResponse(
             status_code=exception.status_code,
+            headers=exception.headers,
             content={
                 "error": {
                     "code": exception.code,

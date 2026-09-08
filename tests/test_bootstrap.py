@@ -27,7 +27,8 @@ def test_application_serves_documentation_without_exposing_configuration(monkeyp
         assert schema.status_code == 200
         assert schema.json()["info"]["title"] == "FastAPI Merchant App"
         assert "test-only-" not in schema.text
-        assert "password" not in schema.text
+        assert "password_hash" not in schema.text
+        assert "senha_hash" not in schema.text
 
 
 def test_missing_settings_prevent_startup():

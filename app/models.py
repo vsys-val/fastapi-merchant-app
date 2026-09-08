@@ -36,6 +36,23 @@ class User(Base):
     reviews: Mapped[List["Review"]] = relationship(back_populates="author")
 
 
+class LoginAttempt(Base):
+    """Contador compartilhado entre workers para limitar tentativas de login."""
+
+    __tablename__ = "limites_login"
+    __table_args__ = (
+        CheckConstraint("escopo IN ('account', 'ip')", name="ck_limites_login_escopo"),
+        CheckConstraint("tentativas > 0", name="ck_limites_login_tentativas_positivas"),
+    )
+
+    scope: Mapped[str] = mapped_column("escopo", String(8), primary_key=True)
+    key_hash: Mapped[str] = mapped_column("chave_hash", String(64), primary_key=True)
+    attempts: Mapped[int] = mapped_column("tentativas", Integer, nullable=False)
+    window_started_at: Mapped[datetime] = mapped_column(
+        "janela_iniciada_em", DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+
 class Product(Base):
     __tablename__ = "produtos"
     __table_args__ = (

@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     database_url: SecretStr
     migration_database_url: SecretStr | None = None
     jwt_secret: SecretStr
+    access_token_expires_seconds: int = 86400
 
     @field_validator("database_url", "migration_database_url")
     @classmethod
@@ -44,6 +45,13 @@ class Settings(BaseSettings):
     def validate_jwt_secret(cls, value: SecretStr) -> SecretStr:
         if len(value.get_secret_value().encode("utf-8")) < 32:
             raise ValueError("Gere uma chave aleatória com pelo menos 32 bytes.")
+        return value
+
+    @field_validator("access_token_expires_seconds")
+    @classmethod
+    def validate_access_token_expiration(cls, value: int) -> int:
+        if value != 86400:
+            raise ValueError("O token do MVP deve expirar em 86400 segundos.")
         return value
 
 

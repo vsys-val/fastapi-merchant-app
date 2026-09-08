@@ -4,6 +4,7 @@ from fastapi import FastAPI
 
 from app.config import load_settings
 from app.errors import register_exception_handlers
+from app.routes import router
 
 
 def create_app() -> FastAPI:
@@ -16,4 +17,5 @@ def create_app() -> FastAPI:
     )
     application.state.settings = settings
     register_exception_handlers(application)
+    application.include_router(router)
     return application

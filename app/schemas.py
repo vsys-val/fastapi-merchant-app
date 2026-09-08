@@ -5,7 +5,9 @@ from __future__ import annotations
 from decimal import Decimal
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator, model_validator
+
+from app.security import validate_password_policy
 
 from app.validation import (
     normalize_quantity,
@@ -49,6 +51,49 @@ ValueForMoney = Literal["poor", "fair", "good"]
 
 class StrictInput(BaseModel):
     model_config = ConfigDict(extra="forbid")
+
+
+class UserCreate(StrictInput):
+    email: EmailStr
+    name: str = Field(min_length=2, max_length=100)
+    password: str = Field(min_length=15, max_length=128)
+
+    @field_validator("email", mode="before")
+    @classmethod
+    def normalize_email(cls, value):
+        return value.strip().casefold() if isinstance(value, str) else value
+
+    @field_validator("name", mode="before")
+    @classmethod
+    def normalize_name(cls, value):
+        return normalize_text(value, field="name", maximum=100)
+
+    @field_validator("password")
+    @classmethod
+    def validate_password(cls, value: str) -> str:
+        return validate_password_policy(value)
+
+
+class UserPublic(BaseModel):
+    id: int
+    name: str
+    email: EmailStr
+
+
+class LoginInput(StrictInput):
+    email: EmailStr
+    password: str = Field(min_length=1, max_length=128)
+
+    @field_validator("email", mode="before")
+    @classmethod
+    def normalize_email(cls, value):
+        return value.strip().casefold() if isinstance(value, str) else value
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: Literal["bearer"] = "bearer"
+    expires_in: Literal[86400] = 86400
 
 
 class ProductCreate(StrictInput):
