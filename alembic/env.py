@@ -18,7 +18,7 @@ target_metadata = Base.metadata
 def run_migrations_offline() -> None:
     settings = load_settings()
     context.configure(
-        url=settings.database_url.get_secret_value(),
+        url=settings.alembic_database_url.get_secret_value(),
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
@@ -30,7 +30,7 @@ def run_migrations_offline() -> None:
 def run_migrations_online() -> None:
     settings = load_settings()
     connectable = create_engine(
-        settings.database_url.get_secret_value(),
+        settings.alembic_database_url.get_secret_value(),
         poolclass=pool.NullPool,
     )
     with connectable.connect() as connection:
