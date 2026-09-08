@@ -23,6 +23,9 @@ entity produtos {
   categoria : TEXT
   codigo_barras : TEXT [0..1] <<UQ>>
   chave_identidade : TEXT <<UQ>>
+  criado_em : TIMESTAMPTZ
+  atualizado_em : TIMESTAMPTZ
+  excluido_em : TIMESTAMPTZ [0..1]
 }
 
 entity avaliacoes {
@@ -35,8 +38,8 @@ entity avaliacoes {
   expectativa : TEXT
   custo_beneficio : TEXT
   comentario : TEXT [0..1]
-  criado_em : DATETIME
-  atualizado_em : DATETIME
+  criado_em : TIMESTAMPTZ
+  atualizado_em : TIMESTAMPTZ
 }
 
 entity motivos_avaliacao {
@@ -47,7 +50,7 @@ entity motivos_avaliacao {
   percepcao : TEXT
 }
 
-usuarios ||--o{ produtos : cadastra
+usuarios ||--o{ produtos : responsável atual
 usuarios ||--o{ avaliacoes : escreve
 produtos ||--o{ avaliacoes : recebe
 avaliacoes ||--|{ motivos_avaliacao : contém
@@ -55,6 +58,8 @@ avaliacoes ||--|{ motivos_avaliacao : contém
 note right of produtos
   UNIQUE(codigo_barras), quando informado
   UNIQUE(chave_identidade)
+  Unicidade inclui inativos.
+  Exclusão lógica somente sem avaliações.
 end note
 
 note right of avaliacoes
