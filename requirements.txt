@@ -1,1 +1,1 @@
-# Faixas iniciais; fixar versões após a primeira execução completa dos testes.\nfastapi>=0.115,<1\nuvicorn>=0.30,<1\npydantic>=2.9,<3\npydantic-settings>=2.5,<3\n
+# Faixas iniciais; fixar versões após a primeira execução completa dos testes.\nfastapi>=0.115,<1\nuvicorn>=0.30,<1\npydantic>=2.9,<3\npydantic-settings>=2.5,<3\nsqlalchemy>=2.0,<3\npsycopg[binary]>=3.2,<4\nalembic>=1.14,<2\n
