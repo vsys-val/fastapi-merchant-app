@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from decimal import Decimal
 from typing import Literal
 
@@ -230,12 +231,17 @@ class ReviewReasonInput(StrictInput):
     perception: Perception
 
 
+class ReviewReasonPublic(BaseModel):
+    aspect: Aspect
+    perception: Perception
+
+
 class ReviewCreate(StrictInput):
     repurchase_intent: RepurchaseIntent
     quality: Quality
     expectation: Expectation
     value_for_money: ValueForMoney
-    reasons: list[ReviewReasonInput] = Field(min_length=1)
+    reasons: list[ReviewReasonInput] = Field(min_length=1, max_length=12)
     comment: str | None = Field(default=None, max_length=1000)
 
     @field_validator("comment", mode="before")
@@ -256,7 +262,7 @@ class ReviewPatch(StrictInput):
     quality: Quality | None = None
     expectation: Expectation | None = None
     value_for_money: ValueForMoney | None = None
-    reasons: list[ReviewReasonInput] | None = None
+    reasons: list[ReviewReasonInput] | None = Field(default=None, max_length=12)
     comment: str | None = None
 
     @field_validator("comment", mode="before")
@@ -266,6 +272,16 @@ class ReviewPatch(StrictInput):
 
     @model_validator(mode="after")
     def validate_patch_review(self):
+        if not self.model_fields_set:
+            raise ValueError("Envie pelo menos um campo para alterar.")
+        for field_name in (
+            "repurchase_intent",
+            "quality",
+            "expectation",
+            "value_for_money",
+        ):
+            if field_name in self.model_fields_set and getattr(self, field_name) is None:
+                raise ValueError(f"{field_name} é obrigatório e não pode ser null.")
         if "reasons" in self.model_fields_set:
             if self.reasons is None:
                 raise ValueError("reasons não pode ser null.")
@@ -275,3 +291,15 @@ class ReviewPatch(StrictInput):
                 require_other_comment="comment" in self.model_fields_set,
             )
         return self
+
+
+class ReviewPublic(BaseModel):
+    id: int
+    repurchase_intent: RepurchaseIntent
+    quality: Quality
+    expectation: Expectation
+    value_for_money: ValueForMoney
+    reasons: list[ReviewReasonPublic]
+    comment: str | None
+    created_at: datetime
+    updated_at: datetime

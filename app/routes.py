@@ -1,4 +1,4 @@
-"""Rotas funcionais implementadas na entrega de autenticação."""
+"""Rotas HTTP funcionais do MVP."""
 
 from fastapi import APIRouter, Depends, Request, Response, status
 from sqlalchemy.orm import Session
@@ -7,11 +7,15 @@ from app.auth import create_user, current_user_response, get_current_user, login
 from app.database import get_db
 from app.models import User
 from app.products import create_product, delete_product, update_product
+from app.reviews import create_review, delete_review, update_review
 from app.schemas import (
     LoginInput,
     ProductCreate,
     ProductPatch,
     ProductPublic,
+    ReviewCreate,
+    ReviewPatch,
+    ReviewPublic,
     TokenResponse,
     UserCreate,
     UserPublic,
@@ -70,4 +74,38 @@ def remove_product(
     session: Session = Depends(get_db),
 ) -> Response:
     delete_product(product_id, current_user, session)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.post(
+    "/products/{product_id}/reviews",
+    response_model=ReviewPublic,
+    status_code=status.HTTP_201_CREATED,
+)
+def register_review(
+    product_id: int,
+    payload: ReviewCreate,
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_db),
+) -> ReviewPublic:
+    return create_review(product_id, payload, current_user, session)
+
+
+@router.patch("/reviews/{review_id}", response_model=ReviewPublic)
+def edit_review(
+    review_id: int,
+    payload: ReviewPatch,
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_db),
+) -> ReviewPublic:
+    return update_review(review_id, payload, current_user, session)
+
+
+@router.delete("/reviews/{review_id}", status_code=status.HTTP_204_NO_CONTENT)
+def remove_review(
+    review_id: int,
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_db),
+) -> Response:
+    delete_review(review_id, current_user, session)
     return Response(status_code=status.HTTP_204_NO_CONTENT)

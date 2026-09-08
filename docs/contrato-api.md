@@ -696,6 +696,8 @@ Respostas:
 - `409 Conflict`: usuário já avaliou o produto;
 - `422 Unprocessable Content`: avaliação ou algum motivo inválido.
 
+Quando já existir uma avaliação, o `409` inclui `existing_review_id` em `error.details`, permitindo que o cliente direcione a edição para `PATCH /reviews/{review_id}`.
+
 ### Editar avaliação
 
 `PATCH /reviews/{review_id}`

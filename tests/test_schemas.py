@@ -70,6 +70,10 @@ def test_review_patch_replaces_reasons_as_a_whole():
     assert patch.model_fields_set == {"reasons"}
     with pytest.raises(ValidationError):
         ReviewPatch(reasons=[])
+    with pytest.raises(ValidationError):
+        ReviewPatch()
+    with pytest.raises(ValidationError):
+        ReviewPatch(quality=None)
 
 
 def test_review_patch_can_keep_existing_comment_for_other_reason():
@@ -80,4 +84,16 @@ def test_review_patch_can_keep_existing_comment_for_other_reason():
         ReviewPatch(
             reasons=[{"aspect": "other", "perception": "negative"}],
             comment=None,
+        )
+
+
+def test_review_reasons_are_limited_to_the_number_of_distinct_aspects():
+    reasons = [{"aspect": "taste", "perception": "positive"}] * 13
+    with pytest.raises(ValidationError):
+        ReviewCreate(
+            repurchase_intent="yes",
+            quality="high",
+            expectation="met",
+            value_for_money="good",
+            reasons=reasons,
         )
