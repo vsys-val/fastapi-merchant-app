@@ -36,7 +36,6 @@
 | `categoria` | TEXT | não | valor controlado |
 | `codigo_barras` | TEXT | sim | único quando informado |
 | `chave_identidade` | TEXT | não | única; gerada a partir dos dados normalizados |
-
 | `criado_em` | TIMESTAMPTZ | não | criação original, preservada na reativação |
 | `atualizado_em` | TIMESTAMPTZ | não | última alteração, incluindo reativação |
 | `excluido_em` | TIMESTAMPTZ | sim | null para ativo; equivale a deleted_at no contrato |
