@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Este documento descreve como os atores interagem com a API para alcançar objetivos do produto. Ele complementa os requisitos de `docs/requisitos.md` e será ampliado de forma incremental durante a modelagem.
+Este documento descreve como os atores interagem com a API para alcançar objetivos do produto. Ele complementa os requisitos de `docs/requisitos.md` e usa o contrato da API como referência para formatos, limites e códigos HTTP.
 
 ## Convenções
 
@@ -117,11 +117,11 @@ O visitante decide entrar na aplicação.
 
 ### Fluxos de exceção
 
-**E1 — Credenciais ausentes ou inválidas**
+**E1 — Estrutura das credenciais ausente ou inválida**
 
 1. A API identifica que o e-mail ou a senha não foi informado corretamente.
 2. A autenticação é rejeitada e nenhum token é emitido.
-3. A API retorna uma mensagem genérica de credenciais inválidas.
+3. A API retorna `422` no envelope padronizado, sem reproduzir a senha recebida.
 
 **E2 — E-mail inexistente ou senha incorreta**
 
@@ -556,7 +556,7 @@ O autor deseja corrigir ou atualizar sua experiência registrada.
 
 **E4 — Novos dados inválidos**
 
-1. A API identifica campos ausentes, valores não permitidos ou motivos inválidos.
+1. A API identifica valores não permitidos ou motivos inválidos na avaliação resultante; campos omitidos no PATCH são preservados.
 2. A atualização não é aplicada, nem parcialmente.
 3. A avaliação anterior permanece intacta e a API informa o que precisa ser corrigido.
 
@@ -597,7 +597,7 @@ O autor decide remover sua avaliação de um produto.
 1. O autor solicita a exclusão da avaliação.
 2. A API identifica o usuário autenticado.
 3. A API localiza a avaliação e confirma sua autoria.
-4. A API exclui somente a avaliação.
+4. A API exclui fisicamente a avaliação e seus motivos na mesma transação.
 5. A API confirma o sucesso da operação.
 
 ### Fluxos de exceção
@@ -626,3 +626,53 @@ O autor decide remover sua avaliação de um produto.
 4. Consultas posteriores calculam os indicadores comunitários usando somente as avaliações restantes.
 5. O usuário poderá cadastrar futuramente uma nova avaliação para o mesmo produto.
 
+
+## Complementos dos casos existentes
+
+- UC02: devolve JWT, tipo bearer e validade de 86.400 segundos; tentativas excedentes retornam 429. Credenciais incorretas retornam 401 genérico.
+- UC04: permite catálogo sem filtros; nome, marca e categoria combinam com AND; GTIN é exclusivo dos demais filtros. A resposta é paginada e inclui resumo comunitário de recompra e intenção pessoal separada.
+- UC05: o detalhe contém indicadores e avaliação pessoal. A lista comunitária é consultada separadamente em `GET /products/{id}/reviews`, paginada, sem a própria avaliação e sem e-mail ou ID do autor.
+- UC06: as exceções de duplicidade referem-se a registros ativos. Registro excluído sem avaliações admite reativação (200), preservando o ID e atribuindo responsabilidade ao usuário que recadastrou. Correspondências conflitantes entre registros retornam 409 sem alteração.
+- UC07: “criador” significa responsável atual, inclusive após reativação. PATCH preserva campos omitidos, aceita null apenas nos opcionais e valida o estado resultante.
+- UC08–UC09: avaliação e motivos são atômicos. PATCH substitui integralmente reasons quando enviado; lista vazia é inválida. O estado resultante deve manter comentário quando houver other.
+- Em consultas comunitárias, avaliações próprias são excluídas para seu autor, mas consideradas para visitantes.
+- Em todos os casos que acessam produto específico, produto logicamente excluído equivale a inexistente.
+
+## UC11 — Excluir produto
+
+**Ator:** responsável atual autenticado. **Relacionado:** RF13.
+
+1. Solicita `DELETE /products/{id}`.
+2. A API verifica produto ativo, responsabilidade e ausência de qualquer avaliação, inclusive própria.
+3. Registra a exclusão lógica e retorna 204 sem corpo.
+
+**Exceções:** 401 sem autenticação; 403 para outro usuário; 404 inexistente/inativo; 409 com avaliações. Nenhuma avaliação é removida automaticamente.
+
+**Pós-condição:** registro preservado, oculto do catálogo e das consultas pessoais. Recadastro segue UC06.
+
+## UC12 — Consultar própria conta
+
+**Ator:** usuário autenticado. **Relacionado:** RF14.
+
+1. Solicita `GET /users/me`.
+2. Recebe 200 com seu ID, nome e e-mail; senha e hash nunca são retornados.
+
+**Exceção:** 401 para autenticação ausente/inválida/expirada. **Pós-condição:** nenhum dado alterado.
+
+## UC13 — Consultar próprias avaliações
+
+**Ator:** usuário autenticado. **Relacionado:** RF14.
+
+1. Solicita `GET /users/me/reviews` com paginação opcional.
+2. Recebe somente suas avaliações completas com resumo dos produtos, mais recentes primeiro.
+
+**Exceções:** 401 sem autenticação válida; 422 para paginação inválida. **Pós-condição:** consulta sem alteração; ausência de resultados retorna 200 e items vazio.
+
+## UC14 — Consultar próprios produtos
+
+**Ator:** usuário autenticado. **Relacionado:** RF14.
+
+1. Solicita `GET /users/me/products` com paginação opcional.
+2. Recebe produtos ativos sob sua responsabilidade atual, por data de cadastro decrescente.
+
+**Exceções:** 401 sem autenticação válida; 422 para paginação inválida. **Pós-condição:** nenhum dado alterado; reativados pertencem à lista do novo responsável.
