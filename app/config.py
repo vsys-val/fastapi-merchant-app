@@ -16,11 +16,14 @@ class Settings(BaseSettings):
 
     environment: Literal["development", "test", "production"] = "development"
     database_url: SecretStr
+    migration_database_url: SecretStr | None = None
     jwt_secret: SecretStr
 
-    @field_validator("database_url")
+    @field_validator("database_url", "migration_database_url")
     @classmethod
-    def validate_database_url(cls, value: SecretStr) -> SecretStr:
+    def validate_database_url(cls, value: SecretStr | None) -> SecretStr | None:
+        if value is None:
+            return None
         # A URL contém credenciais; nunca reproduzir a entrada no erro.
         try:
             parsed = PostgresDsn(value.get_secret_value())
@@ -29,6 +32,12 @@ class Settings(BaseSettings):
         if parsed.scheme != "postgresql+psycopg" or not parsed.path or parsed.path == "/":
             raise ValueError("Use postgresql+psycopg e informe o nome do banco.")
         return value
+
+    @property
+    def alembic_database_url(self) -> SecretStr:
+        """Conexão direta para migrações, com fallback para a URL da aplicação."""
+
+        return self.migration_database_url or self.database_url
 
     @field_validator("jwt_secret")
     @classmethod
