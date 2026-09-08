@@ -115,6 +115,7 @@ Algumas regras atravessam múltiplos registros e serão validadas pela API dentr
 
 Além dos índices criados pelas chaves e restrições únicas:
 
+- índice em `produtos.criador_id`;
 - índice em `produtos.nome`;
 - índice em `produtos.marca`;
 - índice em `avaliacoes.produto_id`;
