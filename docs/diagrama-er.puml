@@ -1,0 +1,74 @@
+@startuml
+title Modelo relacional do MVP — FastAPI Merchant App
+hide circle
+skinparam linetype ortho
+
+entity usuarios {
+  * id : INTEGER <<PK>>
+  --
+  nome_publico : TEXT
+  email : TEXT <<UQ>>
+  senha_hash : TEXT
+}
+
+entity produtos {
+  * id : INTEGER <<PK>>
+  --
+  * criador_id : INTEGER <<FK>>
+  nome : TEXT
+  marca : TEXT
+  variante : TEXT [0..1]
+  quantidade : NUMERIC
+  unidade : TEXT
+  categoria : TEXT
+  codigo_barras : TEXT [0..1] <<UQ>>
+  chave_identidade : TEXT <<UQ>>
+  criado_em : TIMESTAMPTZ
+  atualizado_em : TIMESTAMPTZ
+  excluido_em : TIMESTAMPTZ [0..1]
+}
+
+entity avaliacoes {
+  * id : INTEGER <<PK>>
+  --
+  * usuario_id : INTEGER <<FK>>
+  * produto_id : INTEGER <<FK>>
+  intencao_recompra : TEXT
+  qualidade : TEXT
+  expectativa : TEXT
+  custo_beneficio : TEXT
+  comentario : TEXT [0..1]
+  criado_em : TIMESTAMPTZ
+  atualizado_em : TIMESTAMPTZ
+}
+
+entity motivos_avaliacao {
+  * id : INTEGER <<PK>>
+  --
+  * avaliacao_id : INTEGER <<FK>>
+  aspecto : TEXT
+  percepcao : TEXT
+}
+
+usuarios ||--o{ produtos : responsável atual
+usuarios ||--o{ avaliacoes : escreve
+produtos ||--o{ avaliacoes : recebe
+avaliacoes ||--|{ motivos_avaliacao : contém
+
+note right of produtos
+  UNIQUE(codigo_barras), quando informado
+  UNIQUE(chave_identidade)
+  Unicidade inclui inativos.
+  Exclusão lógica somente sem avaliações.
+end note
+
+note right of avaliacoes
+  UNIQUE(usuario_id, produto_id)
+end note
+
+note right of motivos_avaliacao
+  UNIQUE(avaliacao_id, aspecto)
+  ON DELETE CASCADE
+end note
+
+@enduml
