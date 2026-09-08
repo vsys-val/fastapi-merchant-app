@@ -85,6 +85,11 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("avaliacao_id", "aspecto", name="uq_motivos_avaliacao_aspecto"),
     )
+    # O schema public é exposto pelo Data API do Supabase. Sem políticas, os
+    # papéis anon/authenticated não acessam linhas; o backend mantém acesso via
+    # sua conexão PostgreSQL privada.
+    for table_name in ("usuarios", "produtos", "avaliacoes", "motivos_avaliacao"):
+        op.execute(sa.text(f'ALTER TABLE "{table_name}" ENABLE ROW LEVEL SECURITY'))
 
 
 def downgrade() -> None:
