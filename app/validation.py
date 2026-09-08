@@ -24,6 +24,7 @@ _UNIT_CONVERSION: Final = {
     "un": ("un", Decimal("1")),
 }
 _GTIN_LENGTHS: Final = {8, 12, 13, 14}
+_MAX_CANONICAL_QUANTITY: Final = Decimal("99999999999999999.999")
 _REVIEW_ASPECTS: Final = {
     "taste",
     "fragrance",
@@ -106,6 +107,8 @@ def normalize_quantity(value: Decimal | int | float | str, unit: str) -> Normali
         raise ValueError("quantity pode ter no máximo três casas decimais.")
     if canonical_unit == "un" and normalized != normalized.to_integral_value():
         raise ValueError("quantity em unidades deve ser um número inteiro.")
+    if normalized > _MAX_CANONICAL_QUANTITY:
+        raise ValueError("quantity excede o maior valor aceito.")
     return NormalizedQuantity(normalized, canonical_unit)
 
 

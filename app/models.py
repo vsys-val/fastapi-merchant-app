@@ -75,9 +75,9 @@ class Product(Base):
     name: Mapped[str] = mapped_column("nome", String(120), nullable=False)
     brand: Mapped[str] = mapped_column("marca", String(80), nullable=False)
     variant: Mapped[Optional[str]] = mapped_column("variante", String(80), nullable=True)
-    quantity: Mapped[Decimal] = mapped_column(Numeric(20, 3), nullable=False)
-    unit: Mapped[str] = mapped_column(String(3), nullable=False)
-    category: Mapped[str] = mapped_column(String(32), nullable=False)
+    quantity: Mapped[Decimal] = mapped_column("quantidade", Numeric(20, 3), nullable=False)
+    unit: Mapped[str] = mapped_column("unidade", String(3), nullable=False)
+    category: Mapped[str] = mapped_column("categoria", String(32), nullable=False)
     barcode: Mapped[Optional[str]] = mapped_column(
         "codigo_barras", String(14), nullable=True, unique=True
     )
@@ -134,8 +134,8 @@ class Review(Base):
         "produto_id", ForeignKey("produtos.id", ondelete="RESTRICT"), nullable=False
     )
     repurchase_intent: Mapped[str] = mapped_column("intencao_recompra", String(8), nullable=False)
-    quality: Mapped[str] = mapped_column(String(8), nullable=False)
-    expectation: Mapped[str] = mapped_column(String(10), nullable=False)
+    quality: Mapped[str] = mapped_column("qualidade", String(8), nullable=False)
+    expectation: Mapped[str] = mapped_column("expectativa", String(10), nullable=False)
     value_for_money: Mapped[str] = mapped_column("custo_beneficio", String(5), nullable=False)
     comment: Mapped[Optional[str]] = mapped_column("comentario", String(1000), nullable=True)
     created_at: Mapped[datetime] = mapped_column(

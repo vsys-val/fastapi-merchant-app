@@ -33,6 +33,12 @@ def test_quantity_rejects_invalid_values(value, unit):
         normalize_quantity(value, unit)
 
 
+def test_quantity_rejects_values_that_do_not_fit_numeric_column():
+    normalize_quantity("99999999999999999.999", "g")
+    with pytest.raises(ValueError):
+        normalize_quantity("99999999999999999.999", "kg")
+
+
 def test_text_preserves_accents_but_normalizes_spaces():
     assert normalize_text("  Pão   de Açúcar ", field="name", maximum=120) == "Pão de Açúcar"
     assert normalize_variant("  ") is None

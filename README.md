@@ -4,7 +4,7 @@ API planejada para catálogo compartilhado de produtos e avaliações de consumi
 
 ## Estado
 
-Planejamento consolidado na branch `docs/casos-de-uso`. Na branch `feat/estrutura-inicial`, as entregas 1–4 estão implementadas: estrutura/configuração, persistência PostgreSQL, validação e autenticação própria da API. Cadastro, login, JWT, `/users/me` e limitação compartilhada de tentativas estão disponíveis. O banco de desenvolvimento está hospedado no Supabase e migrado até `0004_login_rate_limits`.
+Planejamento consolidado na branch `docs/casos-de-uso`. Na branch `feat/estrutura-inicial`, as entregas 1–5 estão implementadas: estrutura/configuração, persistência PostgreSQL, validação, autenticação própria e mutações de produtos. Cadastro, login, JWT, `/users/me`, limitação compartilhada de tentativas e criação, edição, exclusão lógica e reativação de produtos estão disponíveis. O banco de desenvolvimento está hospedado no Supabase e migrado até `0004_login_rate_limits`.
 
 ## Documentação
 
@@ -54,9 +54,9 @@ Preencha `JWT_SECRET` antes de iniciar:
 .venv/bin/python -m uvicorn app.main:create_app --factory --reload
 ```
 
-Acesse http://127.0.0.1:8000/docs. Nesta etapa, a documentação abre sem operações de negócio. A raiz e `/health` ainda não possuem endpoints. A URL do banco é validada sintaticamente. Para criar ou atualizar as tabelas, com o PostgreSQL em execução, use: `./.venv/bin/python -m alembic upgrade head` (PowerShell: `.\\.venv\\Scripts\\python.exe -m alembic upgrade head`). Para conferir a revisão sem conectar: `./.venv/bin/python -m alembic heads`.
+Acesse http://127.0.0.1:8000/docs. A documentação interativa expõe autenticação e mutações de produtos. A raiz e `/health` ainda não possuem endpoints. A URL do banco é validada sintaticamente. Para criar ou atualizar as tabelas, com o PostgreSQL em execução, use: `./.venv/bin/python -m alembic upgrade head` (PowerShell: `.\\.venv\\Scripts\\python.exe -m alembic upgrade head`). Para conferir a revisão sem conectar: `./.venv/bin/python -m alembic heads`.
 
-O exemplo de DATABASE_URL é somente para desenvolvimento e será ajustado à instância PostgreSQL na próxima entrega. A chave JWT já é exigida para preparar a configuração, mas login e emissão de tokens ainda não existem. Uma chave longa deve ser gerada aleatoriamente: comprimento sozinho não garante segurança.
+As URLs de banco destinam-se ao ambiente de desenvolvimento. A chave JWT é obrigatória para login e emissão de tokens e deve ser gerada aleatoriamente; comprimento sozinho não garante segurança.
 
 ### Usar Supabase
 
@@ -79,11 +79,11 @@ As migrações ativam RLS nas quatro tabelas de negócio, na tabela interna `lim
 
 Em Linux/macOS: `.venv/bin/python -m pytest -q`.
 
-A suíte cobre também cadastro, normalização de e-mail, política e hash Argon2id de senha, JWT, autenticação Bearer, privacidade e limites de tentativa. Os testes usam valores fictícios e não gravam dados permanentes.
+A suíte cobre cadastro, autenticação, privacidade, limites de tentativa e as mutações de produtos, incluindo normalização, permissões, conflitos, exclusão lógica e reativação. Os testes usam valores fictícios e não gravam dados permanentes.
 
 ### Validação desta entrega
 
-Sintaxe Python conferida, dependências sem conflitos e 68 testes aprovados. A migração `0004_login_rate_limits` foi validada em SQL offline e no Supabase com teste transacional revertido. As faixas de dependências continuam iniciais, sem lock de versões; esse endurecimento será feito antes da implantação.
+Sintaxe Python conferida, dependências sem conflitos e 87 testes aprovados. O fluxo de produtos foi validado no Supabase com uma transação revertida: unicidade, exclusão lógica, reativação com o mesmo ID, preservação da criação e vínculo com avaliações. Nenhum dado de teste permaneceu. As faixas de dependências continuam iniciais, sem lock de versões; esse endurecimento será feito antes da implantação.
 
 ## Como os arquivos se conectam
 
@@ -99,6 +99,7 @@ Sintaxe Python conferida, dependências sem conflitos e 68 testes aprovados. A m
 | app/security.py | Aplica política e hash Argon2id de senha e assina/valida JWT |
 | app/auth.py | Implementa cadastro, login e resolução do usuário autenticado |
 | app/rate_limit.py | Mantém limites atômicos de login no PostgreSQL |
+| app/products.py | Implementa criação, edição, exclusão lógica e reativação de produtos |
 | app/routes.py | Expõe as rotas funcionais sob `/api/v1` |
 | alembic/ | Mantém as migrações versionadas do banco |
 | .env.example | Documenta as variáveis necessárias; copiar para .env |
@@ -111,5 +112,5 @@ Fluxo de inicialização: Uvicorn chama `create_app`, a configuração é valida
 
 Referências técnicas: [primeiros passos do FastAPI](https://fastapi.tiangolo.com/tutorial/first-steps/), [execução com Uvicorn](https://fastapi.tiangolo.com/deployment/manually/) e [configuração com Pydantic Settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
 
-Banco Supabase de desenvolvimento migrado até `0004_login_rate_limits`. RLS, privilégios e comportamento atômico do contador foram auditados; nenhum dado de teste permaneceu no banco. Próximo passo: implementar criação, edição, exclusão lógica e reativação de produtos.
+Banco Supabase de desenvolvimento migrado até `0004_login_rate_limits`. RLS, privilégios, contador de login e persistência de produtos foram auditados; nenhum dado de teste permaneceu no banco. Próximo passo: implementar criação, edição e exclusão de avaliações e motivos.
 

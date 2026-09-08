@@ -5,7 +5,15 @@ from __future__ import annotations
 from decimal import Decimal
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    EmailStr,
+    Field,
+    field_serializer,
+    field_validator,
+    model_validator,
+)
 
 from app.security import validate_password_policy
 
@@ -141,8 +149,25 @@ class ProductCreate(StrictInput):
         return self
 
 
+class ProductPublic(BaseModel):
+    id: int
+    name: str
+    brand: str
+    variant: str | None
+    quantity: Decimal
+    unit: Literal["g", "ml", "un"]
+    category: Category
+    barcode: str | None
+
+    @field_serializer("quantity", when_used="json")
+    def serialize_quantity(self, value: Decimal) -> int | float:
+        if value == value.to_integral_value():
+            return int(value)
+        return float(value)
+
+
 class ProductPatch(StrictInput):
-    name: str | None = Field(default=None, max_length=120)
+    name: str | None = Field(default=None, min_length=2, max_length=120)
     brand: str | None = Field(default=None, max_length=80)
     variant: str | None = Field(default=None, max_length=80)
     quantity: Decimal | None = None
@@ -182,7 +207,9 @@ class ProductPatch(StrictInput):
 
     @model_validator(mode="after")
     def validate_patch_semantics(self):
-        for field_name in ("name", "brand"):
+        if not self.model_fields_set:
+            raise ValueError("Envie pelo menos um campo para alterar.")
+        for field_name in ("name", "brand", "category"):
             if field_name in self.model_fields_set and getattr(self, field_name) is None:
                 raise ValueError(f"{field_name} é obrigatório e não pode ser null.")
         quantity_sent = "quantity" in self.model_fields_set

@@ -38,6 +38,12 @@ def test_product_patch_accepts_independent_quantity_and_unit_changes():
         ProductPatch(quantity=None)
     with pytest.raises(ValidationError):
         ProductPatch(unit=None)
+    with pytest.raises(ValidationError):
+        ProductPatch(category=None)
+    with pytest.raises(ValidationError):
+        ProductPatch(name="x")
+    with pytest.raises(ValidationError):
+        ProductPatch()
 
 
 def test_review_create_requires_reason_and_other_comment():
