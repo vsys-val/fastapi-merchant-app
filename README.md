@@ -58,6 +58,19 @@ Acesse http://127.0.0.1:8000/docs. Nesta etapa, a documentação abre sem opera�
 
 O exemplo de DATABASE_URL é somente para desenvolvimento e será ajustado à instância PostgreSQL na próxima entrega. A chave JWT já é exigida para preparar a configuração, mas login e emissão de tokens ainda não existem. Uma chave longa deve ser gerada aleatoriamente: comprimento sozinho não garante segurança.
 
+### Usar Supabase
+
+O Supabase fornece o PostgreSQL hospedado; a aplicação continua acessando o banco com SQLAlchemy e Psycopg, sem usar o cliente Supabase ou o Supabase Auth.
+
+1. Crie um projeto exclusivo de desenvolvimento no Supabase.
+2. No botão **Connect**, copie a URL do **Session pooler** para `DATABASE_URL`. Ela funciona em redes IPv4 e usa a porta 5432.
+3. Copie a **Direct connection** para `MIGRATION_DATABASE_URL`. Ela é a opção preferida para Alembic, mas exige IPv6 no plano sem o adicional IPv4. Se sua rede não alcançar IPv6, use a URL do Session pooler também para migrações.
+4. Nas duas URLs, troque o início `postgresql://` por `postgresql+psycopg://` e acrescente `?sslmode=require`.
+5. Guarde as URLs apenas no `.env` ou em segredos do ambiente. Não envie a senha pelo chat nem faça commit do arquivo.
+6. Execute `.\\.venv\\Scripts\\python.exe -m alembic upgrade head` no PowerShell.
+
+A migração ativa RLS nas quatro tabelas e não cria políticas para os papéis públicos do Supabase. O acesso de usuários continuará passando pelos endpoints e pelo JWT da nossa API.
+
 ### Testes
 
 ```powershell
@@ -70,7 +83,7 @@ Quando publicado, o arquivo de testes cobrirá inicialização, ausência e vali
 
 ### Validação desta entrega
 
-Sintaxe Python e TOML conferida. As dependências foram instaladas no ambiente local e os 7 testes de inicialização passaram. O arquivo de testes ainda não foi publicado na branch porque a conexão GitHub recusou essa operação por limite automático de uso. As faixas de dependências são iniciais, sem lock de versões. Concluir instalação e testes antes de considerar a entrega 1 aprovada.
+Sintaxe Python e TOML conferida. As dependências foram instaladas no ambiente local e os 9 testes de inicialização e configuração passaram. O arquivo de testes ainda não foi publicado na branch porque a conexão GitHub recusou essa operação por limite automático de uso. As faixas de dependências são iniciais, sem lock de versões. Concluir instalação e testes antes de considerar a entrega 1 aprovada.
 
 ## Como os arquivos se conectam
 
