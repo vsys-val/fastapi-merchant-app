@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: fastapi-merchant-app
+    runtime: python
+    plan: free
+    region: virginia
+    branch: main
+    autoDeployTrigger: checksPass
+    buildCommand: pip install --requirement requirements.txt
+    startCommand: alembic upgrade head && uvicorn app.main:create_app --factory --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.14
+      - key: ENVIRONMENT
+        value: production
+      - key: ACCESS_TOKEN_EXPIRES_SECONDS
+        value: 86400
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: MIGRATION_DATABASE_URL
+        sync: false
