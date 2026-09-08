@@ -4,7 +4,7 @@ API planejada para catálogo compartilhado de produtos e avaliações de consumi
 
 ## Estado
 
-Planejamento consolidado na branch `docs/casos-de-uso`. A aplicação e os testes ainda serão implementados. Banco definido: PostgreSQL.
+Planejamento consolidado na branch `docs/casos-de-uso`. Estrutura inicial em `feat/estrutura-inicial`: fábrica da aplicação FastAPI, configuração por ambiente e testes de inicialização. Banco definido: PostgreSQL; conexão e migrações ainda não implementadas.
 
 ## Documentação
 
@@ -18,4 +18,75 @@ Planejamento consolidado na branch `docs/casos-de-uso`. A aplicação e os teste
 - [Matriz mínima de testes](docs/matriz-testes.md)
 - [Plano de implementação](docs/plano-implementacao.md)
 
-Próxima entrega: estrutura da aplicação, configuração de ambiente e persistência inicial conforme a sequência do plano. Instruções de instalação, execução e teste serão adicionadas junto ao código.
+## Executar esta primeira etapa
+
+Use Python 3.12. Execute os comandos na raiz do repositório, na branch `feat/estrutura-inicial`.
+
+### Windows (PowerShell)
+
+```powershell
+git fetch origin
+git switch feat/estrutura-inicial
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+Copy-Item .env.example .env
+.\.venv\Scripts\python.exe -c "import secrets; print(secrets.token_urlsafe(32))"
+```
+
+Copie a chave gerada para `JWT_SECRET` no arquivo `.env`. O arquivo é local e ignorado pelo Git. Se já tiver um `.env`, preserve-o e apenas confira os campos do exemplo.
+
+```powershell
+.\.venv\Scripts\python.exe -m uvicorn app.main:create_app --factory --reload
+```
+
+### Linux/macOS
+
+```bash
+python3.12 -m venv .venv
+.venv/bin/python -m pip install -r requirements-dev.txt
+cp -n .env.example .env
+.venv/bin/python -c "import secrets; print(secrets.token_urlsafe(32))"
+```
+
+Preencha `JWT_SECRET` antes de iniciar:
+
+```bash
+.venv/bin/python -m uvicorn app.main:create_app --factory --reload
+```
+
+Acesse http://127.0.0.1:8000/docs. Nesta etapa, a documentação abre sem operações de negócio. A raiz e `/health` ainda não possuem endpoints. A URL do banco é validada sintaticamente, mas nenhuma conexão é aberta e nenhuma tabela é criada.
+
+O exemplo de DATABASE_URL é somente para desenvolvimento e será ajustado à instância PostgreSQL na próxima entrega. A chave JWT já é exigida para preparar a configuração, mas login e emissão de tokens ainda não existem. Uma chave longa deve ser gerada aleatoriamente: comprimento sozinho não garante segurança.
+
+### Testes
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q
+```
+
+Em Linux/macOS: `.venv/bin/python -m pytest -q`.
+
+Os testes cobrem inicialização, ausência e validade de configuração, prioridade das variáveis de ambiente e ausência de segredos na mensagem de erro/representação. Usam valores fictícios, diretório temporário e nenhum banco.
+
+### Validação desta entrega
+
+Sintaxe Python e TOML conferida. A instalação de dependências foi bloqueada pela rede do ambiente de desenvolvimento do assistente; os testes automatizados ainda não foram executados. As faixas de dependências são iniciais, sem lock de versões. Concluir instalação e testes antes de considerar a entrega 1 aprovada.
+
+## Como os arquivos se conectam
+
+| Arquivo | Função |
+|---|---|
+| app/main.py | Cria a aplicação que o servidor Uvicorn recebe |
+| app/config.py | Lê e valida a configuração local/ambiente; protege a exibição de segredos |
+| .env.example | Documenta as variáveis necessárias; copiar para .env |
+| requirements.txt | Dependências da aplicação |
+| requirements-dev.txt | Inclui também as ferramentas de teste |
+| tests/test_bootstrap.py | Verifica a inicialização e a configuração |
+| pyproject.toml | Metadados e configuração do pytest |
+
+Fluxo de inicialização: Uvicorn chama `create_app`, a configuração é validada e a instância FastAPI é criada. Configuração inválida interrompe esse fluxo com os nomes dos campos a corrigir.
+
+Referências técnicas: [primeiros passos do FastAPI](https://fastapi.tiangolo.com/tutorial/first-steps/), [execução com Uvicorn](https://fastapi.tiangolo.com/deployment/manually/) e [configuração com Pydantic Settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
+
+Próximo passo: concluir a validação da base e implementar conexão PostgreSQL, modelos e migração inicial.
+
