@@ -4,7 +4,7 @@ API planejada para catálogo compartilhado de produtos e avaliações de consumi
 
 ## Estado
 
-Planejamento consolidado na branch `docs/casos-de-uso`. Estrutura inicial em `feat/estrutura-inicial`: fábrica da aplicação FastAPI e configuração por ambiente. Os testes de inicialização foram preparados localmente e passaram; a publicação do arquivo de testes foi bloqueada pelo limite automático de uso da conexão GitHub. Banco definido: PostgreSQL; conexão e migrações ainda não implementadas.
+Planejamento consolidado na branch `docs/casos-de-uso`. Na branch `feat/estrutura-inicial`, as entregas de estrutura/configuração e persistência PostgreSQL estão implementadas e publicadas. A base de normalização, schemas de entrada e envelope padronizado de erros também está disponível. O banco de desenvolvimento está hospedado no Supabase e migrado até `0003_secure_alembic`.
 
 ## Documentação
 
@@ -69,7 +69,7 @@ O Supabase fornece o PostgreSQL hospedado; a aplicação continua acessando o ba
 5. Guarde as URLs apenas no `.env` ou em segredos do ambiente. Não envie a senha pelo chat nem faça commit do arquivo.
 6. Execute `.\\.venv\\Scripts\\python.exe -m alembic upgrade head` no PowerShell.
 
-A migração ativa RLS nas quatro tabelas e não cria políticas para os papéis públicos do Supabase. O acesso de usuários continuará passando pelos endpoints e pelo JWT da nossa API.
+As migrações ativam RLS nas quatro tabelas de negócio e na tabela técnica `alembic_version`. Não existem políticas para os papéis públicos do Supabase; além disso, `anon` e `authenticated` não possuem privilégios sobre `alembic_version`. O acesso de usuários continuará passando pelos endpoints e pelo JWT da nossa API.
 
 ### Testes
 
@@ -79,11 +79,11 @@ A migração ativa RLS nas quatro tabelas e não cria políticas para os papéis
 
 Em Linux/macOS: `.venv/bin/python -m pytest -q`.
 
-Quando publicado, o arquivo de testes cobrirá inicialização, ausência e validade de configuração, prioridade das variáveis de ambiente e ausência de segredos na mensagem de erro/representação. A execução local atual passou em 7 cenários; o arquivo ainda precisa ser adicionado à branch. Usam valores fictícios, diretório temporário e nenhum banco.
+A suíte cobre inicialização, configuração, proteção de segredos, normalização de unidades, precisão decimal, GTIN, chave de identidade, semântica de PATCH e envelope de erros. Os testes usam valores fictícios e não gravam dados permanentes.
 
 ### Validação desta entrega
 
-Sintaxe Python e TOML conferida. As dependências foram instaladas no ambiente local e os 9 testes de inicialização e configuração passaram. O arquivo de testes ainda não foi publicado na branch porque a conexão GitHub recusou essa operação por limite automático de uso. As faixas de dependências são iniciais, sem lock de versões. Concluir instalação e testes antes de considerar a entrega 1 aprovada.
+Sintaxe Python conferida, dependências sem conflitos e 36 testes aprovados. A migração foi validada em SQL offline e no Supabase. As faixas de dependências continuam iniciais, sem lock de versões; esse endurecimento será feito antes da implantação.
 
 ## Como os arquivos se conectam
 
@@ -93,7 +93,10 @@ Sintaxe Python e TOML conferida. As dependências foram instaladas no ambiente l
 | app/config.py | Lê e valida a configuração local/ambiente; protege a exibição de segredos |
 | app/database.py | Cria engine e sessões PostgreSQL sob demanda |
 | app/models.py | Mapeia as quatro tabelas e suas restrições |
-| alembic/ | Mantém a migração inicial do banco |
+| app/validation.py | Normaliza textos, medidas, GTIN e chaves de identidade |
+| app/schemas.py | Define e valida os corpos de criação e PATCH |
+| app/errors.py | Padroniza o envelope público de erros |
+| alembic/ | Mantém as migrações versionadas do banco |
 | .env.example | Documenta as variáveis necessárias; copiar para .env |
 | requirements.txt | Dependências da aplicação |
 | requirements-dev.txt | Inclui também as ferramentas de teste |
@@ -104,5 +107,5 @@ Fluxo de inicialização: Uvicorn chama `create_app`, a configuração é valida
 
 Referências técnicas: [primeiros passos do FastAPI](https://fastapi.tiangolo.com/tutorial/first-steps/), [execução com Uvicorn](https://fastapi.tiangolo.com/deployment/manually/) e [configuração com Pydantic Settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
 
-Banco Supabase de desenvolvimento migrado até `0002_product_owner_index` e validado com teste transacional revertido. Próximo passo: conectar os repositórios e endpoints aos modelos, começando pelo cadastro e autenticação.
+Banco Supabase de desenvolvimento migrado até `0003_secure_alembic`. RLS e privilégios da tabela técnica foram auditados, e a conexão de migração continuou funcional. Próximo passo: conectar repositórios e endpoints aos modelos, começando pelo cadastro e autenticação.
 

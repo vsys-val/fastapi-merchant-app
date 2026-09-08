@@ -8,7 +8,9 @@
 - Avaliações e motivos usam exclusão física.
 - Produtos usam exclusão lógica; contas não possuem exclusão no escopo inicial.
 - Indicadores comunitários são calculados sob demanda e não são armazenados.
-- RLS habilitado nas quatro tabelas, sem políticas públicas; clientes acessam os dados pela API FastAPI.
+- RLS habilitado nas quatro tabelas de negócio, sem políticas públicas; clientes acessam os dados pela API FastAPI.
+- A tabela técnica `alembic_version` também usa RLS e não concede privilégios a `anon` ou `authenticated`.
+- A conexão de migração permanece privilegiada. Antes de implantação pública, a conexão de execução da API deverá usar um papel PostgreSQL próprio e limitado.
 - Quantidades equivalentes são normalizadas para unidades-base antes da geração da chave de identidade:
   - massa em `g`;
   - volume em `ml`;
