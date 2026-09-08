@@ -15,6 +15,10 @@ rectangle "API de avaliações de produtos" {
   usecase "UC08\nCadastrar avaliação" as UC08
   usecase "UC09\nEditar avaliação" as UC09
   usecase "UC10\nExcluir avaliação" as UC10
+  usecase "UC11\nExcluir produto" as UC11
+  usecase "UC12\nConsultar própria conta" as UC12
+  usecase "UC13\nConsultar próprias avaliações" as UC13
+  usecase "UC14\nConsultar próprios produtos" as UC14
 }
 
 Visitante -- UC01
@@ -29,6 +33,10 @@ UsuarioAutenticado -- UC07
 UsuarioAutenticado -- UC08
 UsuarioAutenticado -- UC09
 UsuarioAutenticado -- UC10
+UsuarioAutenticado -- UC11
+UsuarioAutenticado -- UC12
+UsuarioAutenticado -- UC13
+UsuarioAutenticado -- UC14
 
 note right of UC05
   Sem token: your_review = null
@@ -36,7 +44,7 @@ note right of UC05
 end note
 
 note right of UC07
-  Somente o criador, enquanto nenhum
+  Somente o responsável atual, enquanto nenhum
   outro usuário tiver avaliado o produto
 end note
 
