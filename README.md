@@ -104,5 +104,5 @@ Fluxo de inicialização: Uvicorn chama `create_app`, a configuração é valida
 
 Referências técnicas: [primeiros passos do FastAPI](https://fastapi.tiangolo.com/tutorial/first-steps/), [execução com Uvicorn](https://fastapi.tiangolo.com/deployment/manually/) e [configuração com Pydantic Settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
 
-Próximo passo: conectar os repositórios e endpoints aos modelos, começando pelo cadastro e autenticação.
+Banco Supabase de desenvolvimento migrado até `0002_product_owner_index` e validado com teste transacional revertido. Próximo passo: conectar os repositórios e endpoints aos modelos, começando pelo cadastro e autenticação.
 
