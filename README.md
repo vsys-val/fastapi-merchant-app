@@ -4,7 +4,11 @@ API planejada para catálogo compartilhado de produtos e avaliações de consumi
 
 ## Estado
 
-Planejamento consolidado na branch `docs/casos-de-uso`. Na branch `feat/estrutura-inicial`, as entregas 1–8 do MVP estão implementadas: estrutura/configuração, persistência PostgreSQL, validação, autenticação própria, produtos, avaliações, consultas, observabilidade básica e automação de testes. O banco de desenvolvimento está hospedado no Supabase e migrado até `0004_login_rate_limits`.
+As entregas 1–8 do backend do MVP estão consolidadas na branch `main`: estrutura/configuração, persistência PostgreSQL, validação, autenticação própria, produtos, avaliações, consultas, observabilidade básica e automação de testes. A API está publicada no Render e usa PostgreSQL hospedado no Supabase.
+
+- API: https://fastapi-merchant-app.onrender.com
+- Swagger: https://fastapi-merchant-app.onrender.com/docs
+- Saúde: https://fastapi-merchant-app.onrender.com/health
 
 ## Documentação
 
@@ -20,7 +24,7 @@ Planejamento consolidado na branch `docs/casos-de-uso`. Na branch `feat/estrutur
 
 ## Executar o MVP
 
-Use Python 3.12. Execute os comandos na raiz do repositório, na branch `feat/estrutura-inicial`.
+Use Python 3.12 e execute os comandos na raiz do repositório, na branch `main`.
 
 ### Windows (PowerShell)
 
@@ -71,6 +75,16 @@ O Supabase fornece o PostgreSQL hospedado; a aplicação continua acessando o ba
 
 As migrações ativam RLS nas quatro tabelas de negócio, na tabela interna `limites_login` e na tabela técnica `alembic_version`. Não existem políticas para os papéis públicos do Supabase; `anon` e `authenticated` também não possuem privilégios sobre as duas tabelas internas. O acesso de usuários passa pelos endpoints e pelo JWT da nossa API.
 
+Em produção, `MIGRATION_DATABASE_URL` permanece com o papel administrativo usado pelo Alembic. `DATABASE_URL` deve usar um login próprio que seja membro de `merchant_app_runtime`. Esse papel coletivo recebe somente operações de dados nas cinco tabelas operacionais e não acessa `alembic_version` nem altera a estrutura do banco.
+
+### CORS
+
+`CORS_ALLOWED_ORIGINS` contém as origens exatas autorizadas a chamar a API a partir de um navegador, separadas por vírgula. Enquanto não houver frontend, o valor deve permanecer vazio. Não use `*`.
+
+```text
+CORS_ALLOWED_ORIGINS=https://app.exemplo.com,http://localhost:5173
+```
+
 ### Testes
 
 ```powershell
@@ -81,9 +95,11 @@ Em Linux/macOS: `.venv/bin/python -m pytest -q`.
 
 A suíte cobre cadastro, autenticação, privacidade, limites de tentativa, mutações, consultas, saúde, OpenAPI e uma jornada integrada completa. Dois testes adicionais executam transações realmente concorrentes no PostgreSQL 17 efêmero do GitHub Actions. Os testes usam valores fictícios e não gravam dados permanentes.
 
+O workflow `Production smoke test` executa diariamente uma verificação não destrutiva da API publicada. Ele confere saúde, banco, OpenAPI, catálogo e bloqueio de mutações sem autenticação, sem criar usuários ou produtos.
+
 ### Validação desta entrega
 
-Sintaxe Python conferida, dependências diretas fixadas, `pip check` sem conflitos e 120 testes locais aprovados; dois testes PostgreSQL adicionais são executados no CI, totalizando 122. Os fluxos foram validados no Supabase com transações revertidas e a jornada HTTP completa foi automatizada. Nenhum dado de teste permaneceu.
+Sintaxe Python conferida, dependências diretas fixadas, `pip check` sem conflitos e 125 testes locais aprovados; dois testes PostgreSQL adicionais são executados no CI, totalizando 127. Os fluxos foram validados no Supabase com transações revertidas e a jornada HTTP completa foi automatizada. Nenhum dado de teste permaneceu.
 
 ## Como os arquivos se conectam
 
@@ -105,6 +121,8 @@ Sintaxe Python conferida, dependências diretas fixadas, `pip check` sem conflit
 | app/routes.py | Expõe as rotas funcionais sob `/api/v1` |
 | app/health.py | Verifica a aplicação e a conexão com o banco em `/health` |
 | .github/workflows/tests.yml | Executa a suíte com PostgreSQL 17 efêmero no GitHub Actions |
+| .github/workflows/smoke-test.yml | Valida diariamente a API publicada sem gravar dados |
+| scripts/smoke_test.py | Implementa o smoke test não destrutivo de produção |
 | alembic/ | Mantém as migrações versionadas do banco |
 | .env.example | Documenta as variáveis necessárias; copiar para .env |
 | requirements.txt | Dependências diretas fixadas da aplicação |
@@ -116,5 +134,4 @@ Fluxo de inicialização: Uvicorn chama `create_app`, a configuração é valida
 
 Referências técnicas: [primeiros passos do FastAPI](https://fastapi.tiangolo.com/tutorial/first-steps/), [execução com Uvicorn](https://fastapi.tiangolo.com/deployment/manually/) e [configuração com Pydantic Settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
 
-Banco Supabase de desenvolvimento migrado até `0004_login_rate_limits`. RLS, privilégios, saúde, contador de login e persistência foram auditados; nenhum dado de teste permaneceu. O backend do MVP está concluído. Antes de uma implantação pública, ainda é necessário configurar HTTPS, segredos do ambiente e um papel PostgreSQL próprio com privilégios mínimos.
-
+O backend do MVP está publicado com HTTPS, segredos de ambiente e persistência no Supabase. A migração `0005_runtime_role` prepara o papel de mínimo privilégio da aplicação; a troca da credencial no Render é uma etapa operacional separada para que nenhuma senha seja registrada no repositório.

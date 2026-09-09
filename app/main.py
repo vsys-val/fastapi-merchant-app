@@ -1,6 +1,7 @@
 """Ponto de entrada: uvicorn app.main:create_app --factory --reload."""
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import load_settings
 from app.errors import register_exception_handlers
@@ -24,6 +25,14 @@ def create_app() -> FastAPI:
         debug=False,
     )
     application.state.settings = settings
+    if settings.cors_origins:
+        application.add_middleware(
+            CORSMiddleware,
+            allow_origins=settings.cors_origins,
+            allow_credentials=False,
+            allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+            allow_headers=["Authorization", "Content-Type"],
+        )
     register_exception_handlers(application)
     application.include_router(router)
     application.include_router(health_router)

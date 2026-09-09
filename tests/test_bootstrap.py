@@ -10,7 +10,13 @@ from app.main import create_app
 @pytest.fixture(autouse=True)
 def isolated_environment(monkeypatch, tmp_path):
     monkeypatch.chdir(tmp_path)
-    for name in ("ENVIRONMENT", "DATABASE_URL", "MIGRATION_DATABASE_URL", "JWT_SECRET"):
+    for name in (
+        "ENVIRONMENT",
+        "DATABASE_URL",
+        "MIGRATION_DATABASE_URL",
+        "JWT_SECRET",
+        "CORS_ALLOWED_ORIGINS",
+    ):
         monkeypatch.delenv(name, raising=False)
 
 
@@ -78,3 +84,53 @@ def test_migration_url_can_use_a_separate_supabase_connection(monkeypatch):
     monkeypatch.setenv("MIGRATION_DATABASE_URL", direct_url)
     settings = load_settings()
     assert settings.alembic_database_url.get_secret_value() == direct_url
+
+
+def test_cors_is_disabled_when_no_frontend_origin_is_configured(monkeypatch):
+    configure(monkeypatch)
+    with TestClient(create_app()) as client:
+        response = client.options(
+            "/api/v1/products",
+            headers={
+                "Origin": "https://frontend.example.com",
+                "Access-Control-Request-Method": "GET",
+            },
+        )
+    assert "access-control-allow-origin" not in response.headers
+
+
+def test_cors_allows_only_configured_frontend_origins(monkeypatch):
+    configure(monkeypatch)
+    monkeypatch.setenv(
+        "CORS_ALLOWED_ORIGINS",
+        "https://frontend.example.com, http://localhost:5173/",
+    )
+    with TestClient(create_app()) as client:
+        allowed = client.options(
+            "/api/v1/products",
+            headers={
+                "Origin": "https://frontend.example.com",
+                "Access-Control-Request-Method": "GET",
+            },
+        )
+        denied = client.options(
+            "/api/v1/products",
+            headers={
+                "Origin": "https://untrusted.example.com",
+                "Access-Control-Request-Method": "GET",
+            },
+        )
+    assert allowed.status_code == 200
+    assert allowed.headers["access-control-allow-origin"] == "https://frontend.example.com"
+    assert "access-control-allow-origin" not in denied.headers
+
+
+@pytest.mark.parametrize(
+    "value",
+    ["*", "javascript:alert(1)", "https://frontend.example.com/path"],
+)
+def test_invalid_cors_origins_prevent_startup(monkeypatch, value):
+    configure(monkeypatch)
+    monkeypatch.setenv("CORS_ALLOWED_ORIGINS", value)
+    with pytest.raises(RuntimeError, match="CORS_ALLOWED_ORIGINS"):
+        create_app()
