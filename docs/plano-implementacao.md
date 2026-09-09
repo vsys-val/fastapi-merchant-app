@@ -2,7 +2,7 @@
 
 ## Situação
 
-Planejamento consolidado. Entregas 1–8 implementadas na branch `feat/estrutura-inicial`: fábrica FastAPI, configuração protegida, SQLAlchemy/Alembic, normalizadores, schemas, envelope seguro de erros, autenticação, produtos, avaliações transacionais, consultas, `/health`, OpenAPI e CI. O Supabase de desenvolvimento está em `0004_login_rate_limits`; as seis tabelas do schema público têm RLS. A suíte possui 120 testes locais aprovados e dois testes de concorrência reservados ao PostgreSQL 17 efêmero do GitHub Actions, totalizando 122. O fluxo cadastro → login → produto → avaliação → consulta está automatizado. Antes de implantação pública, a aplicação ainda deverá receber HTTPS, segredos próprios do ambiente e um papel PostgreSQL com privilégios mínimos.
+Planejamento consolidado. Entregas 1–8 implementadas na branch `main`: fábrica FastAPI, configuração protegida, SQLAlchemy/Alembic, normalizadores, schemas, envelope seguro de erros, autenticação, produtos, avaliações transacionais, consultas, `/health`, OpenAPI e CI. A API está publicada no Render com HTTPS e PostgreSQL no Supabase. A Entrega 9 fecha a operação de produção com acesso mínimo ao banco, CORS configurável, smoke test e documentação atualizada.
 
 Referências: [requisitos](requisitos.md), [casos de uso](casos-de-uso.md), [contrato](contrato-api.md), [modelo](modelo-banco.md) e [testes](matriz-testes.md). Ideação é histórico; mudanças posteriores estão refletidas nesses documentos.
 
@@ -18,13 +18,14 @@ Referências: [requisitos](requisitos.md), [casos de uso](casos-de-uso.md), [con
 | 6 | Criar, editar e excluir avaliações e motivos | 5 | Atomicidade, autoria e unicidade testadas |
 | 7 | Pesquisa, detalhe, comunidade e listas pessoais | 5–6 | Paginação, filtros e exclusão da própria avaliação conferidos |
 | 8 | /health, documentação OpenAPI, revisão integrada e execução automatizada dos testes | 1–7 | Matriz mínima aprovada em PostgreSQL e README com execução reproduzível |
+| 9 | Segurança e operação da API publicada | 8 | Papel restrito no banco, CORS explícito, smoke test não destrutivo e documentação de produção |
 
 ## Diretrizes técnicas para execução
 
 - Usar uma aplicação monolítica simples. Como base de implementação, SQLAlchemy, Alembic e pytest são escolhas propostas; versões e APIs serão verificadas no início da implementação.
 - Usar PostgreSQL também nos testes de integração, com banco isolado e nunca dados de produção.
 - Separar schemas públicos das entidades persistidas e manter regras de negócio testáveis, sem criar camadas sem necessidade.
-- Aplicar migrações somente em ambiente explicitamente destinado ao desenvolvimento/teste. Implantação pública fica fora desta entrega.
+- Aplicar migrações em produção somente pelo Alembic durante o deploy, usando credencial separada da conexão diária da aplicação.
 - Rate limiting precisa de contadores atômicos e prazo de expiração. Não presumir que memória de um processo proteja múltiplos workers; documentar o modo de execução e testar seus limites antes de ampliar.
 - Senhas e tokens não entram em logs nem nos detalhes retornados por validadores. Usar HTTPS quando houver implantação.
 - Unicidade deve ser protegida pelo banco, não apenas por consulta prévia. Verificações de estado e gravação compartilham transação e bloqueio do produto.
@@ -36,4 +37,4 @@ Não são funcionalidades novas: o recadastro troca o responsável atual e prese
 
 ## Critério de encerramento
 
-Cada entrega inclui implementação e testes pertinentes, sem postergar toda a validação para o fim. O MVP está concluído quanto ao escopo planejado: a matriz possui cobertura executável, a documentação reproduz a execução e o fluxo cadastro → login → produto → avaliação → consulta foi automatizado. Implantação pública e interface continuam fora deste plano.
+Cada entrega inclui implementação e testes pertinentes, sem postergar toda a validação para o fim. O backend do MVP está concluído e publicado: a matriz possui cobertura executável, a documentação reproduz a execução e o fluxo cadastro → login → produto → avaliação → consulta foi validado em produção. A interface web continua fora deste plano e será a próxima fase do produto.

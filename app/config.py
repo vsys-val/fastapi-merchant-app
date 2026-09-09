@@ -1,6 +1,7 @@
 """Configuração local/ambiente, sem segredos embutidos no código."""
 
 from typing import Literal
+from urllib.parse import urlsplit
 
 from pydantic import PostgresDsn, SecretStr, ValidationError, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -19,6 +20,7 @@ class Settings(BaseSettings):
     migration_database_url: SecretStr | None = None
     jwt_secret: SecretStr
     access_token_expires_seconds: int = 86400
+    cors_allowed_origins: str = ""
 
     @field_validator("database_url", "migration_database_url")
     @classmethod
@@ -53,6 +55,36 @@ class Settings(BaseSettings):
         if value != 86400:
             raise ValueError("O token do MVP deve expirar em 86400 segundos.")
         return value
+
+    @field_validator("cors_allowed_origins")
+    @classmethod
+    def validate_cors_allowed_origins(cls, value: str) -> str:
+        normalized: list[str] = []
+        for item in value.split(","):
+            origin = item.strip().rstrip("/")
+            if not origin:
+                continue
+            parsed = urlsplit(origin)
+            if (
+                parsed.scheme not in {"http", "https"}
+                or not parsed.netloc
+                or parsed.path
+                or parsed.query
+                or parsed.fragment
+            ):
+                raise ValueError(
+                    "Informe origens HTTP/HTTPS separadas por vírgula, sem caminhos."
+                )
+            normalized.append(origin)
+        return ",".join(dict.fromkeys(normalized))
+
+    @property
+    def cors_origins(self) -> list[str]:
+        """Origens exatas autorizadas a chamar a API pelo navegador."""
+
+        if not self.cors_allowed_origins:
+            return []
+        return self.cors_allowed_origins.split(",")
 
 
 def load_settings() -> Settings:
