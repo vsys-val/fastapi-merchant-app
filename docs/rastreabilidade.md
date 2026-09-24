@@ -14,7 +14,7 @@ Legenda de cobertura na interface: ✅ disponível · ◐ parcial · — não se
 | RF01 | Cadastrar conta | UC01 | `POST /api/v1/users` | T01–T03 | Modal de acesso, aba "Cadastrar" | ✅ |
 | RF02 | Autenticar e obter token | UC02 | `POST /api/v1/auth/login` | T04–T06 | Modal de acesso, aba "Entrar" | ✅ |
 | RF03 | Consulta pública de produtos | UC04, UC05 | `GET /api/v1/products`, `GET /api/v1/products/{id}` | T07, T23 | `/search`, `/products/:id` | ✅ |
-| RF04 | Pesquisar por nome, marca, categoria ou GTIN | UC04 | `GET /api/v1/products?name&brand&category&barcode` | T23–T25 | `/search`: seletor Produto · Marca · Código | ◐ ⚠️ sem filtro de categoria nem busca combinada |
+| RF04 | Pesquisar por nome, marca, categoria ou GTIN | UC04 | `GET /api/v1/products?name&brand&category&barcode` | T23–T25 | `/search`: nome + marca + chips de categoria combinados; modo separado para código; filtros na URL | ✅ |
 | RF05 | Detalhe com avaliação própria separada | UC05 | `GET /api/v1/products/{id}` → `your_review` | T26 | `/products/:id`, seção "Sua experiência" | ✅ |
 | RF06 | Cadastrar produto ausente | UC06 | `POST /api/v1/products` | T08–T11, T16, T17 | `/products/new` | ✅ |
 | RF07 | Criador corrige produto sem avaliações de terceiros | UC07 | `PATCH /api/v1/products/{id}` | T12, T13 | — | ⚠️ sem tela |
@@ -30,7 +30,7 @@ Legenda de cobertura na interface: ✅ disponível · ◐ parcial · — não se
 | RF17 | Reenviar código de confirmação | UC15 | `POST /api/v1/auth/email-verification/resend` | T36 | Botão "Reenviar código" com contagem de 60 s | ✅ |
 | RF18 | Redefinir senha por código | UC16 | `POST /api/v1/auth/password-reset`, `/password-reset/confirm` | T38, T40 | Modal de acesso, "Esqueci minha senha" | ✅ ⚠️ responde 503 até haver provedor |
 
-**Leitura rápida:** os 18 requisitos funcionais estão implementados e testados na API. Na interface, 15 estão completos, 2 parciais (RF04 e RF13) e 1 sem tela (RF07). RF16 e RF18 só entram em vigor em produção quando um provedor de e-mail for configurado ([ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)). As lacunas são escolhas de sequenciamento e estão priorizadas no [roadmap](roadmap.md).
+**Leitura rápida:** os 18 requisitos funcionais estão implementados e testados na API. Na interface, 16 estão completos, 1 parcial (RF13) e 1 sem tela (RF07). RF16 e RF18 só entram em vigor em produção quando um provedor de e-mail for configurado ([ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)). As lacunas são escolhas de sequenciamento e estão priorizadas no [roadmap](roadmap.md).
 
 ## 2. Regras de negócio — onde cada uma é garantida
 

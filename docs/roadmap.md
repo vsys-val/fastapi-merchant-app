@@ -25,6 +25,7 @@ Os itens foram ordenados por **impacto no ciclo central** (buscar → decidir �
 
 ## ✅ Entregue — pós-MVP
 
+- Busca combinando nome, marca e categoria na interface, com os filtros na URL (RF04).
 - Atalho para o produto já cadastrado quando o cadastro é duplicado ([ADR-0004](decisoes/0004-catalogo-canonico-comunitario.md)).
 - Confirmação de conta por código, recuperação de senha, encerramento de sessões na troca de senha e limite de cadastros por IP ([ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)). A confirmação fica **inativa em produção** até o provedor de e-mail ser configurado.
 
@@ -34,7 +35,6 @@ Os itens foram ordenados por **impacto no ciclo central** (buscar → decidir �
 |---|---|---|---|---|
 | Escolher e configurar o provedor de e-mail (ex.: Brevo ou Resend) e implementar o `EmailSender` HTTP | Sem provedor, a produção não exige confirmação de conta e não oferece recuperação de senha | RNF07; risco R2 | [ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md) | Alto / P |
 | Instrumentação de eventos (busca, abertura de produto, etapas da avaliação, publicação) | Hoje não é possível calcular nenhuma métrica da visão | Todas as métricas; valida H1 e H2 | [Métricas](visao-produto.md#7-métricas-de-sucesso) | Alto / M |
-| Busca combinada e filtro por categoria na interface | A API aceita nome + marca + categoria; a tela aceita um campo por vez | % de buscas com resultado | RF04 ◐ | Médio / P |
 | Tela de correção de produto | Erros de cadastro não podem ser corrigidos pelo usuário | Qualidade do catálogo | RF07 ⚠️, [ADR-0005](decisoes/0005-bloqueio-de-edicao-apos-avaliacao.md) | Médio / P |
 
 ## 🔵 Próximo — escala e confiança
