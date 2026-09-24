@@ -1,6 +1,6 @@
 # FastAPI Merchant App
 
-API planejada para catálogo compartilhado de produtos e avaliações de consumidores.
+API do catálogo compartilhado de produtos e avaliações de consumidores. O frontend que a consome está em [vsys-val/merchant-app-web](https://github.com/vsys-val/merchant-app-web).
 
 ## Estado
 
@@ -29,8 +29,6 @@ Use Python 3.12 e execute os comandos na raiz do repositório, na branch `main`.
 ### Windows (PowerShell)
 
 ```powershell
-git fetch origin
-git switch feat/estrutura-inicial
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 Copy-Item .env.example .env
@@ -79,7 +77,7 @@ Em produção, `MIGRATION_DATABASE_URL` permanece com o papel administrativo usa
 
 ### CORS
 
-`CORS_ALLOWED_ORIGINS` contém as origens exatas autorizadas a chamar a API a partir de um navegador, separadas por vírgula. Enquanto não houver frontend, o valor deve permanecer vazio. Não use `*`.
+`CORS_ALLOWED_ORIGINS` contém as origens exatas autorizadas a chamar a API a partir de um navegador, separadas por vírgula. Vazio desativa o CORS. Localmente, informe a origem do servidor de desenvolvimento do frontend; em produção, a origem publicada do [merchant-app-web](https://merchant-app-web.onrender.com). Não use `*`.
 
 ```text
 CORS_ALLOWED_ORIGINS=https://app.exemplo.com,http://localhost:5173
@@ -108,7 +106,7 @@ Sintaxe Python conferida, dependências diretas fixadas, `pip check` sem conflit
 | app/main.py | Cria a aplicação que o servidor Uvicorn recebe |
 | app/config.py | Lê e valida a configuração local/ambiente; protege a exibição de segredos |
 | app/database.py | Cria engine e sessões PostgreSQL sob demanda |
-| app/models.py | Mapeia as quatro tabelas e suas restrições |
+| app/models.py | Mapeia as quatro tabelas de negócio, a tabela `limites_login` e suas restrições |
 | app/validation.py | Normaliza textos, medidas, GTIN e chaves de identidade |
 | app/schemas.py | Define e valida os corpos de criação e PATCH |
 | app/errors.py | Padroniza o envelope público de erros |

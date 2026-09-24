@@ -93,7 +93,7 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 - múltiplas categorias por produto;
 - filtros avançados por variante ou múltiplas categorias;
 - administração e mesclagem manual de produtos duplicados;
-- interface web ou aplicativo móvel.
+- interface web ou aplicativo móvel neste repositório; o frontend foi desenvolvido depois, em [merchant-app-web](https://github.com/vsys-val/merchant-app-web).
 
 ## Especificações consolidadas
 

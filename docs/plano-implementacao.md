@@ -37,4 +37,4 @@ Não são funcionalidades novas: o recadastro troca o responsável atual e prese
 
 ## Critério de encerramento
 
-Cada entrega inclui implementação e testes pertinentes, sem postergar toda a validação para o fim. O backend do MVP está concluído e publicado: a matriz possui cobertura executável, a documentação reproduz a execução e o fluxo cadastro → login → produto → avaliação → consulta foi validado em produção. A interface web continua fora deste plano e será a próxima fase do produto.
+Cada entrega inclui implementação e testes pertinentes, sem postergar toda a validação para o fim. O backend do MVP está concluído e publicado: a matriz possui cobertura executável, a documentação reproduz a execução e o fluxo cadastro → login → produto → avaliação → consulta foi validado em produção. A interface web ficou fora deste plano e foi desenvolvida em seguida no repositório [merchant-app-web](https://github.com/vsys-val/merchant-app-web).
