@@ -322,6 +322,54 @@ Respostas:
 - `401 Unauthorized`: autenticação ausente, inválida ou expirada;
 - `422 Unprocessable Content`: paginação inválida.
 
+## Métricas e administração
+
+### Enviar eventos de uso
+
+`POST /events`
+
+Público. Token opcional: se válido, os eventos são associados ao usuário; se inválido ou expirado, ficam anônimos (sem `401`).
+
+```json
+{
+  "session_id": "0b6c3a5e-6d1f-4f0e-9d7a-1c2b3d4e5f60",
+  "events": [
+    { "name": "search_performed", "properties": { "mode": "text", "name": true, "brand": false, "category": "food", "results": 3, "page": 1 } }
+  ]
+}
+```
+
+Regras:
+
+- `session_id`: identificador anônimo da aba (UUID gerado no navegador);
+- de 1 a 20 eventos por lote;
+- `name` é um destes: `app_loaded`, `client_error`, `search_performed`, `product_viewed`, `review_step_viewed`, `review_saved`, `product_create_submitted`, `product_created`, `product_create_conflict`, `product_edit_saved`, `signup_completed`;
+- `properties`: até 8 chaves identificadoras, com valores escalares (texto, número, booleano ou `null`); textos são cortados em 200 caracteres.
+
+Respostas: `202 Accepted`; `422` para lote inválido; `429` acima de 120 lotes por IP por hora.
+
+### Consultar o painel administrativo
+
+`GET /admin/overview?days=30`
+
+Exige autenticação de administração (RN35). `days` vai de 1 a 90, com padrão 30.
+
+Blocos da resposta:
+
+| Bloco | Conteúdo |
+|---|---|
+| `system` | ambiente, commit da API (`RENDER_GIT_COMMIT`), entrega de e-mail, tempo no ar e latência do banco |
+| `totals` | contas (confirmadas e pendentes), produtos (ativos e excluídos) e avaliações |
+| `daily` | por dia: novas contas, produtos e avaliações; usuários ativos, sessões e buscas |
+| `product` | North Star, buscas com resultado, ativação em 7 dias, avaliações por usuário ativo, funil da avaliação e conflitos no cadastro, cada um com a meta da [visão de produto](visao-produto.md#7-métricas-de-sucesso) |
+| `catalog` | produtos por categoria, % sem avaliação, mais avaliados, motivos por aspecto e intenção de recompra |
+| `technical` | requisições, % de 4xx e 5xx, p95 no período e por dia, e as 15 rotas mais chamadas nas últimas 24 h |
+| `frontend` | carregamentos, versões (commit) em uso e erros mais frequentes do navegador |
+
+Respostas: `200 OK`; `401` sem autenticação; `403 admin_required` para quem não administra.
+
+`GET /users/me` passa a informar `is_admin`, para que a interface mostre o acesso ao painel.
+
 ## Verificação de saúde
 
 ### Consultar saúde da aplicação

@@ -31,6 +31,8 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 | RF16 | Quando houver entrega de e-mail configurada, a API deve exigir a confirmação do e-mail por código antes do primeiro acesso à conta. |
 | RF17 | A API deve permitir reenviar o código de confirmação de uma conta pendente. |
 | RF18 | A API deve permitir redefinir a senha com um código enviado ao e-mail da conta. |
+| RF19 | A API deve oferecer à administração uma visão consolidada de uso, catálogo, operação da API e frontend, por período de 1 a 90 dias. |
+| RF20 | A API deve receber eventos de uso enviados pela interface, para calcular as métricas de produto. |
 
 ## Regras de negócio
 
@@ -88,6 +90,17 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 | RN33 | Cada endereço IP pode fazer no máximo 10 cadastros, 30 tentativas de código e 10 pedidos de e-mail por hora. |
 | RN34 | Sem entrega de e-mail configurada, contas nascem confirmadas e a recuperação de senha responde como indisponível. |
 
+### Administração e métricas
+
+| ID | Regra |
+|---|---|
+| RN35 | Somente contas cujo e-mail está em `ADMIN_EMAILS` acessam o painel; as demais recebem `403`. |
+| RN36 | Eventos de uso só aceitam nomes previstos e até 8 propriedades escalares curtas. A interface nunca envia texto digitado, e-mail ou query string, e não envia nada com *Do Not Track*, em navegadores automatizados ou fora do build de produção. |
+| RN37 | Um evento é associado a um usuário apenas quando há token válido; token inválido torna o evento anônimo, sem erro. |
+| RN38 | Eventos são guardados por 180 dias e métricas técnicas por 90 dias. |
+| RN39 | As métricas técnicas excluem o health check e os preflights de CORS, agregam por rota (template, não o caminho com IDs) e calculam o p95 pelo limite superior da faixa de latência. |
+| RN40 | Dias são contados no fuso de São Paulo. |
+
 ## Requisitos não funcionais
 
 | ID | Requisito |
@@ -99,6 +112,8 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 | RNF05 | Entradas inválidas devem produzir respostas de erro claras e códigos HTTP adequados. |
 | RNF06 | As regras críticas de autenticação, unicidade e autorização devem possuir testes automatizados. |
 | RNF07 | O cadastro deve resistir à criação automatizada de contas em massa, sem depender de serviços pagos. |
+| RNF08 | Métricas de uso devem ser próprias (sem terceiros) e respeitar a privacidade descrita em RN36. |
+| RNF09 | Coletar métricas técnicas não pode acrescentar uma escrita no banco por requisição nem derrubar a API em caso de falha. |
 
 ## Fora do escopo inicial
 

@@ -1,6 +1,6 @@
 # Matriz mínima de testes do MVP
 
-Estado: T01–T40 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 141 testes e ignora os 11 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 152. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
+Estado: T01–T46 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 148 testes e ignora os 16 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 164. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
 
 A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos, endpoints e telas do frontend.
 
@@ -46,6 +46,12 @@ A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos,
 | T38 | RF18, RN32, UC16 | Recuperação troca a senha, recusa a senha antiga, invalida tokens anteriores e aceita o novo login; dona do e-mail recupera conta criada por outra pessoa |
 | T39 | RN33, RNF07 | 11º cadastro do mesmo IP em 1 h retorna 429 `too_many_requests` |
 | T40 | RN34 | Sem entrega de e-mail, conta nasce confirmada e reenvio/recuperação retornam 503; `EMAIL_DELIVERY=log` é recusado em produção; migração `0006` preserva contas existentes como confirmadas |
+| T41 | RN35 | Painel exige autenticação (401) e administração (403); `ADMIN_EMAILS` é normalizado; `/users/me` informa `is_admin` |
+| T42 | RN36 | Lotes aceitam só eventos previstos, até 8 propriedades escalares com nomes identificadores, textos cortados em 200 caracteres, até 20 eventos e sessão UUID |
+| T43 | RN37 | Evento com token válido é associado ao usuário; sem token ou com token inválido fica anônimo, sempre 202; lotes acima do limite por IP retornam 429 |
+| T44 | RN38, RN39, RNF09 | Middleware registra o template da rota e ignora `/health`; agregação por minuto e classe; `UPSERT` soma contagens e faixas; falha de gravação devolve ao buffer; retenção remove dados antigos; p95 pelas faixas, com a faixa aberta sinalizada |
+| T45 | RF19, RN40 | Painel sobre dados conhecidos: totais, 30 dias de série, North Star, buscas com resultado, ativação por coorte, funil e abandono, conflitos, catálogo, rotas com 5xx e p95, versões e erros do frontend |
+| T46 | RNF08 | Interface: eventos só no build de produção, sem automação e sem Do Not Track; lote a cada 5 s ou 10 eventos; erros do navegador sem query string e limitados por sessão |
 
 ## Estratégia
 
@@ -62,4 +68,7 @@ A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos,
 - `tests/test_postgres_concurrency.py`: unicidade sob commits simultâneos e corrida avaliação versus exclusão usando sessões PostgreSQL independentes.
 - `tests/test_account_flows_postgres.py`: confirmação de e-mail, reenvio, expiração, recuperação de senha e limites por IP via HTTP contra PostgreSQL real (T34–T39).
 - `tests/test_account_security.py`: configuração de entrega, versão de sessão no JWT, formato e HMAC dos códigos (T35, T40).
+- `tests/test_observability.py`: faixas e percentis, agregação, middleware, acesso ao painel e validação de eventos (T41, T42, T44).
+- `tests/test_admin_postgres.py`: gravação e retenção das métricas, ingestão de eventos e números do painel contra PostgreSQL real (T43–T45).
+- Frontend: `src/lib/analytics.test.ts` (T46) e `AdminDashboard.test.tsx` + `e2e/admin.spec.ts` (painel).
 - `.github/workflows/tests.yml`: Python 3.12, PostgreSQL 17, verificação de dependências e suíte completa.

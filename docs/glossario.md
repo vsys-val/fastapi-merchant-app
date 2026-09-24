@@ -28,6 +28,11 @@ Uma linguagem comum evita que produto, código e banco usem palavras diferentes 
 | **Aspecto** | Dimensão do produto à qual o motivo se refere | `aspect` | `aspecto` |
 | **Percepção** | Se o aspecto foi positivo ou negativo | `perception` | `percepcao` |
 | **Sua experiência** | A avaliação do próprio usuário, apresentada separadamente | `your_review`, `your_repurchase_intent` | — |
+| **Administração** | Contas cujo e-mail está em `ADMIN_EMAILS`; acessam o painel `/admin` | `is_admin` | — (configuração) |
+| **Evento de uso** | Registro de uma ação na interface (busca, abertura de produto, etapa da avaliação…), sem dados pessoais | `events[]` | `eventos_produto` |
+| **Sessão anônima** | UUID gerado por aba do navegador para agrupar eventos sem identificar a pessoa | `session_id` | `sessao` |
+| **Usuário ativo** | Usuário autenticado com ao menos um evento no período | — | — |
+| **North Star** | Consultas a produtos que o usuário já avaliou, por usuário ativo por semana | `product.north_star` | — (calculado) |
 | **Indicadores comunitários** | Distribuições percentuais calculadas sob demanda a partir das avaliações de outras pessoas | `community_summary` | — (não armazenado) |
 
 ## Valores controlados

@@ -60,6 +60,7 @@ erDiagram
   PRODUTOS ||--o{ AVALIACOES : recebe
   AVALIACOES ||--|{ MOTIVOS_AVALIACAO : contém
   USUARIOS ||--o{ CODIGOS_VERIFICACAO : recebe
+  USUARIOS |o--o{ EVENTOS_PRODUTO : "gera (opcional)"
 
   USUARIOS {
     int id PK
@@ -112,14 +113,32 @@ erDiagram
     varchar percepcao
   }
   LIMITES_LOGIN {
-    varchar escopo PK "account | ip | register | code | email"
+    varchar escopo PK "account | ip | register | code | email | events"
     varchar chave_hash PK "HMAC-SHA256"
     int tentativas
     timestamptz janela_iniciada_em
   }
+  EVENTOS_PRODUTO {
+    bigint id PK
+    varchar nome "lista fechada"
+    char sessao "UUID anônimo da aba"
+    int usuario_id FK "ON DELETE SET NULL"
+    jsonb propriedades "até 8 escalares"
+    timestamptz criado_em "retenção 180 dias"
+  }
+  METRICAS_REQUISICOES {
+    timestamptz minuto PK
+    varchar metodo PK
+    varchar rota PK "template da rota"
+    int classe PK "1 a 5"
+    int contagem
+    float duracao_total_ms
+    float duracao_max_ms
+    int_array faixas "latência em 9 faixas"
+  }
 ```
 
-`LIMITES_LOGIN` é uma tabela técnica, sem relação com as entidades de negócio: guarda só o HMAC do e-mail ou do IP.
+`LIMITES_LOGIN` é uma tabela técnica, sem relação com as entidades de negócio: guarda só o HMAC do e-mail ou do IP. `METRICAS_REQUISICOES` também é técnica e não guarda nada sobre quem fez a requisição. `EVENTOS_PRODUTO` alimenta o painel administrativo ([ADR-0012](decisoes/0012-painel-e-instrumentacao-propria.md)).
 
 ## 4. Ciclo de vida do produto
 

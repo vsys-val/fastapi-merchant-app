@@ -33,14 +33,14 @@ A documentação segue o caminho **problema → decisões → requisitos → esp
 
 | Produto | Requisitos e especificação | Qualidade e operação |
 |---|---|---|
-| [Visão de produto](docs/visao-produto.md): personas, JTBD, métricas, riscos | [Requisitos](docs/requisitos.md): 18 RF · 34 RN · 7 RNF | [Matriz de testes](docs/matriz-testes.md): T01–T40 |
+| [Visão de produto](docs/visao-produto.md): personas, JTBD, métricas, riscos | [Requisitos](docs/requisitos.md): 20 RF · 40 RN · 9 RNF | [Matriz de testes](docs/matriz-testes.md): T01–T46 |
 | [Decisões (ADRs)](docs/decisoes/README.md): 11 trade-offs registrados | [Histórias de usuário](docs/historias-usuario.md) com critérios Gherkin | [Rastreabilidade](docs/rastreabilidade.md): requisito → teste → tela |
 | [Roadmap](docs/roadmap.md): agora · próximo · depois | [Casos de uso](docs/casos-de-uso.md) · [Contrato da API](docs/contrato-api.md) | [Plano de implementação](docs/plano-implementacao.md) |
 | [Glossário](docs/glossario.md) · [Ideação](docs/ideacao.md) | [Modelo de dados](docs/modelo-banco.md) · [Diagramas](docs/diagramas.md) | [Deploy no Render](docs/deploy-render.md) |
 
 ## Estado
 
-MVP concluído e em produção (entregas 1–9 do [plano](docs/plano-implementacao.md)): configuração protegida, PostgreSQL com migrações, validação e normalização, autenticação própria, produtos, avaliações, consultas, observabilidade básica, CI e endurecimento de produção. Depois do MVP vieram a confirmação de conta por código, a recuperação de senha e o limite de cadastros por IP ([ADR-0011](docs/decisoes/0011-confirmacao-de-conta-por-codigo.md)). Os 18 requisitos funcionais estão implementados e cobertos por 152 testes automatizados. As lacunas de interface estão na [rastreabilidade](docs/rastreabilidade.md) e priorizadas no [roadmap](docs/roadmap.md).
+MVP concluído e em produção (entregas 1–9 do [plano](docs/plano-implementacao.md)): configuração protegida, PostgreSQL com migrações, validação e normalização, autenticação própria, produtos, avaliações, consultas, observabilidade básica, CI e endurecimento de produção. Depois do MVP vieram a confirmação de conta por código, a recuperação de senha e o limite de cadastros por IP ([ADR-0011](docs/decisoes/0011-confirmacao-de-conta-por-codigo.md)), e depois o painel administrativo com métricas de uso e de operação ([ADR-0012](docs/decisoes/0012-painel-e-instrumentacao-propria.md)). Os 20 requisitos funcionais estão implementados e cobertos por 164 testes automatizados. As lacunas de interface estão na [rastreabilidade](docs/rastreabilidade.md) e priorizadas no [roadmap](docs/roadmap.md).
 
 ## Executar o MVP
 
@@ -93,7 +93,7 @@ O Supabase fornece o PostgreSQL hospedado; a aplicação continua acessando o ba
 
 As migrações ativam RLS nas quatro tabelas de negócio, na tabela interna `limites_login` e na tabela técnica `alembic_version`. Não existem políticas para os papéis públicos do Supabase; `anon` e `authenticated` também não possuem privilégios sobre as duas tabelas internas. O acesso de usuários passa pelos endpoints e pelo JWT da nossa API.
 
-Em produção, `MIGRATION_DATABASE_URL` permanece com o papel administrativo usado pelo Alembic. `DATABASE_URL` deve usar um login próprio que seja membro de `merchant_app_runtime`. Esse papel coletivo recebe somente operações de dados nas cinco tabelas operacionais e não acessa `alembic_version` nem altera a estrutura do banco.
+Em produção, `MIGRATION_DATABASE_URL` permanece com o papel administrativo usado pelo Alembic. `DATABASE_URL` deve usar um login próprio que seja membro de `merchant_app_runtime`. Esse papel coletivo recebe somente operações de dados nas tabelas operacionais e não acessa `alembic_version` nem altera a estrutura do banco.
 
 ### CORS
 
@@ -126,7 +126,7 @@ Sintaxe Python conferida, dependências diretas fixadas, `pip check` sem conflit
 | app/main.py | Cria a aplicação que o servidor Uvicorn recebe |
 | app/config.py | Lê e valida a configuração local/ambiente; protege a exibição de segredos |
 | app/database.py | Cria engine e sessões PostgreSQL sob demanda |
-| app/models.py | Mapeia as quatro tabelas de negócio, a tabela `limites_login` e suas restrições |
+| app/models.py | Mapeia as tabelas de negócio, as técnicas (`limites_login`, eventos e métricas) e suas restrições |
 | app/validation.py | Normaliza textos, medidas, GTIN e chaves de identidade |
 | app/schemas.py | Define e valida os corpos de criação e PATCH |
 | app/errors.py | Padroniza o envelope público de erros |
@@ -138,6 +138,9 @@ Sintaxe Python conferida, dependências diretas fixadas, `pip check` sem conflit
 | app/reviews.py | Implementa criação, edição e exclusão transacional de avaliações e motivos |
 | app/routes.py | Expõe as rotas funcionais sob `/api/v1` |
 | app/health.py | Verifica a aplicação e a conexão com o banco em `/health` |
+| app/observability.py | Agrega métricas de requisição em memória e as grava a cada 30 s |
+| app/events.py | Valida e grava os eventos de uso enviados pela interface |
+| app/admin.py | Controla o acesso de administração e calcula o painel `/admin/overview` |
 | .github/workflows/tests.yml | Executa a suíte com PostgreSQL 17 efêmero no GitHub Actions |
 | .github/workflows/smoke-test.yml | Valida diariamente a API publicada sem gravar dados |
 | scripts/smoke_test.py | Implementa o smoke test não destrutivo de produção |

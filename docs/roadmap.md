@@ -29,13 +29,15 @@ Os itens foram ordenados por **impacto no ciclo central** (buscar → decidir �
 - Correção de produto pelo responsável, com o bloqueio de RN13 avisado antes do formulário (RF07).
 - Atalho para o produto já cadastrado quando o cadastro é duplicado ([ADR-0004](decisoes/0004-catalogo-canonico-comunitario.md)).
 - Confirmação de conta por código, recuperação de senha, encerramento de sessões na troca de senha e limite de cadastros por IP ([ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)). A confirmação fica **inativa em produção** até o provedor de e-mail ser configurado.
+- Painel administrativo `/admin` com eventos de uso próprios e métricas técnicas da API: North Star, funil da avaliação, catálogo, latência por rota e erros do navegador ([ADR-0012](decisoes/0012-painel-e-instrumentacao-propria.md)).
 
 ## 🟢 Agora — medir e fechar o ciclo
 
 | Item | Problema | Move | Origem | Impacto / Esforço |
 |---|---|---|---|---|
 | Escolher e configurar o provedor de e-mail (ex.: Brevo ou Resend) e implementar o `EmailSender` HTTP | Sem provedor, a produção não exige confirmação de conta e não oferece recuperação de senha | RNF07; risco R2 | [ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md) | Alto / P |
-| Instrumentação de eventos (busca, abertura de produto, etapas da avaliação, publicação) | Hoje não é possível calcular nenhuma métrica da visão | Todas as métricas; valida H1 e H2 | [Métricas](visao-produto.md#7-métricas-de-sucesso) | Alto / M |
+| Ler o painel por 2–4 semanas e recalibrar as metas da visão | As metas são hipóteses; agora existem dados | Todas as métricas; valida H1 e H2 | [ADR-0012](decisoes/0012-painel-e-instrumentacao-propria.md) | Alto / P |
+| Alertas: aviso quando a taxa de 5xx ou o p95 passar do guarda-corpo | O painel só mostra problemas quando alguém abre | Latência p95; disponibilidade | [ADR-0012](decisoes/0012-painel-e-instrumentacao-propria.md) | Médio / P |
 
 ## 🔵 Próximo — escala e confiança
 

@@ -33,8 +33,12 @@ flowchart TB
     US12[US12 Lembrete na tela inicial · S]
     US13[US13 Minha área · S]
   end
+  subgraph E6[E6 · Operação do produto]
+    US16[US16 Acompanhar o produto com dados · M]
+  end
   E1 --> E2 --> E4 --> E5
   E2 --> E3 --> E4
+  E2 & E3 & E4 -. eventos de uso .-> E6
 ```
 
 ---
@@ -424,6 +428,36 @@ Cenário: acesso sem login
   Dado que não estou autenticada
   Quando acesso /account
   Então vejo o convite para entrar, e não os dados de outra pessoa
+```
+
+## E6 · Operação do produto
+
+### US16 — Acompanhar o produto com dados · Must
+
+> **Como** responsável pelo produto, **quero** um painel com o estado geral do frontend e do backend, **para** decidir com dados, e não por impressão.
+
+Rastreabilidade: RF19, RF20 · RN35–RN40 · UC17 · T41–T46 · [ADR-0012](decisoes/0012-painel-e-instrumentacao-propria.md)
+
+```gherkin
+Cenário: visão geral para administração
+  Dado que meu e-mail está em ADMIN_EMAILS
+  Quando abro /admin
+  Então vejo a saúde da API e do banco, as versões no ar e o estado do e-mail
+  E vejo a North Star e as métricas da visão de produto, cada uma com meta e estado
+  E cada gráfico tem uma tabela equivalente
+
+Cenário: período
+  Quando escolho 7, 30 ou 90 dias
+  Então todos os números e séries passam a considerar esse período
+
+Cenário: quem não administra
+  Dado que estou autenticada, mas meu e-mail não está em ADMIN_EMAILS
+  Quando abro /admin
+  Então vejo que o acesso é restrito, e a interface não consulta a API
+
+Cenário: privacidade
+  Quando uso o app com Do Not Track ativado
+  Então nenhum evento de uso é enviado
 ```
 
 ---

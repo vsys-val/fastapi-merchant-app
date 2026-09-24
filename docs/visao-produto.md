@@ -105,7 +105,7 @@ Os dois contextos de uso, **durante a compra** (leitura, pressa, celular) e **de
 
 ## 7. Métricas de sucesso
 
-O MVP ainda não coleta analytics. As métricas abaixo definem **o que medir** quando a instrumentação entrar no [roadmap](roadmap.md). As metas são hipóteses iniciais a calibrar com os primeiros dados.
+Todas as métricas abaixo são medidas pelo painel `/admin`, com eventos de uso próprios e sem ferramentas de terceiros ([ADR-0012](decisoes/0012-painel-e-instrumentacao-propria.md)). O painel mostra cada uma ao lado da meta. As metas são hipóteses iniciais, a calibrar com os primeiros dados.
 
 | Tipo | Métrica | Por que importa | Meta inicial |
 |---|---|---|---|
