@@ -154,7 +154,7 @@ Cenário: serviço de e-mail indisponível
 
 ### US03 — Buscar produto · Must
 
-> **Como** compradora no mercado, **quero** encontrar um produto pelo nome, pela marca ou pelo código de barras, **para** chegar rápido à informação que me ajuda a decidir.
+> **Como** compradora no mercado, **quero** encontrar um produto pelo nome, pela marca, pela categoria ou pelo código de barras, combinando os filtros quando precisar, **para** chegar rápido à informação que me ajuda a decidir.
 
 Rastreabilidade: RF03, RF04 · RN14 · UC04 · T23–T25
 
@@ -176,6 +176,25 @@ Cenário: busca sem login
   Dado que não estou autenticada
   Quando eu busco um produto
   Então vejo os resultados e o resumo de recompra da comunidade
+
+Cenário: filtros combinados
+  Dado que existem "Café solúvel" (Alimentos) e "Café gelado" (Bebidas), ambos da marca "Nescafé"
+  Quando eu busco por nome "cafe", marca "nescafe" e escolho a categoria Bebidas
+  Então vejo somente "Café gelado"
+
+Cenário: navegar só pela categoria
+  Quando eu toco no filtro "Limpeza" sem digitar nada
+  Então vejo todos os produtos de limpeza do catálogo
+
+Cenário: a busca não se perde
+  Dado que busquei por "cafe" em Bebidas e abri um resultado
+  Quando volto à busca
+  Então os filtros e os resultados continuam os mesmos
+  E o endereço da página pode ser compartilhado com a mesma busca
+
+Cenário: termo curto
+  Quando eu busco pela marca "k"
+  Então vejo "Digite pelo menos 2 letras para a marca." sem esperar a API
 ```
 
 ### US04 — Ver minha experiência em destaque · Must
