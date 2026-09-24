@@ -42,6 +42,7 @@ def test_register_returns_201_without_password_or_hash(application, monkeypatch)
         "name": "Valério",
         "email": "valerio@example.com",
         "email_verified": False,
+        "is_admin": False,
     }
     assert "password" not in response.text
     assert "hash" not in response.text
@@ -87,4 +88,5 @@ def test_users_me_returns_only_private_account_fields(application):
         "name": "Valério",
         "email": "valerio@example.com",
         "email_verified": True,
+        "is_admin": False,
     }

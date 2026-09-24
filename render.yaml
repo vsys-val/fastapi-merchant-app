@@ -23,5 +23,8 @@ services:
         generateValue: true
       - key: DATABASE_URL
         sync: false
+      # E-mails com acesso ao painel administrativo; definidos no painel do Render.
+      - key: ADMIN_EMAILS
+        sync: false
       - key: MIGRATION_DATABASE_URL
         sync: false

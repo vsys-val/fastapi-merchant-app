@@ -24,6 +24,10 @@ class Settings(BaseSettings):
     # "disabled" mantém contas ativas desde o cadastro e desliga recuperação de
     # senha; "log" grava os códigos no log e serve apenas para desenvolvimento.
     email_delivery: Literal["disabled", "log"] = "disabled"
+    # E-mails com acesso ao painel administrativo, separados por vírgula.
+    admin_emails: str = ""
+    # Definido automaticamente pelo Render em cada deploy.
+    render_git_commit: str | None = None
 
     @field_validator("database_url", "migration_database_url")
     @classmethod
@@ -92,6 +96,16 @@ class Settings(BaseSettings):
         """Confirmação de conta só é exigida quando há como entregar o código."""
 
         return self.email_delivery != "disabled"
+
+    @field_validator("admin_emails")
+    @classmethod
+    def normalize_admin_emails(cls, value: str) -> str:
+        emails = [item.strip().casefold() for item in value.split(",") if item.strip()]
+        return ",".join(dict.fromkeys(emails))
+
+    @property
+    def admin_email_set(self) -> frozenset[str]:
+        return frozenset(filter(None, self.admin_emails.split(",")))
 
     @property
     def cors_origins(self) -> list[str]:

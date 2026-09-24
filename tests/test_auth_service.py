@@ -58,6 +58,7 @@ def test_create_user_persists_only_hash_and_returns_public_fields(monkeypatch):
         "name": "Valério",
         "email": "valerio@example.com",
         "email_verified": True,
+        "is_admin": False,
     }
     assert result.email is None
     # Um commit para o limite por IP e outro para a conta.

@@ -4,7 +4,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import load_settings
+from app.database import get_session_factory
 from app.email import build_email_sender
+from app.observability import RequestMetrics, install_request_metrics
 from app.errors import register_exception_handlers
 from app.health import router as health_router
 from app.routes import router
@@ -35,6 +37,7 @@ def create_app() -> FastAPI:
             allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
             allow_headers=["Authorization", "Content-Type"],
         )
+    install_request_metrics(application, RequestMetrics(), lambda: get_session_factory()())
     register_exception_handlers(application)
     application.include_router(router)
     application.include_router(health_router)

@@ -10,7 +10,7 @@
 - Indicadores comunitários são calculados sob demanda e não são armazenados.
 - RLS habilitado nas quatro tabelas de negócio, sem políticas públicas; clientes acessam os dados pela API FastAPI.
 - As tabelas internas `alembic_version` e `limites_login` também usam RLS e não concedem privilégios a `anon` ou `authenticated`.
-- A conexão de migração permanece privilegiada. A conexão de execução da API deve usar um login membro de `merchant_app_runtime`, papel criado pela migração `0005_runtime_role` com acesso apenas às operações de dados nas cinco tabelas operacionais.
+- A conexão de migração permanece privilegiada. A conexão de execução da API deve usar um login membro de `merchant_app_runtime`, papel criado pela migração `0005_runtime_role` com acesso apenas às operações de dados nas tabelas operacionais.
 - Quantidades equivalentes são normalizadas para unidades-base antes da geração da chave de identidade:
   - massa em `g`;
   - volume em `ml`;
@@ -41,11 +41,38 @@
 
 A chave primária garante **um código vigente por finalidade**: um novo envio substitui o anterior em um único `UPSERT`. O código é removido ao ser usado. A tabela usa RLS, não concede privilégios a `anon` ou `authenticated` e é acessível ao papel `merchant_app_runtime`.
 
+## Tabela `eventos_produto`
+
+| Coluna | Tipo conceitual | Nulo | Regras |
+|---|---|---:|---|
+| `id` | BIGINT | não | identidade |
+| `nome` | TEXT | não | um dos eventos previstos no contrato |
+| `sessao` | CHAR(36) | não | identificador anônimo da aba |
+| `usuario_id` | INTEGER | sim | FK para `usuarios.id` com `ON DELETE SET NULL`; nulo para visitantes e tokens inválidos |
+| `propriedades` | JSONB | não | até 8 escalares curtos; nunca texto digitado ou e-mail |
+| `criado_em` | TIMESTAMPTZ | não | índices em `criado_em` e em `(nome, criado_em)` |
+
+Retenção: 180 dias.
+
+## Tabela `metricas_requisicoes`
+
+| Coluna | Tipo conceitual | Nulo | Regras |
+|---|---|---:|---|
+| `minuto` | TIMESTAMPTZ | não | parte da chave primária |
+| `metodo` | TEXT | não | parte da chave primária |
+| `rota` | TEXT | não | template da rota (`/api/v1/products/{product_id}`); parte da chave primária |
+| `classe` | INTEGER | não | 1 a 5 (2xx, 4xx…); parte da chave primária |
+| `contagem` | INTEGER | não | requisições no minuto |
+| `duracao_total_ms` / `duracao_max_ms` | FLOAT | não | para média e máximo |
+| `faixas` | INTEGER[] | não | contagem por faixa de latência (≤25, 50, 100, 200, 400, 800, 1600, 3200 ms e acima) |
+
+O processo acumula em memória e grava a cada 30 s com um `UPSERT` que soma contagens e faixas. Retenção: 90 dias. As duas tabelas usam RLS, sem privilégios para `anon`/`authenticated`, com acesso do papel `merchant_app_runtime`.
+
 ## Tabela `limites_login`
 
 | Coluna | Tipo conceitual | Nulo | Regras |
 |---|---|---:|---|
-| `escopo` | TEXT | não | `account` e `ip` (login), `register` (cadastro), `code` (uso de códigos) ou `email` (pedidos de e-mail); parte da chave primária |
+| `escopo` | TEXT | não | `account` e `ip` (login), `register` (cadastro), `code` (uso de códigos), `email` (pedidos de e-mail) ou `events` (lotes de eventos); parte da chave primária |
 | `chave_hash` | CHAR(64) | não | HMAC-SHA-256 do identificador; parte da chave primária |
 | `tentativas` | INTEGER | não | contador positivo atualizado atomicamente |
 | `janela_iniciada_em` | TIMESTAMPTZ | não | início da janela temporária vigente |

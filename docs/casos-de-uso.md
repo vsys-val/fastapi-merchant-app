@@ -709,3 +709,15 @@ O autor decide remover sua avaliação de um produto.
 **Pós-condição:** somente a nova senha funciona e todos os tokens anteriores recebem `401`.
 
 **Caso de segurança:** se alguém cadastrou o e-mail de outra pessoa (conta pendente), a dona do e-mail recupera a conta por este caso de uso: ela define a própria senha e a senha do invasor deixa de valer.
+
+## UC17 — Acompanhar o produto pelo painel
+
+**Ator:** administração. **Relacionado:** RF19, RF20, RN35–RN40.
+
+1. Acessa `/admin` na interface com uma conta listada em `ADMIN_EMAILS`.
+2. A interface pede `GET /admin/overview` para o período escolhido (7, 30 ou 90 dias).
+3. Vê a saúde atual (API, banco, versões e e-mail), as métricas de produto contra as metas, crescimento, catálogo, operação da API e erros do navegador.
+
+**Exceções:** 401 sem sessão; 403 para quem não administra (a interface nem chama a API).
+
+**Pós-condição:** nenhum dado alterado.

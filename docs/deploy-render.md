@@ -42,6 +42,12 @@ A variável não é declarada no `render.yaml`; configure-a em **Environment** n
 
 Quando um provedor HTTP for implementado, troque o valor **no `render.yaml`**: variáveis com `value` no Blueprint sobrescrevem as do painel a cada sincronização. A chave de API do provedor deve entrar com `sync: false`, como as URLs de banco. Ver [ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md).
 
+## Painel administrativo
+
+`ADMIN_EMAILS` é declarada no `render.yaml` com `sync: false`. Configure-a em **Environment** com os e-mails que podem abrir `/admin`, separados por vírgula (maiúsculas e espaços são ignorados). Vazia, ninguém acessa o painel. A troca exige reiniciar o serviço, o que o Render faz ao salvar a variável.
+
+O commit exibido no painel vem de `RENDER_GIT_COMMIT`, que o Render define sozinho. Ver [ADR-0012](decisoes/0012-painel-e-instrumentacao-propria.md).
+
 ## Inicialização e saúde
 
 Ao iniciar cada deploy, o serviço executa `alembic upgrade head` e somente então

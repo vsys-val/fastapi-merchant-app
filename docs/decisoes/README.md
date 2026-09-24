@@ -17,6 +17,7 @@ As decisões 0001–0010 foram tomadas durante a ideação e a implementação d
 | [0009](0009-leitura-publica-escrita-autenticada.md) | Leitura pública, escrita autenticada | Produto / Segurança | Aceita |
 | [0010](0010-autenticacao-propria.md) | Autenticação própria na API, sem Supabase Auth | Arquitetura | Aceita |
 | [0011](0011-confirmacao-de-conta-por-codigo.md) | Confirmação de conta e recuperação de senha por código | Produto / Segurança | Aceita |
+| [0012](0012-painel-e-instrumentacao-propria.md) | Painel administrativo com instrumentação própria | Produto / Operação | Aceita |
 
 ## Modelo
 

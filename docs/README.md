@@ -29,7 +29,7 @@ flowchart TB
     MD[Modelo de dados<br/>+ diagramas]
   end
   subgraph Verificação
-    MT[Matriz de testes<br/>T01–T40]
+    MT[Matriz de testes<br/>T01–T46]
     RT[Rastreabilidade<br/>RF → UC → endpoint → teste → tela]
   end
   subgraph Evolução
@@ -55,7 +55,7 @@ flowchart TB
 |---|---|
 | [visao-produto.md](visao-produto.md) | Problema, proto-personas, JTBD, proposta de valor, princípios, escopo, métricas, hipóteses e riscos |
 | [ideacao.md](ideacao.md) | Registro histórico da ideação e das decisões confirmadas (14 a 18/08/2026) |
-| [decisoes/](decisoes/README.md) | 11 ADRs de produto e arquitetura, com alternativas e consequências |
+| [decisoes/](decisoes/README.md) | 12 ADRs de produto e arquitetura, com alternativas e consequências |
 | [roadmap.md](roadmap.md) | Próximos passos priorizados por impacto e esforço, ligados a métricas e lacunas |
 | [glossario.md](glossario.md) | Linguagem do domínio em português, API e banco |
 
@@ -65,7 +65,7 @@ flowchart TB
 |---|---|
 | [requisitos.md](requisitos.md) | 18 requisitos funcionais, 34 regras de negócio, 7 não funcionais e o que ficou fora do escopo |
 | [historias-usuario.md](historias-usuario.md) | 15 histórias em 5 épicos, MoSCoW, critérios de aceite em Gherkin e definição de pronto |
-| [casos-de-uso.md](casos-de-uso.md) | UC01–UC16 com fluxos principal, alternativos e de exceção |
+| [casos-de-uso.md](casos-de-uso.md) | UC01–UC17 com fluxos principal, alternativos e de exceção |
 | [contrato-api.md](contrato-api.md) | Endpoints, formatos, normalização, paginação e erros |
 | [modelo-banco.md](modelo-banco.md) | Tabelas, restrições e decisões de persistência |
 | [diagramas.md](diagramas.md) | Contexto, casos de uso, ER, ciclos de vida do produto e da conta, sequência e deploy (Mermaid) |
@@ -74,7 +74,7 @@ flowchart TB
 
 | Documento | Conteúdo |
 |---|---|
-| [matriz-testes.md](matriz-testes.md) | T01–T40 ligados a requisitos e casos de uso |
+| [matriz-testes.md](matriz-testes.md) | T01–T46 ligados a requisitos e casos de uso |
 | [rastreabilidade.md](rastreabilidade.md) | Cobertura ponta a ponta nos dois repositórios, incluindo lacunas |
 | [plano-implementacao.md](plano-implementacao.md) | Sequência de entregas com critérios de conclusão |
 | [deploy-render.md](deploy-render.md) | Implantação, segredos, CORS e saúde |
