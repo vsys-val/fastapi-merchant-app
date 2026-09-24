@@ -270,7 +270,7 @@ Cenário: recadastro de produto removido
 
 > **Como** quem cadastrou um produto, **quero** corrigir um erro de digitação, **para** que o catálogo fique correto, **sem** alterar o que outras pessoas já avaliaram.
 
-Rastreabilidade: RF07 · RN13 · UC07 · T12, T13 · [ADR-0005](decisoes/0005-bloqueio-de-edicao-apos-avaliacao.md) · **Interface: pendente**
+Rastreabilidade: RF07 · RN13 · UC07 · T12, T13 · [ADR-0005](decisoes/0005-bloqueio-de-edicao-apos-avaliacao.md)
 
 ```gherkin
 Cenário: correção antes de avaliações de terceiros
@@ -280,8 +280,22 @@ Cenário: correção antes de avaliações de terceiros
 
 Cenário: produto já avaliado por outra pessoa
   Dado que outra pessoa avaliou o produto
-  Quando tento alterá-lo
+  Quando abro "Corrigir cadastro"
+  Então vejo "Correção indisponível" antes de preencher qualquer campo
+
+Cenário: outra pessoa avalia enquanto corrijo
+  Dado que abri a correção de um produto sem avaliações de terceiros
+  E outra pessoa o avaliou nesse meio-tempo
+  Quando salvo a correção
   Então recebo "O produto não pode ser editado porque outra pessoa já o avaliou."
+
+Cenário: correção que duplica outro produto
+  Quando corrijo o nome para o de um produto que já existe
+  Então vejo "Este produto já está cadastrado." e o atalho "Ver produto já cadastrado"
+
+Cenário: nada alterado
+  Quando salvo sem mudar nenhum campo
+  Então vejo "Nada foi alterado." e nenhuma requisição é enviada
 ```
 
 ### US08 — Remover cadastro indevido · Could
