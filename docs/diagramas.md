@@ -41,8 +41,11 @@ flowchart LR
     UC12([UC12 Consultar própria conta])
     UC13([UC13 Consultar próprias avaliações])
     UC14([UC14 Consultar próprios produtos])
+    UC15([UC15 Confirmar e-mail])
+    UC16([UC16 Recuperar senha])
   end
   V --- UC01 & UC02 & UC04 & UC05
+  V --- UC15 & UC16
   U --- UC04 & UC05 & UC06 & UC07 & UC11
   U --- UC08 & UC09 & UC10
   U --- UC12 & UC13 & UC14
@@ -56,12 +59,24 @@ erDiagram
   USUARIOS ||--o{ AVALIACOES : escreve
   PRODUTOS ||--o{ AVALIACOES : recebe
   AVALIACOES ||--|{ MOTIVOS_AVALIACAO : contém
+  USUARIOS ||--o{ CODIGOS_VERIFICACAO : recebe
 
   USUARIOS {
     int id PK
     varchar nome_publico
     varchar email UK
     text senha_hash
+    timestamptz criado_em
+    timestamptz email_verificado_em "null = pendente"
+    int versao_sessao "troca de senha incrementa"
+  }
+  CODIGOS_VERIFICACAO {
+    int usuario_id PK, FK "ON DELETE CASCADE"
+    varchar finalidade PK "email_verification | password_reset"
+    char codigo_hash "HMAC, nunca o código"
+    timestamptz expira_em "15 min"
+    int tentativas "máx. 5"
+    timestamptz enviado_em "reenvio após 60 s"
   }
   PRODUTOS {
     int id PK
@@ -97,7 +112,7 @@ erDiagram
     varchar percepcao
   }
   LIMITES_LOGIN {
-    varchar escopo PK "account | ip"
+    varchar escopo PK "account | ip | register | code | email"
     varchar chave_hash PK "HMAC-SHA256"
     int tentativas
     timestamptz janela_iniciada_em
@@ -162,7 +177,28 @@ sequenceDiagram
   end
 ```
 
-## 6. Deploy e verificação contínua
+## 6. Ciclo de vida da conta
+
+```mermaid
+stateDiagram-v2
+  direction LR
+  [*] --> Pendente: cadastro (201)
+  Pendente --> Confirmada: código de confirmação
+  Pendente --> Confirmada: recuperação de senha
+  Pendente --> Substituída: novo cadastro após 24 h
+  Substituída --> [*]
+  Confirmada --> Confirmada: recuperação de senha
+```
+
+| Estado | Pode obter token? | Observações |
+|---|---|---|
+| Pendente | Não: login com senha correta → `403 email_not_verified` | E-mail reservado por 24 h; reenvio de código a cada 60 s |
+| Confirmada | Sim | Recuperar a senha incrementa `versao_sessao` e derruba os tokens anteriores |
+| Substituída | — | A conta pendente é apagada; como nunca obteve token, não tem dados |
+
+Sem entrega de e-mail configurada (`EMAIL_DELIVERY=disabled`), o cadastro vai direto para **Confirmada**.
+
+## 7. Deploy e verificação contínua
 
 ```mermaid
 flowchart LR

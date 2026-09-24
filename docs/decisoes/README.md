@@ -2,7 +2,7 @@
 
 Cada arquivo registra **uma** decisão relevante de produto ou arquitetura: o contexto, as alternativas consideradas, a escolha e suas consequências, inclusive as negativas.
 
-As decisões foram tomadas durante a ideação (14 a 18/08/2026) e registradas em commits atômicos de `docs/ideacao.md`. Estes ADRs foram **escritos retroativamente** a partir desse histórico, para tornar explícitas as alternativas e os trade-offs que a ideação registrava apenas como resultado. O commit de origem é citado em cada ADR.
+As decisões 0001–0010 foram tomadas durante a ideação e a implementação do MVP e registradas em commits de `docs/ideacao.md`. Esses ADRs foram **escritos retroativamente** a partir desse histórico, para tornar explícitas as alternativas e os trade-offs que a ideação registrava apenas como resultado. O commit de origem é citado em cada ADR. A partir do ADR-0011, cada decisão é registrada junto com a mudança que a implementa.
 
 | ADR | Decisão | Tipo | Status |
 |---|---|---|---|
@@ -16,6 +16,7 @@ As decisões foram tomadas durante a ideação (14 a 18/08/2026) e registradas e
 | [0008](0008-exclusao-logica-e-reativacao.md) | Exclusão lógica de produto e reativação por recadastro | Produto / Dados | Aceita |
 | [0009](0009-leitura-publica-escrita-autenticada.md) | Leitura pública, escrita autenticada | Produto / Segurança | Aceita |
 | [0010](0010-autenticacao-propria.md) | Autenticação própria na API, sem Supabase Auth | Arquitetura | Aceita |
+| [0011](0011-confirmacao-de-conta-por-codigo.md) | Confirmação de conta e recuperação de senha por código | Produto / Segurança | Aceita |
 
 ## Modelo
 

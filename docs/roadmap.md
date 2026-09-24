@@ -23,12 +23,17 @@ Os itens foram ordenados por **impacto no ciclo central** (buscar → decidir �
 - Web/PWA mobile-first com busca, detalhe, avaliação em três etapas, área pessoal e lembretes.
 - Endurecimento de produção: rate limiting, RLS, papel de mínimo privilégio, CORS explícito e CSP.
 
+## ✅ Entregue — pós-MVP
+
+- Atalho para o produto já cadastrado quando o cadastro é duplicado ([ADR-0004](decisoes/0004-catalogo-canonico-comunitario.md)).
+- Confirmação de conta por código, recuperação de senha, encerramento de sessões na troca de senha e limite de cadastros por IP ([ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)). A confirmação fica **inativa em produção** até o provedor de e-mail ser configurado.
+
 ## 🟢 Agora — medir e fechar o ciclo
 
 | Item | Problema | Move | Origem | Impacto / Esforço |
 |---|---|---|---|---|
+| Escolher e configurar o provedor de e-mail (ex.: Brevo ou Resend) e implementar o `EmailSender` HTTP | Sem provedor, a produção não exige confirmação de conta e não oferece recuperação de senha | RNF07; risco R2 | [ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md) | Alto / P |
 | Instrumentação de eventos (busca, abertura de produto, etapas da avaliação, publicação) | Hoje não é possível calcular nenhuma métrica da visão | Todas as métricas; valida H1 e H2 | [Métricas](visao-produto.md#7-métricas-de-sucesso) | Alto / M |
-| Levar ao produto existente em caso de duplicata (`existing_product_id`) | O usuário recebe "já cadastrado" e fica sem saída | Conversão cadastro → avaliação; guarda-corpo de 409 | [ADR-0004](decisoes/0004-catalogo-canonico-comunitario.md) | Alto / P |
 | Busca combinada e filtro por categoria na interface | A API aceita nome + marca + categoria; a tela aceita um campo por vez | % de buscas com resultado | RF04 ◐ | Médio / P |
 | Tela de correção de produto | Erros de cadastro não podem ser corrigidos pelo usuário | Qualidade do catálogo | RF07 ⚠️, [ADR-0005](decisoes/0005-bloqueio-de-edicao-apos-avaliacao.md) | Médio / P |
 
@@ -39,7 +44,6 @@ Os itens foram ordenados por **impacto no ciclo central** (buscar → decidir �
 | Busca no banco com `pg_trgm` + `unaccent` | `search_products` carrega o catálogo ativo em memória | Latência p95 da busca; risco R3 | [Visão §8](visao-produto.md#8-hipóteses-e-riscos) | Alto / M |
 | Motivos agregados no detalhe ("o que mais elogiam / criticam") | Os motivos existem nos dados, mas não aparecem para a comunidade | Valor para a persona Bruno; valida H3 | [ADR-0003](decisoes/0003-motivos-estruturados-obrigatorios.md) | Alto / M |
 | Leitura de código de barras pela câmera | Digitar 13 dígitos no corredor é lento | Tempo até a decisão; buscas por GTIN | JTBD da persona Ana | Alto / M |
-| Recuperação de senha por e-mail | Quem esquece a senha perde a memória | Retenção | [ADR-0010](decisoes/0010-autenticacao-propria.md) | Médio / M |
 | Sessão em cookie HttpOnly | O token em `localStorage` fica exposto a XSS | Segurança | Arquitetura do frontend | Médio / M |
 | Exclusão de produto pela interface | Cadastros indevidos só saem pela API | Qualidade do catálogo | RF13 ◐ | Baixo / P |
 
@@ -54,6 +58,8 @@ Os itens foram ordenados por **impacto no ciclo central** (buscar → decidir �
 | Listas de compras a partir de "compraria de novo" | O ciclo de memória está validado e os usuários pedem planejamento |
 | Imagens de produto | Existe fonte licenciada ou fluxo de moderação de fotos |
 | Cache de indicadores | O cálculo sob demanda se torna gargalo medido |
+| CAPTCHA invisível (ex.: Cloudflare Turnstile) no cadastro | Cadastros automatizados continuam passando pela confirmação de e-mail e pelo limite por IP |
+| Limpeza periódica de contas pendentes expiradas | O volume de contas pendentes abandonadas passa a pesar no banco (hoje, elas só são substituídas quando o e-mail é recadastrado) |
 
 ## Fora do produto
 

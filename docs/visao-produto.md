@@ -101,7 +101,7 @@ Os dois contextos de uso, **durante a compra** (leitura, pressa, celular) e **de
 | Preços, lojas, promoções | Outro problema e outro produto |
 | Imagens de produtos | Depende de fonte de imagens e de moderação |
 | Moderação, mesclagem e administração de duplicatas | Mitigado pela deduplicação automática e pelo bloqueio de edição ([ADR-005](decisoes/0005-bloqueio-de-edicao-apos-avaliacao.md)) |
-| Recuperação de senha e refresh token | Custo de infraestrutura (e-mail) sem impacto no teste de valor |
+| Refresh token | Sessão de 24 h basta para o uso no mercado; recuperação de senha e confirmação de conta foram adicionadas depois do MVP ([ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)) |
 
 ## 7. Métricas de sucesso
 
@@ -127,7 +127,7 @@ O MVP ainda não coleta analytics. As métricas abaixo definem **o que medir** q
 | H3 | Os 12 aspectos cobrem bem categorias muito diferentes | Uso excessivo de "outro" e motivos pouco úteis | % de avaliações com `other`; análise dos comentários |
 | H4 | A deduplicação por GTIN + identidade normalizada evita duplicatas sem atrito | Catálogo poluído ou usuários bloqueados por conflito | Taxa de `409` e revisão amostral de duplicatas |
 | R1 | Catálogo vazio no início (problema do "ovo e da galinha") | Buscas sem resultado afastam novos usuários | Seed por categoria; cadastro rápido a partir do GTIN |
-| R2 | Avaliações falsas ou maliciosas | Indicadores comunitários perdem confiança | Limite de uma avaliação por usuário e produto (já existe); moderação no roadmap |
+| R2 | Avaliações falsas ou contas criadas em massa por bots | Indicadores comunitários perdem confiança | Uma avaliação por usuário e produto; confirmação de e-mail e limite de cadastros por IP ([ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)); moderação no roadmap |
 | R3 | A busca atual filtra em memória | Latência cresce com o catálogo | Busca no banco com índices trigram (roadmap, *Next*) |
 
 ## 9. Como este documento se conecta ao resto
@@ -139,7 +139,7 @@ flowchart LR
   R --> H[Histórias e critérios de aceite]
   R --> UC[Casos de uso]
   UC --> C[Contrato da API]
-  C --> T[Matriz de testes T01–T33]
+  C --> T[Matriz de testes T01–T40]
   H --> W[Telas do frontend]
   T --> CI[CI + smoke test em produção]
   R -.rastreado em.-> M[Matriz de rastreabilidade]

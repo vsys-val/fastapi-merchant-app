@@ -33,14 +33,14 @@ A documentação segue o caminho **problema → decisões → requisitos → esp
 
 | Produto | Requisitos e especificação | Qualidade e operação |
 |---|---|---|
-| [Visão de produto](docs/visao-produto.md): personas, JTBD, métricas, riscos | [Requisitos](docs/requisitos.md): 15 RF · 28 RN · 6 RNF | [Matriz de testes](docs/matriz-testes.md): T01–T33 |
-| [Decisões (ADRs)](docs/decisoes/README.md): 10 trade-offs registrados | [Histórias de usuário](docs/historias-usuario.md) com critérios Gherkin | [Rastreabilidade](docs/rastreabilidade.md): requisito → teste → tela |
+| [Visão de produto](docs/visao-produto.md): personas, JTBD, métricas, riscos | [Requisitos](docs/requisitos.md): 18 RF · 34 RN · 7 RNF | [Matriz de testes](docs/matriz-testes.md): T01–T40 |
+| [Decisões (ADRs)](docs/decisoes/README.md): 11 trade-offs registrados | [Histórias de usuário](docs/historias-usuario.md) com critérios Gherkin | [Rastreabilidade](docs/rastreabilidade.md): requisito → teste → tela |
 | [Roadmap](docs/roadmap.md): agora · próximo · depois | [Casos de uso](docs/casos-de-uso.md) · [Contrato da API](docs/contrato-api.md) | [Plano de implementação](docs/plano-implementacao.md) |
 | [Glossário](docs/glossario.md) · [Ideação](docs/ideacao.md) | [Modelo de dados](docs/modelo-banco.md) · [Diagramas](docs/diagramas.md) | [Deploy no Render](docs/deploy-render.md) |
 
 ## Estado
 
-MVP concluído e em produção (entregas 1–9 do [plano](docs/plano-implementacao.md)): configuração protegida, PostgreSQL com migrações, validação e normalização, autenticação própria, produtos, avaliações, consultas, observabilidade básica, CI e endurecimento de produção. Os 15 requisitos funcionais estão implementados e cobertos por 127 testes automatizados. As lacunas de interface estão na [rastreabilidade](docs/rastreabilidade.md) e priorizadas no [roadmap](docs/roadmap.md).
+MVP concluído e em produção (entregas 1–9 do [plano](docs/plano-implementacao.md)): configuração protegida, PostgreSQL com migrações, validação e normalização, autenticação própria, produtos, avaliações, consultas, observabilidade básica, CI e endurecimento de produção. Depois do MVP vieram a confirmação de conta por código, a recuperação de senha e o limite de cadastros por IP ([ADR-0011](docs/decisoes/0011-confirmacao-de-conta-por-codigo.md)). Os 18 requisitos funcionais estão implementados e cobertos por 152 testes automatizados. As lacunas de interface estão na [rastreabilidade](docs/rastreabilidade.md) e priorizadas no [roadmap](docs/roadmap.md).
 
 ## Executar o MVP
 
@@ -117,7 +117,7 @@ O workflow `Production smoke test` executa diariamente uma verificação não de
 
 ### Validação desta entrega
 
-Sintaxe Python conferida, dependências diretas fixadas, `pip check` sem conflitos e 125 testes locais aprovados; dois testes PostgreSQL adicionais são executados no CI, totalizando 127. Os fluxos foram validados no Supabase com transações revertidas e a jornada HTTP completa foi automatizada. Nenhum dado de teste permaneceu.
+Sintaxe Python conferida, dependências diretas fixadas, `pip check` sem conflitos e 141 testes locais aprovados; 11 testes adicionais usam o PostgreSQL efêmero do CI, totalizando 152. Os fluxos foram validados no Supabase com transações revertidas e a jornada HTTP completa foi automatizada. Nenhum dado de teste permaneceu.
 
 ## Como os arquivos se conectam
 
