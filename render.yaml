@@ -16,6 +16,9 @@ services:
         value: production
       - key: ACCESS_TOKEN_EXPIRES_SECONDS
         value: 86400
+      # Sem provedor de e-mail, a confirmação de conta fica desligada.
+      - key: EMAIL_DELIVERY
+        value: disabled
       - key: JWT_SECRET
         generateValue: true
       - key: DATABASE_URL

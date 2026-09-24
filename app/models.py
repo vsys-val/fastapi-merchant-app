@@ -31,17 +31,31 @@ class User(Base):
     public_name: Mapped[str] = mapped_column("nome_publico", String(100), nullable=False)
     email: Mapped[str] = mapped_column(String(320), nullable=False, unique=True)
     password_hash: Mapped[str] = mapped_column("senha_hash", Text, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        "criado_em", DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+    # Null enquanto o e-mail não foi confirmado; contas pendentes não entram.
+    email_verified_at: Mapped[Optional[datetime]] = mapped_column(
+        "email_verificado_em", DateTime(timezone=True), nullable=True
+    )
+    # Incrementada na troca de senha; tokens com versão anterior deixam de valer.
+    session_version: Mapped[int] = mapped_column(
+        "versao_sessao", Integer, nullable=False, default=0, server_default="0"
+    )
 
     products: Mapped[List["Product"]] = relationship(back_populates="responsible")
     reviews: Mapped[List["Review"]] = relationship(back_populates="author")
 
 
 class LoginAttempt(Base):
-    """Contador compartilhado entre workers para limitar tentativas de login."""
+    """Contador compartilhado entre workers para limitar operações sensíveis."""
 
     __tablename__ = "limites_login"
     __table_args__ = (
-        CheckConstraint("escopo IN ('account', 'ip')", name="ck_limites_login_escopo"),
+        CheckConstraint(
+            "escopo IN ('account', 'ip', 'register', 'code', 'email')",
+            name="ck_limites_login_escopo",
+        ),
         CheckConstraint("tentativas > 0", name="ck_limites_login_tentativas_positivas"),
     )
 
@@ -50,6 +64,32 @@ class LoginAttempt(Base):
     attempts: Mapped[int] = mapped_column("tentativas", Integer, nullable=False)
     window_started_at: Mapped[datetime] = mapped_column(
         "janela_iniciada_em", DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+
+class VerificationCode(Base):
+    """Código de uso único; só o HMAC é armazenado, nunca o código em si."""
+
+    __tablename__ = "codigos_verificacao"
+    __table_args__ = (
+        CheckConstraint(
+            "finalidade IN ('email_verification', 'password_reset')",
+            name="ck_codigos_verificacao_finalidade",
+        ),
+        CheckConstraint("tentativas >= 0", name="ck_codigos_verificacao_tentativas"),
+    )
+
+    user_id: Mapped[int] = mapped_column(
+        "usuario_id", ForeignKey("usuarios.id", ondelete="CASCADE"), primary_key=True
+    )
+    purpose: Mapped[str] = mapped_column("finalidade", String(20), primary_key=True)
+    code_hash: Mapped[str] = mapped_column("codigo_hash", String(64), nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(
+        "expira_em", DateTime(timezone=True), nullable=False
+    )
+    attempts: Mapped[int] = mapped_column("tentativas", Integer, nullable=False, default=0)
+    sent_at: Mapped[datetime] = mapped_column(
+        "enviado_em", DateTime(timezone=True), nullable=False
     )
 
 

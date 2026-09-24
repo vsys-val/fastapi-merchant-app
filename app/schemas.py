@@ -87,6 +87,7 @@ class UserPublic(BaseModel):
     id: int
     name: str
     email: EmailStr
+    email_verified: bool
 
 
 class LoginInput(StrictInput):
@@ -97,6 +98,33 @@ class LoginInput(StrictInput):
     @classmethod
     def normalize_email(cls, value):
         return value.strip().casefold() if isinstance(value, str) else value
+
+
+def _normalize_email(value):
+    return value.strip().casefold() if isinstance(value, str) else value
+
+
+class EmailInput(StrictInput):
+    email: EmailStr
+
+    @field_validator("email", mode="before")
+    @classmethod
+    def normalize_email(cls, value):
+        return _normalize_email(value)
+
+
+class EmailVerificationInput(EmailInput):
+    code: str = Field(pattern=r"^[0-9]{6}$")
+
+
+class PasswordResetConfirm(EmailInput):
+    code: str = Field(pattern=r"^[0-9]{6}$")
+    new_password: str = Field(min_length=15, max_length=128)
+
+    @field_validator("new_password")
+    @classmethod
+    def validate_new_password(cls, value: str) -> str:
+        return validate_password_policy(value)
 
 
 class TokenResponse(BaseModel):

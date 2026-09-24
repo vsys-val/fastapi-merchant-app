@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import hashlib
 import hmac
+import secrets
+from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 
 import jwt
@@ -39,6 +41,12 @@ class InvalidAccessToken(ValueError):
     pass
 
 
+@dataclass(frozen=True, slots=True)
+class AccessTokenClaims:
+    user_id: int
+    session_version: int
+
+
 def validate_password_policy(password: str) -> str:
     if len(password) < 15:
         raise ValueError("A senha deve ter no mínimo 15 caracteres.")
@@ -70,18 +78,23 @@ def create_access_token(
     user_id: int,
     secret: str,
     *,
+    session_version: int = 0,
     now: datetime | None = None,
 ) -> str:
     issued_at = now or datetime.now(timezone.utc)
     expires_at = issued_at + timedelta(seconds=ACCESS_TOKEN_EXPIRES_SECONDS)
-    return jwt.encode(
-        {"sub": str(user_id), "iat": issued_at, "exp": expires_at},
-        secret,
-        algorithm=JWT_ALGORITHM,
-    )
+    claims: dict[str, object] = {"sub": str(user_id), "iat": issued_at, "exp": expires_at}
+    # Omitida na versão inicial: tokens anteriores ao campo continuam válidos.
+    if session_version:
+        claims["ver"] = session_version
+    return jwt.encode(claims, secret, algorithm=JWT_ALGORITHM)
 
 
 def decode_access_token(token: str, secret: str) -> int:
+    return decode_access_token_claims(token, secret).user_id
+
+
+def decode_access_token_claims(token: str, secret: str) -> AccessTokenClaims:
     try:
         payload = jwt.decode(
             token,
@@ -92,7 +105,10 @@ def decode_access_token(token: str, secret: str) -> int:
         subject = payload["sub"]
         if not isinstance(subject, str) or not subject.isdecimal() or int(subject) <= 0:
             raise InvalidAccessToken("sub inválido")
-        return int(subject)
+        version = payload.get("ver", 0)
+        if not isinstance(version, int) or isinstance(version, bool) or version < 0:
+            raise InvalidAccessToken("ver inválido")
+        return AccessTokenClaims(user_id=int(subject), session_version=version)
     except (InvalidTokenError, KeyError, TypeError, ValueError) as exc:
         raise InvalidAccessToken("Token inválido ou expirado.") from exc
 
@@ -101,5 +117,21 @@ def rate_limit_key(secret: str, scope: str, value: str) -> str:
     return hmac.new(
         secret.encode("utf-8"),
         f"{scope}:{value}".encode("utf-8"),
+        hashlib.sha256,
+    ).hexdigest()
+
+
+def generate_verification_code() -> str:
+    """Código numérico de 6 dígitos, fácil de digitar no celular."""
+
+    return f"{secrets.randbelow(1_000_000):06d}"
+
+
+def verification_code_hash(secret: str, user_id: int, purpose: str, code: str) -> str:
+    """Vincula o código ao usuário e à finalidade; o banco guarda só o HMAC."""
+
+    return hmac.new(
+        secret.encode("utf-8"),
+        f"code:{purpose}:{user_id}:{code}".encode("utf-8"),
         hashlib.sha256,
     ).hexdigest()

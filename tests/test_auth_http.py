@@ -3,7 +3,7 @@ from types import SimpleNamespace
 import pytest
 from fastapi.testclient import TestClient
 
-from app.auth import current_user_response
+from app.auth import RegistrationResult, current_user_response
 from app.database import get_db
 from app.main import create_app
 from app.schemas import UserPublic
@@ -22,7 +22,10 @@ def application(monkeypatch, tmp_path):
 def test_register_returns_201_without_password_or_hash(application, monkeypatch):
     monkeypatch.setattr(
         "app.routes.create_user",
-        lambda payload, _session: UserPublic(id=7, name=payload.name, email=payload.email),
+        lambda payload, _request, _session: RegistrationResult(
+            UserPublic(id=7, name=payload.name, email=payload.email, email_verified=False),
+            None,
+        ),
     )
     with TestClient(application) as client:
         response = client.post(
@@ -34,7 +37,12 @@ def test_register_returns_201_without_password_or_hash(application, monkeypatch)
             },
         )
     assert response.status_code == 201
-    assert response.json() == {"id": 7, "name": "Valério", "email": "valerio@example.com"}
+    assert response.json() == {
+        "id": 7,
+        "name": "Valério",
+        "email": "valerio@example.com",
+        "email_verified": False,
+    }
     assert "password" not in response.text
     assert "hash" not in response.text
 
@@ -69,9 +77,14 @@ def test_users_me_requires_bearer_token(application):
 
 def test_users_me_returns_only_private_account_fields(application):
     application.dependency_overrides[current_user_response] = lambda: UserPublic(
-        id=9, name="Valério", email="valerio@example.com"
+        id=9, name="Valério", email="valerio@example.com", email_verified=True
     )
     with TestClient(application) as client:
         response = client.get("/api/v1/users/me")
     assert response.status_code == 200
-    assert response.json() == {"id": 9, "name": "Valério", "email": "valerio@example.com"}
+    assert response.json() == {
+        "id": 9,
+        "name": "Valério",
+        "email": "valerio@example.com",
+        "email_verified": True,
+    }

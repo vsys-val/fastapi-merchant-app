@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import load_settings
+from app.email import build_email_sender
 from app.errors import register_exception_handlers
 from app.health import router as health_router
 from app.routes import router
@@ -25,6 +26,7 @@ def create_app() -> FastAPI:
         debug=False,
     )
     application.state.settings = settings
+    application.state.email_sender = build_email_sender(settings)
     if settings.cors_origins:
         application.add_middleware(
             CORSMiddleware,

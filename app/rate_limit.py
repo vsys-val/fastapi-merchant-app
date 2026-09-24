@@ -82,3 +82,13 @@ def reset_attempts(session: Session, *, scope: str, key_hash: str) -> None:
             LoginAttempt.key_hash == key_hash,
         )
     )
+
+
+# Limites por IP das operações de conta. Os valores toleram redes
+# compartilhadas (NAT) e ainda impedem criação ou tentativa em massa.
+REGISTER_WINDOW = timedelta(hours=1)
+REGISTER_LIMIT = 10
+CODE_WINDOW = timedelta(hours=1)
+CODE_LIMIT = 30
+EMAIL_WINDOW = timedelta(hours=1)
+EMAIL_LIMIT = 10

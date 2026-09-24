@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from types import SimpleNamespace
 from unittest.mock import Mock
 
@@ -9,22 +10,30 @@ from app import auth
 from app.errors import ApiError
 from app.models import User
 from app.schemas import LoginInput, UserCreate
+from app.security import AccessTokenClaims
 
 
 SECRET = "test-only-" + "x" * 40
+VERIFIED_AT = datetime(2026, 9, 1, tzinfo=timezone.utc)
 
 
-def request_stub(ip="127.0.0.1"):
-    settings = SimpleNamespace(jwt_secret=SimpleNamespace(get_secret_value=lambda: SECRET))
+def request_stub(ip="127.0.0.1", verification=False):
+    settings = SimpleNamespace(
+        jwt_secret=SimpleNamespace(get_secret_value=lambda: SECRET),
+        email_verification_enabled=verification,
+    )
     return SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(settings=settings)), client=SimpleNamespace(host=ip))
 
 
-def user_stub(user_id=7):
+def user_stub(user_id=7, verified=True):
     return User(
         id=user_id,
         public_name="Valério",
         email="valerio@example.com",
         password_hash="stored-hash",
+        created_at=VERIFIED_AT,
+        email_verified_at=VERIFIED_AT if verified else None,
+        session_version=0,
     )
 
 
@@ -32,6 +41,7 @@ def test_create_user_persists_only_hash_and_returns_public_fields(monkeypatch):
     session = Mock()
     session.scalar.return_value = None
     session.refresh.side_effect = lambda user: setattr(user, "id", 7)
+    monkeypatch.setattr(auth, "consume_attempt", lambda *args, **kwargs: 1)
     monkeypatch.setattr(auth, "hash_password", lambda password: "argon2id-hash")
     payload = UserCreate(
         email="valerio@example.com",
@@ -39,28 +49,32 @@ def test_create_user_persists_only_hash_and_returns_public_fields(monkeypatch):
         password="uma frase secreta longa",
     )
 
-    result = auth.create_user(payload, session)
+    result = auth.create_user(payload, request_stub(), session)
 
     stored = session.add.call_args.args[0]
     assert stored.password_hash == "argon2id-hash"
-    assert result.model_dump(mode="json") == {
+    assert result.user.model_dump(mode="json") == {
         "id": 7,
         "name": "Valério",
         "email": "valerio@example.com",
+        "email_verified": True,
     }
-    session.commit.assert_called_once()
+    assert result.email is None
+    # Um commit para o limite por IP e outro para a conta.
+    assert session.commit.call_count == 2
 
 
-def test_create_user_reports_duplicate_found_before_insert():
+def test_create_user_reports_duplicate_found_before_insert(monkeypatch):
     session = Mock()
-    session.scalar.return_value = 7
+    session.scalar.return_value = user_stub()
+    monkeypatch.setattr(auth, "consume_attempt", lambda *args, **kwargs: 1)
     payload = UserCreate(
         email="valerio@example.com",
         name="Outro nome",
         password="outra frase secreta longa",
     )
     with pytest.raises(ApiError) as caught:
-        auth.create_user(payload, session)
+        auth.create_user(payload, request_stub(), session)
     assert caught.value.status_code == 409
     assert caught.value.code == "email_already_registered"
     session.add.assert_not_called()
@@ -69,7 +83,8 @@ def test_create_user_reports_duplicate_found_before_insert():
 def test_create_user_concurrent_duplicate_rolls_back(monkeypatch):
     session = Mock()
     session.scalar.return_value = None
-    session.commit.side_effect = IntegrityError("insert", {}, Exception("unique"))
+    session.flush.side_effect = IntegrityError("insert", {}, Exception("unique"))
+    monkeypatch.setattr(auth, "consume_attempt", lambda *args, **kwargs: 1)
     monkeypatch.setattr(auth, "hash_password", lambda password: "argon2id-hash")
     payload = UserCreate(
         email="valerio@example.com",
@@ -77,7 +92,7 @@ def test_create_user_concurrent_duplicate_rolls_back(monkeypatch):
         password="uma frase secreta longa",
     )
     with pytest.raises(ApiError) as caught:
-        auth.create_user(payload, session)
+        auth.create_user(payload, request_stub(), session)
     assert caught.value.status_code == 409
     session.rollback.assert_called_once()
 
@@ -90,7 +105,7 @@ def test_login_success_resets_account_counter_and_returns_token(monkeypatch):
     monkeypatch.setattr(auth, "verify_password", lambda password, stored: True)
     reset = Mock()
     monkeypatch.setattr(auth, "reset_attempts", reset)
-    monkeypatch.setattr(auth, "create_access_token", lambda user_id, secret: "valid-token")
+    monkeypatch.setattr(auth, "create_access_token", lambda user_id, secret, **_: "valid-token")
 
     result = auth.login(
         LoginInput(email="valerio@example.com", password="senha correta"),
@@ -159,7 +174,11 @@ def test_current_user_accepts_valid_token_and_rejects_missing_user(monkeypatch):
     session = Mock()
     user = user_stub(42)
     session.get.return_value = user
-    monkeypatch.setattr(auth, "decode_access_token", lambda token, secret: 42)
+    monkeypatch.setattr(
+        auth,
+        "decode_access_token_claims",
+        lambda token, secret: AccessTokenClaims(user_id=42, session_version=0),
+    )
     credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials="token")
     assert auth.get_current_user(request_stub(), credentials, session) is user
 
