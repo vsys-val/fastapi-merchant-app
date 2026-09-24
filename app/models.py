@@ -5,7 +5,9 @@ from decimal import Decimal
 from typing import List, Optional
 
 from sqlalchemy import (
+    BigInteger,
     CheckConstraint,
+    Float,
     DateTime,
     ForeignKey,
     Identity,
@@ -17,11 +19,18 @@ from sqlalchemy import (
     UniqueConstraint,
     func,
 )
+from sqlalchemy import JSON
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
 class Base(DeclarativeBase):
     pass
+
+
+# Tipos nativos no PostgreSQL; JSON genérico nos testes que usam SQLite.
+JsonObject = JSON().with_variant(JSONB(), "postgresql")
+IntegerList = JSON().with_variant(ARRAY(Integer), "postgresql")
 
 
 class User(Base):
@@ -53,7 +62,7 @@ class LoginAttempt(Base):
     __tablename__ = "limites_login"
     __table_args__ = (
         CheckConstraint(
-            "escopo IN ('account', 'ip', 'register', 'code', 'email')",
+            "escopo IN ('account', 'ip', 'register', 'code', 'email', 'events')",
             name="ck_limites_login_escopo",
         ),
         CheckConstraint("tentativas > 0", name="ck_limites_login_tentativas_positivas"),
@@ -91,6 +100,46 @@ class VerificationCode(Base):
     sent_at: Mapped[datetime] = mapped_column(
         "enviado_em", DateTime(timezone=True), nullable=False
     )
+
+
+class ProductEvent(Base):
+    """Evento de uso enviado pela interface; sem e-mail nem texto digitado."""
+
+    __tablename__ = "eventos_produto"
+    __table_args__ = (
+        Index("ix_eventos_produto_criado_em", "criado_em"),
+        Index("ix_eventos_produto_nome_criado_em", "nome", "criado_em"),
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, Identity(), primary_key=True)
+    name: Mapped[str] = mapped_column("nome", String(40), nullable=False)
+    session_id: Mapped[str] = mapped_column("sessao", String(36), nullable=False)
+    user_id: Mapped[Optional[int]] = mapped_column(
+        "usuario_id", ForeignKey("usuarios.id", ondelete="SET NULL"), nullable=True
+    )
+    properties: Mapped[dict] = mapped_column("propriedades", JsonObject, nullable=False, default=dict)
+    created_at: Mapped[datetime] = mapped_column(
+        "criado_em", DateTime(timezone=True), nullable=False, server_default=func.now()
+    )
+
+
+class RequestMetric(Base):
+    """Requisições agregadas por minuto, rota, método e classe de status."""
+
+    __tablename__ = "metricas_requisicoes"
+    __table_args__ = (
+        CheckConstraint("classe BETWEEN 1 AND 5", name="ck_metricas_requisicoes_classe"),
+    )
+
+    minute: Mapped[datetime] = mapped_column("minuto", DateTime(timezone=True), primary_key=True)
+    method: Mapped[str] = mapped_column("metodo", String(7), primary_key=True)
+    route: Mapped[str] = mapped_column("rota", String(120), primary_key=True)
+    status_class: Mapped[int] = mapped_column("classe", Integer, primary_key=True)
+    count: Mapped[int] = mapped_column("contagem", Integer, nullable=False)
+    total_ms: Mapped[float] = mapped_column("duracao_total_ms", Float, nullable=False)
+    max_ms: Mapped[float] = mapped_column("duracao_max_ms", Float, nullable=False)
+    # Contagens por faixa de duração; limites em app.observability.LATENCY_BUCKETS_MS.
+    buckets: Mapped[list[int]] = mapped_column("faixas", IntegerList, nullable=False)
 
 
 class Product(Base):

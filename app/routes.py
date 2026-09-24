@@ -1,9 +1,13 @@
 """Rotas HTTP funcionais do MVP."""
 
 from fastapi import APIRouter, BackgroundTasks, Depends, Query, Request, Response, status
+from fastapi.security import HTTPAuthorizationCredentials
+
+from app.admin import build_overview, require_admin
 from sqlalchemy.orm import Session
 
 from app.auth import (
+    bearer_scheme,
     confirm_password_reset,
     create_user,
     current_user_response,
@@ -23,6 +27,7 @@ from app.catalog import (
 )
 from app.database import get_db
 from app.email import EmailMessage, deliver
+from app.events import EventBatch, optional_user_ignoring_errors, record_events
 from app.errors import ApiError
 from app.models import User
 from app.products import create_product, delete_product, update_product
@@ -80,6 +85,28 @@ def register_user(
     result = create_user(payload, request, session)
     _send_later(request, background_tasks, result.email)
     return result.user
+
+
+@router.post("/events", status_code=status.HTTP_202_ACCEPTED)
+def ingest_events(
+    batch: EventBatch,
+    request: Request,
+    credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme),
+    session: Session = Depends(get_db),
+) -> Response:
+    user = optional_user_ignoring_errors(request, credentials, session)
+    record_events(batch, request, session, user)
+    return Response(status_code=status.HTTP_202_ACCEPTED)
+
+
+@router.get("/admin/overview")
+def admin_overview(
+    request: Request,
+    days: int = Query(default=30, ge=1, le=90),
+    _admin: User = Depends(require_admin),
+    session: Session = Depends(get_db),
+) -> dict:
+    return build_overview(request, session, days)
 
 
 @router.post("/auth/email-verification", response_model=TokenResponse)

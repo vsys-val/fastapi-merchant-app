@@ -19,6 +19,8 @@ EXPECTED_PATHS = {
     "/api/v1/reviews/{review_id}",
     "/api/v1/auth/email-verification",
     "/api/v1/auth/password-reset",
+    "/api/v1/events",
+    "/api/v1/admin/overview",
 }
 
 

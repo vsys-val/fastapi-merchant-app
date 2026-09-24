@@ -352,5 +352,9 @@ def get_current_user(
     return _resolve_authenticated_user(request, credentials, session)
 
 
-def current_user_response(user: User = Depends(get_current_user)) -> UserPublic:
-    return _public_user(user)
+def current_user_response(
+    request: Request, user: User = Depends(get_current_user)
+) -> UserPublic:
+    public = _public_user(user)
+    public.is_admin = user.email in request.app.state.settings.admin_email_set
+    return public

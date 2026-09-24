@@ -88,6 +88,7 @@ class UserPublic(BaseModel):
     name: str
     email: EmailStr
     email_verified: bool
+    is_admin: bool = False
 
 
 class LoginInput(StrictInput):
