@@ -97,7 +97,7 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 
 ## Especificações consolidadas
 
-O [contrato da API](contrato-api.md) detalha limites, valores técnicos em inglês, normalização, paginação e respostas de erro. A [matriz de testes](matriz-testes.md) torna essas regras verificáveis.
+O [contrato da API](contrato-api.md) detalha limites, valores técnicos em inglês, normalização, paginação e respostas de erro. A [matriz de testes](matriz-testes.md) torna essas regras verificáveis. As [histórias de usuário](historias-usuario.md) traduzem os requisitos em critérios de aceite, e a [matriz de rastreabilidade](rastreabilidade.md) mostra onde cada um é implementado, testado e apresentado na interface.
 
 - Persistência em PostgreSQL; quantidades com decimal exato e datas com fuso horário.
 - Senhas Argon2id, 15–128 caracteres, espaços preservados e bloqueio local de senhas comuns.

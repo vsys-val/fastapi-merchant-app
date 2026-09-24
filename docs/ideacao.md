@@ -2,8 +2,19 @@
 
 ## Status do documento
 
-Documento vivo. Reúne as decisões de produto confirmadas durante a fase de ideação.  
-As questões ainda não decididas ficam registradas separadamente para não serem tratadas como requisitos.
+**Registro histórico** da ideação (14 a 18/08/2026). O documento é preservado como foi escrito, para mostrar como as decisões foram tomadas. As regras vigentes estão em [requisitos](requisitos.md), [contrato da API](contrato-api.md) e [testes](matriz-testes.md). A síntese de produto está na [visão de produto](visao-produto.md), e as alternativas de cada decisão estão nos [ADRs](decisoes/README.md).
+
+### Evolução posterior à ideação
+
+| Ponto da ideação | Como foi resolvido |
+|---|---|
+| "Os motivos exatos ainda serão definidos" | 12 aspectos com percepção positiva/negativa ([ADR-0003](decisoes/0003-motivos-estruturados-obrigatorios.md), RN21–RN24) |
+| "Edição da avaliação conforme regra que ainda será definida" | Somente o autor edita; PATCH valida o estado final (RN25, UC09) |
+| Filtro por categoria fora do MVP | **Revisto na especificação:** a API aceita `category`, combinável com nome e marca (RF04, contrato). Filtro por variante continua fora |
+| Exclusão de produto não prevista | Adicionada exclusão lógica sem avaliações, com reativação por recadastro ([ADR-0008](decisoes/0008-exclusao-logica-e-reativacao.md), RF13) |
+| Área pessoal não prevista | Adicionadas consultas da própria conta, avaliações e produtos (RF14) |
+| "Futura interface web ou móvel" | Entregue em [merchant-app-web](https://github.com/vsys-val/merchant-app-web), com a confirmação antes de publicar prevista aqui |
+| Questão em aberto sobre campos do produto | Fechada: os campos são os da seção "Identificação dos produtos"; imagens seguem no [roadmap](roadmap.md) |
 
 ## Problema
 

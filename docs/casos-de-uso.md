@@ -12,6 +12,8 @@ Este documento descreve como os atores interagem com a API para alcançar objeti
 - **Fluxo de exceção:** situação que impede a conclusão do objetivo.
 - **Pós-condição:** estado garantido depois de uma conclusão bem-sucedida.
 
+O identificador **UC03 não é usado**. A numeração foi mantida para não quebrar referências já feitas em requisitos, testes e diagramas. As [histórias de usuário](historias-usuario.md) descrevem os mesmos comportamentos do ponto de vista de quem usa, e o [diagrama de casos de uso](diagramas.md#2-casos-de-uso) mostra a relação entre atores e casos.
+
 ## UC01 — Cadastrar conta
 
 ### Objetivo
