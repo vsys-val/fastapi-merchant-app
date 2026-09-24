@@ -29,3 +29,7 @@ O **responsável atual** pode editar o produto enquanto não existir avaliação
 ## Rastreabilidade
 
 RF07 · RN13 · UC07 · T12, T13, T32 · `app/products.py::update_product`
+
+## Atualizações
+
+- 2026-09-24: a interface web passou a expor a correção em "Meus produtos". O bloqueio é avisado antes do formulário, porque o resumo comunitário de quem está autenticado já exclui a própria avaliação. A decisão continua a mesma; só a consequência sobre a interface mudou.

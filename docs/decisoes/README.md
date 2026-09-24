@@ -34,4 +34,4 @@ As decisões 0001–0010 foram tomadas durante a ideação e a implementação d
 ## Rastreabilidade
 ```
 
-Uma nova decisão que contrarie uma existente gera um ADR novo, que **substitui** o anterior. ADRs aceitos não são reescritos.
+Uma nova decisão que contrarie uma existente gera um ADR novo, que **substitui** o anterior. ADRs aceitos não são reescritos. Mudanças de contexto que não alteram a decisão entram numa seção **Atualizações** datada, no fim do ADR.
