@@ -10,7 +10,7 @@
 - Indicadores comunitários são calculados sob demanda e não são armazenados.
 - RLS habilitado nas quatro tabelas de negócio, sem políticas públicas; clientes acessam os dados pela API FastAPI.
 - As tabelas internas `alembic_version` e `limites_login` também usam RLS e não concedem privilégios a `anon` ou `authenticated`.
-- A conexão de migração permanece privilegiada. Antes de implantação pública, a conexão de execução da API deverá usar um papel PostgreSQL próprio e limitado.
+- A conexão de migração permanece privilegiada. A conexão de execução da API deve usar um login membro de `merchant_app_runtime`, papel criado pela migração `0005_runtime_role` com acesso apenas às operações de dados nas cinco tabelas operacionais.
 - Quantidades equivalentes são normalizadas para unidades-base antes da geração da chave de identidade:
   - massa em `g`;
   - volume em `ml`;

@@ -1,26 +1,46 @@
-# FastAPI Merchant App
+# Merchant — API
 
-API planejada para catálogo compartilhado de produtos e avaliações de consumidores.
+[![Tests](https://github.com/vsys-val/fastapi-merchant-app/actions/workflows/tests.yml/badge.svg)](https://github.com/vsys-val/fastapi-merchant-app/actions/workflows/tests.yml)
+[![Production smoke test](https://github.com/vsys-val/fastapi-merchant-app/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/vsys-val/fastapi-merchant-app/actions/workflows/smoke-test.yml)
 
-## Estado
+**A memória de compras de quem vai ao mercado.** O Merchant responde, no corredor, à pergunta *"eu compraria isto de novo?"* com a sua própria experiência em destaque e a da comunidade ao lado.
 
-As entregas 1–8 do backend do MVP estão consolidadas na branch `main`: estrutura/configuração, persistência PostgreSQL, validação, autenticação própria, produtos, avaliações, consultas, observabilidade básica e automação de testes. A API está publicada no Render e usa PostgreSQL hospedado no Supabase.
+Este repositório contém a API (FastAPI + PostgreSQL) e **toda a documentação de produto e requisitos**. A interface web/PWA está em [vsys-val/merchant-app-web](https://github.com/vsys-val/merchant-app-web).
 
-- API: https://fastapi-merchant-app.onrender.com
-- Swagger: https://fastapi-merchant-app.onrender.com/docs
-- Saúde: https://fastapi-merchant-app.onrender.com/health
+| | |
+|---|---|
+| 🛒 **Aplicação** | [merchant-app-web.onrender.com](https://merchant-app-web.onrender.com) |
+| 📘 **API (Swagger)** | [fastapi-merchant-app.onrender.com/docs](https://fastapi-merchant-app.onrender.com/docs) |
+| 💓 **Saúde** | [fastapi-merchant-app.onrender.com/health](https://fastapi-merchant-app.onrender.com/health) |
+
+> O plano gratuito do Render hiberna após inatividade; o primeiro acesso pode levar cerca de um minuto.
+
+## O problema e a abordagem
+
+A experiência com um produto acontece em casa. A próxima decisão de compra acontece no corredor, dias depois e com pressa. Entre as duas, a memória falha, e notas de 1 a 5 estrelas não dizem **por que** algo foi bom ou ruim.
+
+| Decisão de produto | Em vez de | Por quê |
+|---|---|---|
+| **"Compraria de novo?"** como resumo | Nota geral | É a própria decisão que o usuário precisa tomar ([ADR-0002](docs/decisoes/0002-intencao-de-recompra-como-resumo.md)) |
+| **Critérios semânticos** (qualidade, expectativa, custo-benefício) | Escalas numéricas | Cada resposta tem significado explícito e vale para qualquer categoria ([ADR-0001](docs/decisoes/0001-avaliacao-estruturada-sem-nota.md)) |
+| **Motivo obrigatório** (aspecto + positivo/negativo) | Comentário livre | Agregável, rápido de marcar e evita avaliações acidentais ([ADR-0003](docs/decisoes/0003-motivos-estruturados-obrigatorios.md)) |
+| **Sua experiência separada** da comunidade | Uma média só | A opinião pessoal não é diluída nem contamina a estatística ([ADR-0006](docs/decisoes/0006-avaliacao-pessoal-separada.md)) |
+| **Catálogo comunitário canônico** com deduplicação | Catálogo curado ou privado | Escala sem operação e soma avaliações no mesmo item ([ADR-0004](docs/decisoes/0004-catalogo-canonico-comunitario.md)) |
 
 ## Documentação
 
-- [Requisitos](docs/requisitos.md)
-- [Casos de uso](docs/casos-de-uso.md)
-- [Contrato da API](docs/contrato-api.md)
-- [Modelo de banco](docs/modelo-banco.md)
-- [Diagrama ER](docs/diagrama-er.puml)
-- [Classes](docs/uml-classes.puml)
-- [Diagrama de casos de uso](docs/uml-casos-de-uso.puml)
-- [Matriz mínima de testes](docs/matriz-testes.md)
-- [Plano de implementação](docs/plano-implementacao.md)
+A documentação segue o caminho **problema → decisões → requisitos → especificação → testes → entrega**, com IDs rastreáveis entre os artefatos. Comece pelo [índice](docs/README.md).
+
+| Produto | Requisitos e especificação | Qualidade e operação |
+|---|---|---|
+| [Visão de produto](docs/visao-produto.md): personas, JTBD, métricas, riscos | [Requisitos](docs/requisitos.md): 15 RF · 28 RN · 6 RNF | [Matriz de testes](docs/matriz-testes.md): T01–T33 |
+| [Decisões (ADRs)](docs/decisoes/README.md): 10 trade-offs registrados | [Histórias de usuário](docs/historias-usuario.md) com critérios Gherkin | [Rastreabilidade](docs/rastreabilidade.md): requisito → teste → tela |
+| [Roadmap](docs/roadmap.md): agora · próximo · depois | [Casos de uso](docs/casos-de-uso.md) · [Contrato da API](docs/contrato-api.md) | [Plano de implementação](docs/plano-implementacao.md) |
+| [Glossário](docs/glossario.md) · [Ideação](docs/ideacao.md) | [Modelo de dados](docs/modelo-banco.md) · [Diagramas](docs/diagramas.md) | [Deploy no Render](docs/deploy-render.md) |
+
+## Estado
+
+MVP concluído e em produção (entregas 1–9 do [plano](docs/plano-implementacao.md)): configuração protegida, PostgreSQL com migrações, validação e normalização, autenticação própria, produtos, avaliações, consultas, observabilidade básica, CI e endurecimento de produção. Os 15 requisitos funcionais estão implementados e cobertos por 127 testes automatizados. As lacunas de interface estão na [rastreabilidade](docs/rastreabilidade.md) e priorizadas no [roadmap](docs/roadmap.md).
 
 ## Executar o MVP
 
@@ -29,8 +49,6 @@ Use Python 3.12 e execute os comandos na raiz do repositório, na branch `main`.
 ### Windows (PowerShell)
 
 ```powershell
-git fetch origin
-git switch feat/estrutura-inicial
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 Copy-Item .env.example .env
@@ -79,7 +97,7 @@ Em produção, `MIGRATION_DATABASE_URL` permanece com o papel administrativo usa
 
 ### CORS
 
-`CORS_ALLOWED_ORIGINS` contém as origens exatas autorizadas a chamar a API a partir de um navegador, separadas por vírgula. Enquanto não houver frontend, o valor deve permanecer vazio. Não use `*`.
+`CORS_ALLOWED_ORIGINS` contém as origens exatas autorizadas a chamar a API a partir de um navegador, separadas por vírgula. Vazio desativa o CORS. Localmente, informe a origem do servidor de desenvolvimento do frontend; em produção, a origem publicada do [merchant-app-web](https://merchant-app-web.onrender.com). Não use `*`.
 
 ```text
 CORS_ALLOWED_ORIGINS=https://app.exemplo.com,http://localhost:5173
@@ -108,7 +126,7 @@ Sintaxe Python conferida, dependências diretas fixadas, `pip check` sem conflit
 | app/main.py | Cria a aplicação que o servidor Uvicorn recebe |
 | app/config.py | Lê e valida a configuração local/ambiente; protege a exibição de segredos |
 | app/database.py | Cria engine e sessões PostgreSQL sob demanda |
-| app/models.py | Mapeia as quatro tabelas e suas restrições |
+| app/models.py | Mapeia as quatro tabelas de negócio, a tabela `limites_login` e suas restrições |
 | app/validation.py | Normaliza textos, medidas, GTIN e chaves de identidade |
 | app/schemas.py | Define e valida os corpos de criação e PATCH |
 | app/errors.py | Padroniza o envelope público de erros |

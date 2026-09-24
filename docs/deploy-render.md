@@ -28,7 +28,13 @@ declaradas no Blueprint.
 
 ## CORS
 
-Enquanto não houver frontend, `CORS_ALLOWED_ORIGINS` permanece vazio. Quando a interface for publicada, informe sua origem exata, sem caminho ou barra final. Múltiplas origens são separadas por vírgula e curingas não são aceitos.
+`CORS_ALLOWED_ORIGINS` deve conter a origem exata do frontend publicado, sem caminho ou barra final:
+
+```text
+CORS_ALLOWED_ORIGINS=https://merchant-app-web.onrender.com
+```
+
+A variável não é declarada no `render.yaml`; configure-a em **Environment** no painel do serviço. Sem ela, o navegador bloqueia as chamadas do frontend. Múltiplas origens são separadas por vírgula e curingas não são aceitos.
 
 ## Inicialização e saúde
 
