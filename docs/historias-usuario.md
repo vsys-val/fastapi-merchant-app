@@ -11,6 +11,8 @@ flowchart TB
   subgraph E1[E1 · Conta e acesso]
     US01[US01 Criar conta · M]
     US02[US02 Entrar · M]
+    US14[US14 Confirmar e-mail · M]
+    US15[US15 Recuperar senha · M]
   end
   subgraph E2[E2 · Decidir no corredor]
     US03[US03 Buscar produto · M]
@@ -88,6 +90,62 @@ Cenário: proteção contra tentativa e erro
   Dado que errei a senha 5 vezes nos últimos 15 minutos
   Quando tento entrar de novo
   Então vejo "Muitas tentativas de login. Tente novamente mais tarde."
+```
+
+### US14 — Confirmar meu e-mail · Must
+
+> **Como** responsável pelo produto, **quero** que cada conta prove a posse de um e-mail real, **para** que bots não criem contas em massa e distorçam o catálogo e os indicadores. **Como** pessoa que se cadastra, **quero** confirmar com um código curto no próprio app, **para** começar a usar sem trocar de tela.
+
+Rastreabilidade: RF16, RF17 · RN29–RN31, RN33 · UC15 · T34–T37, T39 · [ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)
+
+```gherkin
+Cenário: cadastro leva à confirmação
+  Quando eu me cadastro com dados válidos
+  Então vejo "Enviamos um código de 6 dígitos para ana@exemplo.com"
+  E ao digitar o código correto já entro na minha conta
+
+Cenário: tentar entrar antes de confirmar
+  Dado que me cadastrei e não confirmei o e-mail
+  Quando entro com e-mail e senha corretos
+  Então sou levada à tela de código em vez de entrar
+
+Cenário: código errado ou vencido
+  Quando digito um código errado ou com mais de 15 minutos
+  Então vejo "Código inválido ou expirado."
+  E depois de 5 erros preciso pedir um novo código
+
+Cenário: reenviar código
+  Quando peço "Reenviar código"
+  Então o botão fica indisponível por 60 segundos
+  E o código anterior deixa de valer
+
+Cenário: cadastros em massa
+  Dado que o mesmo endereço IP fez 10 cadastros na última hora
+  Quando tenta o 11º
+  Então recebe "Muitas solicitações deste endereço. Tente novamente mais tarde."
+```
+
+### US15 — Recuperar minha senha · Must
+
+> **Como** pessoa que esqueceu a senha, **quero** criar uma nova com um código enviado ao meu e-mail, **para** não perder a memória de compras que já registrei.
+
+Rastreabilidade: RF18 · RN29, RN31, RN32 · UC16 · T38 · [ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)
+
+```gherkin
+Cenário: recuperação completa
+  Quando escolho "Esqueci minha senha" e informo meu e-mail
+  E digito o código recebido e uma nova senha de 15 caracteres
+  Então entro na conta com a nova senha
+  E sessões abertas em outros aparelhos são encerradas
+
+Cenário: e-mail desconhecido não é revelado
+  Quando peço recuperação para um e-mail sem conta
+  Então vejo a mesma mensagem de "se existir uma conta, enviamos um código"
+
+Cenário: serviço de e-mail indisponível
+  Dado que o envio de e-mails não está configurado
+  Quando peço recuperação
+  Então vejo "O envio de e-mails está temporariamente indisponível."
 ```
 
 ---

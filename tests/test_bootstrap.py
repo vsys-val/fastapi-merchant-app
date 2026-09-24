@@ -16,6 +16,7 @@ def isolated_environment(monkeypatch, tmp_path):
         "MIGRATION_DATABASE_URL",
         "JWT_SECRET",
         "CORS_ALLOWED_ORIGINS",
+        "EMAIL_DELIVERY",
     ):
         monkeypatch.delenv(name, raising=False)
 

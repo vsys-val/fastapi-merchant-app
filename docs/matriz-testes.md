@@ -1,6 +1,6 @@
 # Matriz mínima de testes do MVP
 
-Estado: T01–T33 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 125 testes e ignora somente os dois casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 127. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
+Estado: T01–T40 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 141 testes e ignora os 11 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 152. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
 
 A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos, endpoints e telas do frontend.
 
@@ -39,6 +39,13 @@ A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos,
 | T31 | RF15 | /health fora de /api/v1: 200 saudável; API respondendo sem banco: 503 padronizado |
 | T32 | Integridade | Corridas avaliar versus editar/excluir produto preservam regras; transações com bloqueio consistente, sem órfãos |
 | T33 | Persistência | Migração em banco vazio; CHECKs, FKs e UNIQUE efetivos; datas UTC e quantidades exatas no percurso entrada-banco-resposta |
+| T34 | RF16, RN30, UC15 | Cadastro com entrega ativa cria conta pendente e envia código; login com senha correta retorna 403 `email_not_verified`; senha errada continua 401 genérico; código correto retorna token; código reutilizado retorna 400 |
+| T35 | RN29 | Código com 5 erros é invalidado; código expirado é recusado; entrada que não tem 6 dígitos retorna 422; hash vinculado a usuário e finalidade |
+| T36 | RF17, RN29, RN31 | Reenvio dentro de 60 s não gera e-mail; depois de 60 s substitui o código; e-mail desconhecido recebe 202 sem envio |
+| T37 | RN30 | E-mail pendente fica reservado por 24 h (409); depois disso, o novo cadastro substitui a conta pendente |
+| T38 | RF18, RN32, UC16 | Recuperação troca a senha, recusa a senha antiga, invalida tokens anteriores e aceita o novo login; dona do e-mail recupera conta criada por outra pessoa |
+| T39 | RN33, RNF07 | 11º cadastro do mesmo IP em 1 h retorna 429 `too_many_requests` |
+| T40 | RN34 | Sem entrega de e-mail, conta nasce confirmada e reenvio/recuperação retornam 503; `EMAIL_DELIVERY=log` é recusado em produção; migração `0006` preserva contas existentes como confirmadas |
 
 ## Estratégia
 
@@ -53,4 +60,6 @@ A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos,
 - `tests/test_end_to_end.py`: jornada cadastro → login/JWT → produto → avaliação → consultas pública e privada → edição → exclusões.
 - `tests/test_operations.py`: saúde 200/503, erro 500 seguro e contrato OpenAPI com Bearer obrigatório/opcional.
 - `tests/test_postgres_concurrency.py`: unicidade sob commits simultâneos e corrida avaliação versus exclusão usando sessões PostgreSQL independentes.
+- `tests/test_account_flows_postgres.py`: confirmação de e-mail, reenvio, expiração, recuperação de senha e limites por IP via HTTP contra PostgreSQL real (T34–T39).
+- `tests/test_account_security.py`: configuração de entrega, versão de sessão no JWT, formato e HMAC dos códigos (T35, T40).
 - `.github/workflows/tests.yml`: Python 3.12, PostgreSQL 17, verificação de dependências e suíte completa.

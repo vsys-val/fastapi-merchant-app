@@ -65,7 +65,9 @@ Exemplo de validação:
 |---|---|
 | `200 OK` | Consulta ou atualização concluída com corpo na resposta |
 | `201 Created` | Novo recurso criado |
+| `202 Accepted` | Pedido aceito para processamento assíncrono, como o envio de e-mail |
 | `204 No Content` | Exclusão concluída sem corpo na resposta |
+| `400 Bad Request` | Código de confirmação ou de recuperação inválido, expirado ou esgotado |
 | `401 Unauthorized` | Token ausente, inválido ou expirado; ou credenciais de login incorretas |
 | `403 Forbidden` | Usuário autenticado sem permissão para a operação |
 | `404 Not Found` | Recurso específico não encontrado |
@@ -73,7 +75,7 @@ Exemplo de validação:
 | `422 Unprocessable Content` | Dados ou parâmetros não passaram pela validação |
 | `429 Too Many Requests` | Limite temporário de requisições excedido |
 | `500 Internal Server Error` | Falha inesperada do servidor |
-| `503 Service Unavailable` | Dependência necessária, como o banco de dados, está indisponível |
+| `503 Service Unavailable` | Dependência necessária, como o banco de dados ou a entrega de e-mail, está indisponível |
 
 ## Formato de paginação
 
@@ -117,11 +119,27 @@ Regras da conta:
 - o salt exclusivo é gerado e administrado automaticamente pela biblioteca;
 - a senha original nunca é armazenada nem pode ser recuperada a partir do hash.
 
+Resposta de sucesso — `201 Created`:
+
+```json
+{
+  "id": 42,
+  "name": "Valério",
+  "email": "valerio@example.com",
+  "email_verified": false
+}
+```
+
+Quando a entrega de e-mail está ativa, a conta nasce **pendente** (`email_verified: false`) e um código de 6 dígitos é enviado ao e-mail. Sem entrega configurada, a conta nasce confirmada (RN34).
+
 Respostas:
 
 - `201 Created`: conta criada;
-- `409 Conflict`: e-mail já cadastrado;
-- `422 Unprocessable Content`: e-mail, senha ou outro campo inválido.
+- `409 Conflict`: e-mail já cadastrado, inclusive por conta pendente criada há menos de 24 horas;
+- `422 Unprocessable Content`: e-mail, senha ou outro campo inválido;
+- `429 Too Many Requests` (`too_many_requests`): mais de 10 cadastros por IP em 1 hora.
+
+Uma conta pendente com mais de 24 horas é substituída por um novo cadastro com o mesmo e-mail (RN30).
 
 ### Fazer login
 
@@ -150,7 +168,10 @@ Respostas:
 
 - `200 OK`: autenticação concluída;
 - `401 Unauthorized`: e-mail ou senha inválidos;
+- `403 Forbidden` (`email_not_verified`): credenciais corretas, mas o e-mail ainda não foi confirmado;
 - `422 Unprocessable Content`: formato dos dados inválido.
+
+O `403` só é devolvido depois que a senha confere, e por isso não serve para descobrir quais e-mails existem.
 
 A falha de autenticação usa a mensagem genérica “E-mail ou senha inválidos”, sem revelar se o e-mail está cadastrado.
 
@@ -170,8 +191,9 @@ Proteção contra tentativas automatizadas:
 - chave secreta forte fornecida por variável de ambiente e nunca versionada no código;
 - validade de 24 horas;
 - conteúdo mínimo: `sub` com o ID do usuário, `iat` com o instante de emissão e `exp` com a expiração;
+- depois de uma troca de senha, o token carrega também `ver`, a versão de sessão da conta;
 - nome, e-mail, senha e outros dados privados não são incluídos;
-- não há refresh token nem revogação antecipada no MVP;
+- não há refresh token; a única revogação antecipada é a troca de senha, que incrementa a versão de sessão e invalida todos os tokens anteriores (RN32);
 - logout é realizado no cliente pela remoção do token, sem endpoint na API.
 
 ### Consultar a própria conta
@@ -186,7 +208,8 @@ Resposta de sucesso — `200 OK`:
 {
   "id": 42,
   "name": "Valério",
-  "email": "valerio@example.com"
+  "email": "valerio@example.com",
+  "email_verified": true
 }
 ```
 
@@ -195,7 +218,70 @@ Respostas:
 - `200 OK`: conta autenticada encontrada;
 - `401 Unauthorized`: autenticação ausente, inválida ou expirada.
 
-No MVP, a conta é imutável após o cadastro. Não existem endpoints para alteração de nome, e-mail ou senha.
+Nome e e-mail são imutáveis após o cadastro. A senha só muda pela recuperação por e-mail.
+
+### Confirmar e-mail
+
+`POST /auth/email-verification`
+
+```json
+{ "email": "valerio@example.com", "code": "482913" }
+```
+
+Resposta de sucesso — `200 OK`: o mesmo corpo do login. Confirmar já autentica a pessoa.
+
+Respostas:
+
+- `200 OK`: e-mail confirmado e token emitido;
+- `400 Bad Request` (`invalid_verification_code`): código errado, expirado, já usado, esgotado após 5 erros, ou conta inexistente ou já confirmada. A mensagem é sempre "Código inválido ou expirado.";
+- `422 Unprocessable Content`: o código não tem exatamente 6 dígitos;
+- `429 Too Many Requests`: mais de 30 tentativas de código por IP em 1 hora.
+
+### Reenviar código de confirmação
+
+`POST /auth/email-verification/resend`
+
+```json
+{ "email": "valerio@example.com" }
+```
+
+Respostas:
+
+- `202 Accepted`: sempre que a entrada é válida, exista ou não uma conta pendente com esse e-mail. Um novo código substitui o anterior, desde que o último envio tenha ocorrido há mais de 60 segundos;
+- `429 Too Many Requests`: mais de 10 pedidos de e-mail por IP em 1 hora;
+- `503 Service Unavailable` (`email_unavailable`): entrega de e-mail não configurada.
+
+### Pedir recuperação de senha
+
+`POST /auth/password-reset`
+
+```json
+{ "email": "valerio@example.com" }
+```
+
+Respostas: as mesmas do reenvio (`202`, `429`, `503`). Um código de recuperação é enviado se existir conta com o e-mail, inclusive pendente há menos de 24 horas.
+
+### Redefinir senha
+
+`POST /auth/password-reset/confirm`
+
+```json
+{
+  "email": "valerio@example.com",
+  "code": "771204",
+  "new_password": "uma nova frase longa e memorável"
+}
+```
+
+Respostas:
+
+- `204 No Content`: senha trocada, e-mail confirmado e sessões anteriores encerradas;
+- `400 Bad Request` (`invalid_verification_code`): as mesmas condições da confirmação de e-mail;
+- `422 Unprocessable Content`: código ou nova senha fora da política;
+- `429 Too Many Requests`: mais de 30 tentativas de código por IP em 1 hora;
+- `503 Service Unavailable` (`email_unavailable`): entrega de e-mail não configurada.
+
+Depois do `204`, o cliente faz login com a nova senha. Qualquer token emitido antes da troca passa a receber `401`.
 
 ### Listar as próprias avaliações
 

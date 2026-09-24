@@ -1,14 +1,18 @@
 """Rotas HTTP funcionais do MVP."""
 
-from fastapi import APIRouter, Depends, Query, Request, Response, status
+from fastapi import APIRouter, BackgroundTasks, Depends, Query, Request, Response, status
 from sqlalchemy.orm import Session
 
 from app.auth import (
+    confirm_password_reset,
     create_user,
     current_user_response,
     get_current_user,
     get_optional_user,
     login,
+    request_password_reset,
+    resend_verification,
+    verify_email,
 )
 from app.catalog import (
     get_product_detail,
@@ -18,12 +22,16 @@ from app.catalog import (
     search_products,
 )
 from app.database import get_db
+from app.email import EmailMessage, deliver
 from app.errors import ApiError
 from app.models import User
 from app.products import create_product, delete_product, update_product
 from app.reviews import create_review, delete_review, update_review
 from app.schemas import (
+    EmailInput,
+    EmailVerificationInput,
     LoginInput,
+    PasswordResetConfirm,
     Category,
     CommunityReviewPage,
     ErrorResponse,
@@ -52,9 +60,67 @@ router = APIRouter(
 )
 
 
+def _send_later(
+    request: Request, background_tasks: BackgroundTasks, message: EmailMessage | None
+) -> None:
+    """Envia depois da resposta: o tempo de resposta não revela contas."""
+
+    sender = request.app.state.email_sender
+    if message is not None and sender is not None:
+        background_tasks.add_task(deliver, sender, message)
+
+
 @router.post("/users", response_model=UserPublic, status_code=status.HTTP_201_CREATED)
-def register_user(payload: UserCreate, session: Session = Depends(get_db)) -> UserPublic:
-    return create_user(payload, session)
+def register_user(
+    payload: UserCreate,
+    request: Request,
+    background_tasks: BackgroundTasks,
+    session: Session = Depends(get_db),
+) -> UserPublic:
+    result = create_user(payload, request, session)
+    _send_later(request, background_tasks, result.email)
+    return result.user
+
+
+@router.post("/auth/email-verification", response_model=TokenResponse)
+def confirm_email(
+    payload: EmailVerificationInput,
+    request: Request,
+    session: Session = Depends(get_db),
+) -> TokenResponse:
+    return verify_email(payload, request, session)
+
+
+@router.post("/auth/email-verification/resend", status_code=status.HTTP_202_ACCEPTED)
+def resend_email_verification(
+    payload: EmailInput,
+    request: Request,
+    background_tasks: BackgroundTasks,
+    session: Session = Depends(get_db),
+) -> Response:
+    _send_later(request, background_tasks, resend_verification(payload, request, session))
+    return Response(status_code=status.HTTP_202_ACCEPTED)
+
+
+@router.post("/auth/password-reset", status_code=status.HTTP_202_ACCEPTED)
+def start_password_reset(
+    payload: EmailInput,
+    request: Request,
+    background_tasks: BackgroundTasks,
+    session: Session = Depends(get_db),
+) -> Response:
+    _send_later(request, background_tasks, request_password_reset(payload, request, session))
+    return Response(status_code=status.HTTP_202_ACCEPTED)
+
+
+@router.post("/auth/password-reset/confirm", status_code=status.HTTP_204_NO_CONTENT)
+def finish_password_reset(
+    payload: PasswordResetConfirm,
+    request: Request,
+    session: Session = Depends(get_db),
+) -> Response:
+    confirm_password_reset(payload, request, session)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.post("/auth/login", response_model=TokenResponse)

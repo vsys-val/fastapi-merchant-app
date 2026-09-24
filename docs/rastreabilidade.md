@@ -26,8 +26,11 @@ Legenda de cobertura na interface: ✅ disponível · ◐ parcial · — não se
 | RF13 | Exclusão lógica e reativação de produto | UC06, UC11 | `DELETE /api/v1/products/{id}`; `POST /api/v1/products` → `200` | T14–T16 | Reativação implícita no cadastro | ◐ ⚠️ sem botão de exclusão |
 | RF14 | Conta, avaliações e produtos próprios | UC12–UC14 | `GET /api/v1/users/me`, `/users/me/reviews`, `/users/me/products` | T28 | `/account` (abas) e "Lembrete para você" em `/` | ✅ |
 | RF15 | Verificação operacional | — | `GET /health` | T31 | Indicador "Catálogo conectado" em `/` | ✅ |
+| RF16 | Confirmar e-mail antes do primeiro acesso | UC15 | `POST /api/v1/auth/email-verification` | T34, T35, T37 | Modal de acesso, etapa "Confirme seu e-mail" | ✅ ⚠️ inativa em produção até haver provedor de e-mail |
+| RF17 | Reenviar código de confirmação | UC15 | `POST /api/v1/auth/email-verification/resend` | T36 | Botão "Reenviar código" com contagem de 60 s | ✅ |
+| RF18 | Redefinir senha por código | UC16 | `POST /api/v1/auth/password-reset`, `/password-reset/confirm` | T38, T40 | Modal de acesso, "Esqueci minha senha" | ✅ ⚠️ responde 503 até haver provedor |
 
-**Leitura rápida:** os 15 requisitos funcionais estão implementados e testados na API. Na interface, 12 estão completos, 2 parciais (RF04 e RF13) e 1 sem tela (RF07). As lacunas são escolhas de sequenciamento e estão priorizadas no [roadmap](roadmap.md).
+**Leitura rápida:** os 18 requisitos funcionais estão implementados e testados na API. Na interface, 15 estão completos, 2 parciais (RF04 e RF13) e 1 sem tela (RF07). RF16 e RF18 só entram em vigor em produção quando um provedor de e-mail for configurado ([ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)). As lacunas são escolhas de sequenciamento e estão priorizadas no [roadmap](roadmap.md).
 
 ## 2. Regras de negócio — onde cada uma é garantida
 
@@ -54,6 +57,12 @@ Uma regra crítica é garantida em **mais de uma camada**. A coluna "Banco" indi
 | RN26 | Avaliação própria fora dos indicadores | — | `_split_reviews` | — | T26 |
 | RN27 | Indicadores sob demanda | — | `_community_summary` | nada armazenado | T27 |
 | RN28 | Sem histórico | — | substituição em `update_review` | — | T21 |
+| RN29 | Código de 6 dígitos, uso único, 15 min, 5 tentativas, 60 s entre envios | `code` com padrão `^[0-9]{6}$` | `issue_code`, `consume_code` (bloqueio `FOR UPDATE`) | PK `(usuario_id, finalidade)`; só `codigo_hash` | T35, T36 |
+| RN30 | Pendente não entra; e-mail reservado por 24 h | — | `login`, `_resolve_authenticated_user`, `create_user` | `email_verificado_em` nulo | T34, T37 |
+| RN31 | Reenvio e recuperação não revelam contas | — | resposta 202 fixa; envio em segundo plano | — | T36 |
+| RN32 | Troca de senha confirma e-mail e encerra sessões | `new_password` com a política de senha | `confirm_password_reset` incrementa `versao_sessao` | `versao_sessao` | T38 |
+| RN33 | Limites por IP de cadastro, código e e-mail | — | `_limit_ip` | `limites_login` (escopos `register`, `code`, `email`) | T39 |
+| RN34 | Sem entrega, contas nascem confirmadas | `EMAIL_DELIVERY` validado (`log` recusado em produção) | `create_user`, `_require_email_delivery` | — | T40 |
 
 ## 3. Requisitos não funcionais
 
@@ -64,7 +73,8 @@ Uma regra crítica é garantida em **mais de uma camada**. A coluna "Banco" indi
 | RNF03 | Documentação interativa OpenAPI | `/docs` com Bearer obrigatório/opcional por rota | `test_operations.py` |
 | RNF04 | Instruções claras | [README](../README.md), [deploy](deploy-render.md) | revisão |
 | RNF05 | Erros claros e códigos adequados | Envelope `{error:{code,message,details}}` em `app/errors.py` | T30 |
-| RNF06 | Regras críticas com testes automatizados | 127 testes; CI com PostgreSQL 17; smoke test diário em produção | CI |
+| RNF06 | Regras críticas com testes automatizados | 152 testes; CI com PostgreSQL 17; smoke test diário em produção | CI |
+| RNF07 | Resistência a contas em massa | Confirmação de e-mail obrigatória + limite de 10 cadastros por IP por hora, sem serviço pago | T34, T39 |
 
 Além dos RNFs formais, a fase de endurecimento (Entrega 9) acrescentou: rate limiting persistido, RLS com papel de mínimo privilégio, CORS com origens explícitas e CSP estrita no frontend.
 
@@ -74,11 +84,11 @@ Além dos RNFs formais, a fase de endurecimento (Entrega 9) acrescentou: rate li
 flowchart LR
   subgraph Especificação
     RF[RF01–RF15] --> RN[RN01–RN28]
-    RF --> UC[UC01–UC14]
+    RF --> UC[UC01–UC16]
     UC --> CT[Contrato da API]
   end
   subgraph Verificação
-    CT --> T[T01–T33]
+    CT --> T[T01–T40]
     T --> PY[pytest + PostgreSQL 17]
     PY --> SM[Smoke test diário]
   end

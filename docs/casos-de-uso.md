@@ -631,7 +631,8 @@ O autor decide remover sua avaliação de um produto.
 
 ## Complementos dos casos existentes
 
-- UC02: devolve JWT, tipo bearer e validade de 86.400 segundos; tentativas excedentes retornam 429. Credenciais incorretas retornam 401 genérico.
+- UC01: com entrega de e-mail ativa, a conta nasce pendente e segue o UC15; mais de 10 cadastros por IP em 1 hora retornam 429.
+- UC02: devolve JWT, tipo bearer e validade de 86.400 segundos; tentativas excedentes retornam 429. Credenciais incorretas retornam 401 genérico. Conta pendente com senha correta retorna 403 `email_not_verified`.
 - UC04: permite catálogo sem filtros; nome, marca e categoria combinam com AND; GTIN é exclusivo dos demais filtros. A resposta é paginada e inclui resumo comunitário de recompra e intenção pessoal separada.
 - UC05: o detalhe contém indicadores e avaliação pessoal. A lista comunitária é consultada separadamente em `GET /products/{id}/reviews`, paginada, sem a própria avaliação e sem e-mail ou ID do autor.
 - UC06: as exceções de duplicidade referem-se a registros ativos. Registro excluído sem avaliações admite reativação (200), preservando o ID e atribuindo responsabilidade ao usuário que recadastrou. Correspondências conflitantes entre registros retornam 409 sem alteração.
@@ -678,3 +679,33 @@ O autor decide remover sua avaliação de um produto.
 2. Recebe produtos ativos sob sua responsabilidade atual, por data de cadastro decrescente.
 
 **Exceções:** 401 sem autenticação válida; 422 para paginação inválida. **Pós-condição:** nenhum dado alterado; reativados pertencem à lista do novo responsável.
+
+## UC15 — Confirmar e-mail
+
+**Ator:** visitante que acabou de se cadastrar. **Relacionado:** RF16, RF17, RN29–RN31, RN33.
+
+1. Depois do UC01, recebe no e-mail um código de 6 dígitos.
+2. Informa e-mail e código em `POST /auth/email-verification`.
+3. A API confere o código vigente, marca o e-mail como confirmado e devolve um token. A pessoa já sai autenticada.
+
+**Alternativos:** A1: não recebeu o código e pede reenvio (`POST /auth/email-verification/resend`); um novo código substitui o anterior se o último envio tiver mais de 60 s. A2: tenta entrar antes de confirmar e recebe `403 email_not_verified`; a interface leva ao passo 2.
+
+**Exceções:** 400 para código errado, expirado, usado ou esgotado (5 erros), sempre com a mesma mensagem; 429 acima do limite por IP.
+
+**Pós-condição:** conta confirmada; o código deixa de existir.
+
+## UC16 — Recuperar senha
+
+**Ator:** pessoa com conta que esqueceu a senha. **Relacionado:** RF18, RN29, RN31, RN32.
+
+1. Informa o e-mail em `POST /auth/password-reset` e recebe `202`, exista ou não a conta.
+2. Se a conta existe, recebe no e-mail um código de 6 dígitos.
+3. Informa e-mail, código e nova senha em `POST /auth/password-reset/confirm`.
+4. A API troca o hash da senha, confirma o e-mail se estava pendente, incrementa a versão de sessão e responde `204`.
+5. A pessoa entra com a nova senha (UC02).
+
+**Exceções:** 400 para código inválido; 422 para nova senha fora da política; 503 quando não há entrega de e-mail configurada.
+
+**Pós-condição:** somente a nova senha funciona e todos os tokens anteriores recebem `401`.
+
+**Caso de segurança:** se alguém cadastrou o e-mail de outra pessoa (conta pendente), a dona do e-mail recupera a conta por este caso de uso: ela define a própria senha e a senha do invasor deixa de valer.

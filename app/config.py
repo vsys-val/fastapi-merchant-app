@@ -3,7 +3,7 @@
 from typing import Literal
 from urllib.parse import urlsplit
 
-from pydantic import PostgresDsn, SecretStr, ValidationError, field_validator
+from pydantic import PostgresDsn, SecretStr, ValidationError, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     jwt_secret: SecretStr
     access_token_expires_seconds: int = 86400
     cors_allowed_origins: str = ""
+    # "disabled" mantém contas ativas desde o cadastro e desliga recuperação de
+    # senha; "log" grava os códigos no log e serve apenas para desenvolvimento.
+    email_delivery: Literal["disabled", "log"] = "disabled"
 
     @field_validator("database_url", "migration_database_url")
     @classmethod
@@ -78,6 +81,18 @@ class Settings(BaseSettings):
             normalized.append(origin)
         return ",".join(dict.fromkeys(normalized))
 
+    @model_validator(mode="after")
+    def validate_email_delivery(self) -> "Settings":
+        if self.environment == "production" and self.email_delivery == "log":
+            raise ValueError("EMAIL_DELIVERY=log não pode ser usado em produção.")
+        return self
+
+    @property
+    def email_verification_enabled(self) -> bool:
+        """Confirmação de conta só é exigida quando há como entregar o código."""
+
+        return self.email_delivery != "disabled"
+
     @property
     def cors_origins(self) -> list[str]:
         """Origens exatas autorizadas a chamar a API pelo navegador."""
@@ -91,7 +106,13 @@ def load_settings() -> Settings:
     try:
         return Settings()
     except ValidationError as exc:
-        fields = sorted({str(error["loc"][0]).upper() for error in exc.errors()})
+        # O único validador de modelo trata EMAIL_DELIVERY e não possui "loc".
+        fields = sorted(
+            {
+                str(error["loc"][0]).upper() if error["loc"] else "EMAIL_DELIVERY"
+                for error in exc.errors()
+            }
+        )
         raise RuntimeError(
             "Configuração ausente ou inválida: " + ", ".join(fields)
             + ". Confira o .env e o README."

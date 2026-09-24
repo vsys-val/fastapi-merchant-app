@@ -8,6 +8,9 @@ Uma linguagem comum evita que produto, código e banco usem palavras diferentes 
 |---|---|---|---|
 | **Visitante** | Pessoa sem autenticação; pode consultar o catálogo | — | — |
 | **Usuário autenticado** | Pessoa com token válido; pode cadastrar e avaliar | Bearer JWT | `usuarios` |
+| **Conta pendente** | Conta cadastrada cujo e-mail ainda não foi confirmado; não obtém token e reserva o e-mail por 24 h | `email_verified: false` | `email_verificado_em` nulo |
+| **Código de verificação** | Número de 6 dígitos, de uso único, enviado por e-mail para confirmar a conta ou redefinir a senha | `code` | `codigos_verificacao` (só o HMAC) |
+| **Versão de sessão** | Contador que invalida todos os tokens anteriores quando a senha é trocada | claim `ver` do JWT | `versao_sessao` |
 | **Nome público** | Nome exibido como autor de avaliações; pode se repetir | `name` | `nome_publico` |
 | **Produto** | Item comercial vendido em mercado, com medida e marca definidas | `Product` | `produtos` |
 | **Registro canônico** | O único registro de um produto no catálogo compartilhado | `id` | `produtos.id` |

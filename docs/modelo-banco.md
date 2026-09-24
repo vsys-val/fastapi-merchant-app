@@ -24,12 +24,28 @@
 | `nome_publico` | TEXT | não | pode se repetir |
 | `email` | TEXT | não | único e normalizado antes de salvar |
 | `senha_hash` | TEXT | não | nunca armazenar a senha original |
+| `criado_em` | TIMESTAMPTZ | não | início do prazo de 24 h de uma conta pendente |
+| `email_verificado_em` | TIMESTAMPTZ | sim | null enquanto a conta está pendente; contas anteriores à migração `0006` foram preenchidas com a data de criação |
+| `versao_sessao` | INTEGER | não | começa em 0 e é incrementada a cada troca de senha; tokens com versão diferente são recusados |
+
+## Tabela `codigos_verificacao`
+
+| Coluna | Tipo conceitual | Nulo | Regras |
+|---|---|---:|---|
+| `usuario_id` | INTEGER | não | FK para `usuarios.id` com `ON DELETE CASCADE`; parte da chave primária |
+| `finalidade` | TEXT | não | `email_verification` ou `password_reset`; parte da chave primária |
+| `codigo_hash` | CHAR(64) | não | HMAC-SHA-256 de usuário, finalidade e código; o código nunca é armazenado |
+| `expira_em` | TIMESTAMPTZ | não | 15 minutos após o envio |
+| `tentativas` | INTEGER | não | erros acumulados; ao chegar a 5, a linha é removida |
+| `enviado_em` | TIMESTAMPTZ | não | controla o intervalo mínimo de 60 s entre envios |
+
+A chave primária garante **um código vigente por finalidade**: um novo envio substitui o anterior em um único `UPSERT`. O código é removido ao ser usado. A tabela usa RLS, não concede privilégios a `anon` ou `authenticated` e é acessível ao papel `merchant_app_runtime`.
 
 ## Tabela `limites_login`
 
 | Coluna | Tipo conceitual | Nulo | Regras |
 |---|---|---:|---|
-| `escopo` | TEXT | não | `account` ou `ip`; parte da chave primária |
+| `escopo` | TEXT | não | `account` e `ip` (login), `register` (cadastro), `code` (uso de códigos) ou `email` (pedidos de e-mail); parte da chave primária |
 | `chave_hash` | CHAR(64) | não | HMAC-SHA-256 do identificador; parte da chave primária |
 | `tentativas` | INTEGER | não | contador positivo atualizado atomicamente |
 | `janela_iniciada_em` | TIMESTAMPTZ | não | início da janela temporária vigente |

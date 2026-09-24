@@ -28,6 +28,9 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 | RF13 | O responsável pode excluir logicamente produto sem avaliações; recadastro pode reativar o mesmo registro. |
 | RF14 | O usuário deve consultar sua conta, suas avaliações e seus produtos ativos em endpoints privados. |
 | RF15 | A API deve disponibilizar verificação operacional de conexão com o banco em `/health`. |
+| RF16 | Quando houver entrega de e-mail configurada, a API deve exigir a confirmação do e-mail por código antes do primeiro acesso à conta. |
+| RF17 | A API deve permitir reenviar o código de confirmação de uma conta pendente. |
+| RF18 | A API deve permitir redefinir a senha com um código enviado ao e-mail da conta. |
 
 ## Regras de negócio
 
@@ -74,6 +77,17 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 | RN27 | Os indicadores comunitários devem ser calculados a partir das avaliações existentes no momento da consulta. |
 | RN28 | O MVP mantém apenas a avaliação atual e não armazena histórico de versões. |
 
+### Confirmação e recuperação de conta
+
+| ID | Regra |
+|---|---|
+| RN29 | Códigos de confirmação e de recuperação têm 6 dígitos, são de uso único, expiram em 15 minutos, admitem 5 tentativas erradas e só são reenviados após 60 segundos. Somente o HMAC do código é armazenado. |
+| RN30 | Conta com e-mail não confirmado não obtém token. O e-mail fica reservado por 24 horas; depois disso, um novo cadastro com o mesmo e-mail substitui a conta pendente. |
+| RN31 | Pedidos de reenvio e de recuperação respondem da mesma forma para e-mails cadastrados ou não, sem revelar a existência da conta. |
+| RN32 | Redefinir a senha confirma o e-mail da conta e encerra todas as sessões abertas até então. |
+| RN33 | Cada endereço IP pode fazer no máximo 10 cadastros, 30 tentativas de código e 10 pedidos de e-mail por hora. |
+| RN34 | Sem entrega de e-mail configurada, contas nascem confirmadas e a recuperação de senha responde como indisponível. |
+
 ## Requisitos não funcionais
 
 | ID | Requisito |
@@ -84,10 +98,10 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 | RNF04 | O repositório deve possuir instruções claras para instalar, executar e testar a aplicação. |
 | RNF05 | Entradas inválidas devem produzir respostas de erro claras e códigos HTTP adequados. |
 | RNF06 | As regras críticas de autenticação, unicidade e autorização devem possuir testes automatizados. |
+| RNF07 | O cadastro deve resistir à criação automatizada de contas em massa, sem depender de serviços pagos. |
 
 ## Fora do escopo inicial
 
-- recuperação de senha por e-mail;
 - critérios de avaliação específicos por categoria;
 - histórico de avaliações;
 - múltiplas categorias por produto;

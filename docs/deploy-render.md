@@ -36,6 +36,12 @@ CORS_ALLOWED_ORIGINS=https://merchant-app-web.onrender.com
 
 A variável não é declarada no `render.yaml`; configure-a em **Environment** no painel do serviço. Sem ela, o navegador bloqueia as chamadas do frontend. Múltiplas origens são separadas por vírgula e curingas não são aceitos.
 
+## E-mail
+
+`EMAIL_DELIVERY` é declarada no `render.yaml` como `disabled`. Nesse modo, contas nascem confirmadas e a recuperação de senha responde `503`. `log` é recusado em produção, e a aplicação não inicia com ele.
+
+Quando um provedor HTTP for implementado, troque o valor **no `render.yaml`**: variáveis com `value` no Blueprint sobrescrevem as do painel a cada sincronização. A chave de API do provedor deve entrar com `sync: false`, como as URLs de banco. Ver [ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md).
+
 ## Inicialização e saúde
 
 Ao iniciar cada deploy, o serviço executa `alembic upgrade head` e somente então
