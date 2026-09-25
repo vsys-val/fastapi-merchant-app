@@ -78,6 +78,7 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 | RN26 | A avaliação pessoal deve ser apresentada separadamente e excluída dos indicadores e listas comunitárias para seu autor; visitantes consideram todas. |
 | RN27 | Os indicadores comunitários devem ser calculados a partir das avaliações existentes no momento da consulta. |
 | RN28 | O MVP mantém apenas a avaliação atual e não armazena histórico de versões. |
+| RN41 | O detalhe do produto informa, para cada aspecto citado pela comunidade, quantas avaliações o citaram como positivo e como negativo, do mais citado para o menos citado. Segue RN26 e RN27: sem a avaliação própria e calculado na consulta. |
 
 ### Confirmação e recuperação de conta
 

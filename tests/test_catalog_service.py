@@ -139,6 +139,7 @@ def test_empty_community_uses_zero_for_every_distribution(session, catalog):
     assert set(detail.community_summary.quality.model_dump().values()) == {0.0}
     assert set(detail.community_summary.expectation.model_dump().values()) == {0.0}
     assert set(detail.community_summary.value_for_money.model_dump().values()) == {0.0}
+    assert detail.community_summary.reasons == []
 
 
 def test_detail_has_full_distributions_and_own_review(session, catalog):
@@ -162,6 +163,43 @@ def test_detail_has_full_distributions_and_own_review(session, catalog):
     assert owner.community_summary.total_reviews == 2
     assert owner.your_review.repurchase_intent == "yes"
     assert owner.community_summary.repurchase_intent.yes == 0.0
+
+
+def test_detail_aggregates_reasons_by_aspect_excluding_own_review(session, catalog):
+    users, products = catalog
+
+    def review(intent, reasons, comment=None):
+        return ReviewCreate(
+            repurchase_intent=intent, quality="high", expectation="met", value_for_money="good",
+            reasons=reasons, comment=comment,
+        )
+
+    create_review(products[0].id, review("yes", [
+        {"aspect": "taste", "perception": "positive"},
+        {"aspect": "price", "perception": "negative"},
+    ]), users[0], session)
+    create_review(products[0].id, review("yes", [
+        {"aspect": "taste", "perception": "positive"},
+        {"aspect": "packaging", "perception": "negative"},
+    ]), users[1], session)
+    create_review(products[0].id, review("no", [
+        {"aspect": "taste", "perception": "negative"},
+        {"aspect": "price", "perception": "negative"},
+    ]), users[2], session)
+
+    visitor = get_product_detail(session, products[0].id, None)
+    assert [item.model_dump() for item in visitor.community_summary.reasons] == [
+        {"aspect": "taste", "positive": 2, "negative": 1},
+        {"aspect": "price", "positive": 0, "negative": 2},
+        {"aspect": "packaging", "positive": 0, "negative": 1},
+    ]
+
+    owner = get_product_detail(session, products[0].id, users[0])
+    assert [item.model_dump() for item in owner.community_summary.reasons] == [
+        {"aspect": "taste", "positive": 1, "negative": 1},
+        {"aspect": "packaging", "positive": 0, "negative": 1},
+        {"aspect": "price", "positive": 0, "negative": 1},
+    ]
 
 
 def test_community_reviews_are_private_paginated_and_exclude_current_user(session, catalog):

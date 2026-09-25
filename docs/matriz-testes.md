@@ -1,6 +1,6 @@
 # Matriz mínima de testes do MVP
 
-Estado: T01–T46 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 148 testes e ignora os 16 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 164. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
+Estado: T01–T47 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 149 testes e ignora os 16 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 165. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
 
 A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos, endpoints e telas do frontend.
 
@@ -52,6 +52,7 @@ A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos,
 | T44 | RN38, RN39, RNF09 | Middleware registra o template da rota e ignora `/health`; agregação por minuto e classe; `UPSERT` soma contagens e faixas; falha de gravação devolve ao buffer; retenção remove dados antigos; p95 pelas faixas, com a faixa aberta sinalizada |
 | T45 | RF19, RN40 | Painel sobre dados conhecidos: totais, 30 dias de série, North Star, buscas com resultado, ativação por coorte, funil e abandono, conflitos, catálogo, rotas com 5xx e p95, versões e erros do frontend |
 | T46 | RNF08 | Interface: eventos só no build de produção, sem automação e sem Do Not Track; lote a cada 5 s ou 10 eventos; erros do navegador sem query string e limitados por sessão |
+| T47 | RN41 | Motivos agregados por aspecto no detalhe: contagem positiva e negativa, ordem por menções, exclusão da avaliação própria, lista vazia sem avaliações e ausência na listagem |
 
 ## Estratégia
 

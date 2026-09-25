@@ -35,3 +35,7 @@ Critérios semânticos dizem **quanto** a pessoa gostou, mas não **do quê**. C
 ## Rastreabilidade
 
 RN21–RN24 · UC08, UC09 · T19, T20, T21 · `app/validation.py::validate_review_reasons`, constraint `uq_motivos_avaliacao_aspecto` · frontend: etapa 2 do `ReviewForm`
+
+## Atualizações
+
+- **2026-09-25:** a consequência pendente foi resolvida. O detalhe do produto passou a agregar os motivos por aspecto (RN41, `community_summary.reasons`), e a interface mostra os mais elogiados e os mais criticados, além dos motivos de cada avaliação. As contagens são de avaliações, não percentuais, para não sugerir precisão com poucas respostas.

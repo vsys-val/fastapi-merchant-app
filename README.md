@@ -33,14 +33,14 @@ A documentação segue o caminho **problema → decisões → requisitos → esp
 
 | Produto | Requisitos e especificação | Qualidade e operação |
 |---|---|---|
-| [Visão de produto](docs/visao-produto.md): personas, JTBD, métricas, riscos | [Requisitos](docs/requisitos.md): 20 RF · 40 RN · 9 RNF | [Matriz de testes](docs/matriz-testes.md): T01–T46 |
+| [Visão de produto](docs/visao-produto.md): personas, JTBD, métricas, riscos | [Requisitos](docs/requisitos.md): 20 RF · 41 RN · 9 RNF | [Matriz de testes](docs/matriz-testes.md): T01–T47 |
 | [Decisões (ADRs)](docs/decisoes/README.md): 11 trade-offs registrados | [Histórias de usuário](docs/historias-usuario.md) com critérios Gherkin | [Rastreabilidade](docs/rastreabilidade.md): requisito → teste → tela |
 | [Roadmap](docs/roadmap.md): agora · próximo · depois | [Casos de uso](docs/casos-de-uso.md) · [Contrato da API](docs/contrato-api.md) | [Plano de implementação](docs/plano-implementacao.md) |
 | [Glossário](docs/glossario.md) · [Ideação](docs/ideacao.md) | [Modelo de dados](docs/modelo-banco.md) · [Diagramas](docs/diagramas.md) | [Deploy no Render](docs/deploy-render.md) |
 
 ## Estado
 
-MVP concluído e em produção (entregas 1–9 do [plano](docs/plano-implementacao.md)): configuração protegida, PostgreSQL com migrações, validação e normalização, autenticação própria, produtos, avaliações, consultas, observabilidade básica, CI e endurecimento de produção. Depois do MVP vieram a confirmação de conta por código, a recuperação de senha e o limite de cadastros por IP ([ADR-0011](docs/decisoes/0011-confirmacao-de-conta-por-codigo.md)), e depois o painel administrativo com métricas de uso e de operação ([ADR-0012](docs/decisoes/0012-painel-e-instrumentacao-propria.md)). Os 20 requisitos funcionais estão implementados e cobertos por 164 testes automatizados. As lacunas de interface estão na [rastreabilidade](docs/rastreabilidade.md) e priorizadas no [roadmap](docs/roadmap.md).
+MVP concluído e em produção (entregas 1–9 do [plano](docs/plano-implementacao.md)): configuração protegida, PostgreSQL com migrações, validação e normalização, autenticação própria, produtos, avaliações, consultas, observabilidade básica, CI e endurecimento de produção. Depois do MVP vieram a confirmação de conta por código, a recuperação de senha e o limite de cadastros por IP ([ADR-0011](docs/decisoes/0011-confirmacao-de-conta-por-codigo.md)), e depois o painel administrativo com métricas de uso e de operação ([ADR-0012](docs/decisoes/0012-painel-e-instrumentacao-propria.md)). Os 20 requisitos funcionais estão implementados e cobertos por 165 testes automatizados. As lacunas de interface estão na [rastreabilidade](docs/rastreabilidade.md) e priorizadas no [roadmap](docs/roadmap.md).
 
 ## Executar o MVP
 

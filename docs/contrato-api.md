@@ -605,11 +605,17 @@ Exemplo parcial:
       "high": 50,
       "adequate": 40,
       "low": 10
-    }
+    },
+    "reasons": [
+      { "aspect": "taste", "positive": 7, "negative": 1 },
+      { "aspect": "price", "positive": 0, "negative": 4 }
+    ]
   },
   "your_review": null
 }
 ```
+
+`community_summary.reasons` (RN41) conta **avaliações**, não percentuais: cada avaliação cita um aspecto no máximo uma vez. Só aparecem aspectos citados; o mais citado vem primeiro e o empate segue a ordem alfabética do código. Sem avaliações, a lista é vazia. A listagem de produtos não traz esse campo.
 
 Respostas:
 

@@ -76,8 +76,10 @@ def test_public_and_authenticated_catalog_views(catalog_client):
     assert listed.json()["total"] == 1
     assert listed.json()["items"][0]["community_summary"]["total_reviews"] == 2
     assert listed.json()["items"][0]["your_repurchase_intent"] is None
+    assert "reasons" not in listed.json()["items"][0]["community_summary"]
     detail = client.get(f"/api/v1/products/{product['id']}").json()
     assert detail["community_summary"]["total_reviews"] == 2
+    assert detail["community_summary"]["reasons"] == [{"aspect": "taste", "positive": 2, "negative": 0}]
     assert detail["your_review"] is None
     public_reviews = client.get(f"/api/v1/products/{product['id']}/reviews").json()
     assert public_reviews["total"] == 2
