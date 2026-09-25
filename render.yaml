@@ -26,5 +26,8 @@ services:
       # E-mails com acesso ao painel administrativo; definidos no painel do Render.
       - key: ADMIN_EMAILS
         sync: false
+      # Mesmo valor do secret ALERTS_TOKEN do repositório no GitHub.
+      - key: ALERTS_TOKEN
+        sync: false
       - key: MIGRATION_DATABASE_URL
         sync: false

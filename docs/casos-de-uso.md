@@ -721,3 +721,15 @@ O autor decide remover sua avaliação de um produto.
 **Exceções:** 401 sem sessão; 403 para quem não administra (a interface nem chama a API).
 
 **Pós-condição:** nenhum dado alterado.
+
+## UC18 — Avisar quando um guarda-corpo é violado
+
+**Ator:** verificador automático (workflow agendado do GitHub Actions). **Relacionado:** RF21, RN44, RN45.
+
+1. A cada hora, o workflow chama `GET /internal/alerts` com `X-Alerts-Token`, esperando o Render acordar se preciso.
+2. A API avalia a última hora e responde `ok` ou `alert`, com o detalhe de cada verificação.
+3. Com `alert`, o workflow abre a issue `alerta-producao` (ou atualiza a aberta); com `ok` e uma issue aberta, comenta e fecha.
+
+**Exceções:** API sem resposta após 4 tentativas conta como alerta; token recusado falha o workflow; sem o secret, o workflow só avisa.
+
+**Pós-condição:** existe no máximo uma issue de alerta aberta, com o estado da última verificação.

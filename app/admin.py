@@ -11,6 +11,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
+from app.alerts import evaluate_alerts
 from app.auth import get_current_user
 from app.errors import ApiError
 from app.models import User
@@ -415,4 +416,6 @@ def build_overview(request: Request, session: Session, days: int, now: datetime 
         "catalog": _catalog(session),
         "technical": _technical(session, since, current, days, today),
         "frontend": _frontend(session, since),
+        # Sempre a última hora, independente do período escolhido.
+        "alerts": evaluate_alerts(session, current),
     }
