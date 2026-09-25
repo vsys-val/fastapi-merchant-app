@@ -183,6 +183,14 @@ def _product_metrics(session: Session, since: datetime, now: datetime) -> dict[s
     created = _event_count(session, "product_created", since)
     conflicts = _event_count(session, "product_create_conflict", since)
 
+    # Leitor de código de barras: aberturas e como terminaram.
+    scans = _event_count(session, "barcode_scan", since)
+    scans_detected = _event_count(session, "barcode_scan", since, "propriedades->>'outcome' = 'detected'")
+    scans_blocked = _event_count(
+        session, "barcode_scan", since,
+        "propriedades->>'outcome' IN ('denied', 'no_camera', 'unsupported', 'error')",
+    )
+
     return {
         "north_star": {
             "label": "Consultas a produtos já avaliados, por usuário ativo, nos últimos 7 dias",
@@ -197,6 +205,11 @@ def _product_metrics(session: Session, since: datetime, now: datetime) -> dict[s
             "barcode_pct": _pct(barcode, searches),
             "approximate_pct": _pct(approximate, searches),
             "target_with_results_pct": 70,
+        },
+        "barcode_scanner": {
+            "opened": scans,
+            "detected_pct": _pct(scans_detected, scans),
+            "camera_unavailable_pct": _pct(scans_blocked, scans),
         },
         "activation": {
             "cohort": cohort["total"],
