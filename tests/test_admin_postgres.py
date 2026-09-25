@@ -245,3 +245,48 @@ def test_overview_reflects_business_usage_and_operations(api, sessions):
     frontend = data["frontend"]
     assert frontend["versions"][0]["commit"] == "web123"
     assert frontend["top_errors"][0]["message"] == "TypeError: x is undefined"
+
+
+def _metric(session, minute, route, status_class, count, buckets, method="GET"):
+    session.add(RequestMetric(
+        minute=minute, method=method, route=route, status_class=status_class, count=count,
+        total_ms=float(count), max_ms=1.0, buckets=buckets,
+    ))
+
+
+def test_alerts_need_volume_and_flag_each_guardrail(sessions):
+    from app.alerts import evaluate_alerts
+
+    now = datetime.now(timezone.utc).replace(second=0, microsecond=0)
+    with sessions() as session:
+        quiet = evaluate_alerts(session, now)
+    assert quiet["status"] == "ok"
+    assert {check["key"]: check["value"] for check in quiet["checks"]} == {
+        "database": None, "errors_5xx": None, "search_p95": None, "client_errors": 0,
+    }
+
+    with sessions.begin() as session:
+        # 30 buscas, 25 delas acima de 800 ms, e 3 erros 5xx em 30 requisições (10%).
+        _metric(session, now - timedelta(minutes=5), "/api/v1/products", 2, 27, [2, 0, 0, 0, 0, 0, 25, 0, 0])
+        _metric(session, now - timedelta(minutes=5), "/api/v1/products", 5, 3, [3, 0, 0, 0, 0, 0, 0, 0, 0])
+        # Fora da janela de uma hora: não conta.
+        _metric(session, now - timedelta(hours=3), "/api/v1/products", 5, 500, [500] + [0] * 8)
+        for index in range(5):
+            session.add(ProductEvent(name="client_error", session_id=f"s{index}", user_id=None, properties={}, created_at=now))
+
+    with sessions() as session:
+        result = evaluate_alerts(session, now)
+    checks = {check["key"]: check for check in result["checks"]}
+    assert result["status"] == "alert"
+    assert (checks["errors_5xx"]["ok"], checks["errors_5xx"]["value"]) == (False, 10.0)
+    assert (checks["search_p95"]["ok"], checks["search_p95"]["value"]) == (False, 1600)
+    assert (checks["client_errors"]["ok"], checks["client_errors"]["value"]) == (False, 5)
+    assert checks["database"]["ok"] is True
+
+
+def test_overview_includes_current_alerts(api, sessions):
+    with sessions.begin() as session:
+        admin = _user(session, "admin@example.com")
+    data = api.get("/api/v1/admin/overview?days=7", headers=_bearer(admin)).json()
+    assert data["alerts"]["status"] == "ok"
+    assert data["alerts"]["window_minutes"] == 60

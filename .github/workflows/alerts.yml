@@ -1,0 +1,33 @@
+name: Production alerts
+
+# A cada hora, avalia os guarda-corpos da API publicada e mantém a issue
+# "alerta-producao" aberta enquanto algum estiver violado (ADR-0015).
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "43 * * * *"
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: production-alerts
+  cancel-in-progress: false
+
+jobs:
+  alerts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check production guardrails
+        env:
+          ALERTS_TOKEN: ${{ secrets.ALERTS_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/check_alerts.py

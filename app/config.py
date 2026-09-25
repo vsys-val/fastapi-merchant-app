@@ -28,6 +28,8 @@ class Settings(BaseSettings):
     admin_emails: str = ""
     # Definido automaticamente pelo Render em cada deploy.
     render_git_commit: str | None = None
+    # Segredo compartilhado com o workflow de alertas; sem ele, o endpoint não existe.
+    alerts_token: SecretStr | None = None
 
     @field_validator("database_url", "migration_database_url")
     @classmethod
@@ -54,6 +56,15 @@ class Settings(BaseSettings):
     def validate_jwt_secret(cls, value: SecretStr) -> SecretStr:
         if len(value.get_secret_value().encode("utf-8")) < 32:
             raise ValueError("Gere uma chave aleatória com pelo menos 32 bytes.")
+        return value
+
+    @field_validator("alerts_token")
+    @classmethod
+    def validate_alerts_token(cls, value: SecretStr | None) -> SecretStr | None:
+        if value is None or not value.get_secret_value():
+            return None
+        if len(value.get_secret_value().encode("utf-8")) < 32:
+            raise ValueError("ALERTS_TOKEN deve ter pelo menos 32 bytes.")
         return value
 
     @field_validator("access_token_expires_seconds")

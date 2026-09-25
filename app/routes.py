@@ -4,6 +4,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends, Query, Request, Respons
 from fastapi.security import HTTPAuthorizationCredentials
 
 from app.admin import build_overview, require_admin
+from app.alerts import evaluate_alerts, require_alerts_token
 from sqlalchemy.orm import Session
 
 from app.auth import (
@@ -107,6 +108,11 @@ def admin_overview(
     session: Session = Depends(get_db),
 ) -> dict:
     return build_overview(request, session, days)
+
+
+@router.get("/internal/alerts", dependencies=[Depends(require_alerts_token)], include_in_schema=False)
+def internal_alerts(session: Session = Depends(get_db)) -> dict:
+    return evaluate_alerts(session)
 
 
 @router.post("/auth/email-verification", response_model=TokenResponse)
