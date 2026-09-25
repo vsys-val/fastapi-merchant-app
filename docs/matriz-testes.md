@@ -1,6 +1,6 @@
 # Matriz mínima de testes do MVP
 
-Estado: T01–T48 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 150 testes e ignora os 20 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 170. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
+Estado: T01–T49 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 150 testes e ignora os 20 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 170. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
 
 A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos, endpoints e telas do frontend.
 
@@ -54,6 +54,7 @@ A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos,
 | T46 | RNF08 | Interface: eventos só no build de produção, sem automação e sem Do Not Track; lote a cada 5 s ou 10 eventos; erros do navegador sem query string e limitados por sessão |
 | T47 | RN41 | Motivos agregados por aspecto no detalhe: contagem positiva e negativa, ordem por menções, exclusão da avaliação própria, lista vazia sem avaliações e ausência na listagem |
 | T48 | RN14, RN42 | Busca no PostgreSQL: filtro, contagem, ordem e paginação no banco; `%` e `_` literais; renomear atualiza a busca; erro de digitação devolve parecidos com `approximate`; categoria mantida; termo distante não sugere nada |
+| T49 | RN43, RF20 | Leitor: dígito verificador, leitor nativo e ZXing, permissão negada, sem câmera e sem suporte, câmera desligada ao fechar; E2E com câmera falsa lendo um EAN-13; evento `barcode_scan` aceito e métricas no painel |
 
 ## Estratégia
 
@@ -73,5 +74,5 @@ A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos,
 - `tests/test_observability.py`: faixas e percentis, agregação, middleware, acesso ao painel e validação de eventos (T41, T42, T44).
 - `tests/test_search_postgres.py`: busca exata e aproximada com pg_trgm (T48).
 - `tests/test_admin_postgres.py`: gravação e retenção das métricas, ingestão de eventos e números do painel contra PostgreSQL real (T43–T45).
-- Frontend: `src/lib/analytics.test.ts` (T46) e `AdminDashboard.test.tsx` + `e2e/admin.spec.ts` (painel).
+- Frontend: `src/features/barcode/*.test.ts(x)` e `e2e/barcode.spec.ts` (T49), `src/lib/analytics.test.ts` (T46) e `AdminDashboard.test.tsx` + `e2e/admin.spec.ts` (painel).
 - `.github/workflows/tests.yml`: Python 3.12, PostgreSQL 17, verificação de dependências e suíte completa.

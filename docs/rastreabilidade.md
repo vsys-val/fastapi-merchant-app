@@ -14,7 +14,7 @@ Legenda de cobertura na interface: ✅ disponível · ◐ parcial · — não se
 | RF01 | Cadastrar conta | UC01 | `POST /api/v1/users` | T01–T03 | Modal de acesso, aba "Cadastrar" | ✅ |
 | RF02 | Autenticar e obter token | UC02 | `POST /api/v1/auth/login` | T04–T06 | Modal de acesso, aba "Entrar" | ✅ |
 | RF03 | Consulta pública de produtos | UC04, UC05 | `GET /api/v1/products`, `GET /api/v1/products/{id}` | T07, T23 | `/search`, `/products/:id` | ✅ |
-| RF04 | Pesquisar por nome, marca, categoria ou GTIN | UC04 | `GET /api/v1/products?name&brand&category&barcode` | T23–T25 | `/search`: nome + marca + chips de categoria combinados; modo separado para código; filtros na URL | ✅ |
+| RF04 | Pesquisar por nome, marca, categoria ou GTIN | UC04 | `GET /api/v1/products?name&brand&category&barcode` | T23–T25 | `/search`: nome + marca + chips de categoria combinados; modo separado para código, digitado ou lido pela câmera; filtros na URL | ✅ |
 | RF05 | Detalhe com avaliação própria separada | UC05 | `GET /api/v1/products/{id}` → `your_review` | T26 | `/products/:id`, seção "Sua experiência" | ✅ |
 | RF06 | Cadastrar produto ausente | UC06 | `POST /api/v1/products` | T08–T11, T16, T17 | `/products/new` | ✅ |
 | RF07 | Criador corrige produto sem avaliações de terceiros | UC07 | `PATCH /api/v1/products/{id}` | T12, T13 | `/products/:id/edit`, aberta por "Corrigir cadastro" em Meus produtos | ✅ |
@@ -73,6 +73,7 @@ Uma regra crítica é garantida em **mais de uma camada**. A coluna "Banco" indi
 | RN40 | Dias no fuso de São Paulo | — | `build_overview` | — | T45 |
 | RN41 | Motivos agregados por aspecto | — | `_reason_mentions` | nada armazenado | T47 |
 | RN42 | Sugestões para erro de digitação | `approximate` na página | `_approximate_matches` | `pg_trgm`, operador `<%` | T48 |
+| RN43 | Câmera só aceita GTIN válido | — (interface) | — | `isValidGtin`, `startScanner` no frontend | T49 |
 
 ## 3. Requisitos não funcionais
 
@@ -95,12 +96,12 @@ Além dos RNFs formais, a fase de endurecimento (Entrega 9) acrescentou: rate li
 ```mermaid
 flowchart LR
   subgraph Especificação
-    RF[RF01–RF20] --> RN[RN01–RN42]
+    RF[RF01–RF20] --> RN[RN01–RN43]
     RF --> UC[UC01–UC17]
     UC --> CT[Contrato da API]
   end
   subgraph Verificação
-    CT --> T[T01–T48]
+    CT --> T[T01–T49]
     T --> PY[pytest + PostgreSQL 17]
     PY --> SM[Smoke test diário]
   end

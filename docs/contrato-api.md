@@ -343,7 +343,7 @@ Regras:
 
 - `session_id`: identificador anônimo da aba (UUID gerado no navegador);
 - de 1 a 20 eventos por lote;
-- `name` é um destes: `app_loaded`, `client_error`, `search_performed`, `product_viewed`, `review_step_viewed`, `review_saved`, `product_create_submitted`, `product_created`, `product_create_conflict`, `product_edit_saved`, `signup_completed`;
+- `name` é um destes: `app_loaded`, `client_error`, `search_performed`, `product_viewed`, `review_step_viewed`, `review_saved`, `product_create_submitted`, `product_created`, `product_create_conflict`, `product_edit_saved`, `signup_completed`, `barcode_scan`;
 - `properties`: até 8 chaves identificadoras, com valores escalares (texto, número, booleano ou `null`); textos são cortados em 200 caracteres.
 
 Respostas: `202 Accepted`; `422` para lote inválido; `429` acima de 120 lotes por IP por hora.
@@ -361,7 +361,7 @@ Blocos da resposta:
 | `system` | ambiente, commit da API (`RENDER_GIT_COMMIT`), entrega de e-mail, tempo no ar e latência do banco |
 | `totals` | contas (confirmadas e pendentes), produtos (ativos e excluídos) e avaliações |
 | `daily` | por dia: novas contas, produtos e avaliações; usuários ativos, sessões e buscas |
-| `product` | North Star, buscas com resultado, ativação em 7 dias, avaliações por usuário ativo, funil da avaliação e conflitos no cadastro, cada um com a meta da [visão de produto](visao-produto.md#7-métricas-de-sucesso) |
+| `product` | North Star, buscas com resultado, ativação em 7 dias, avaliações por usuário ativo, funil da avaliação e conflitos no cadastro, cada um com a meta da [visão de produto](visao-produto.md#7-métricas-de-sucesso); uso do leitor de código de barras (`barcode_scanner`) |
 | `catalog` | produtos por categoria, % sem avaliação, mais avaliados, motivos por aspecto e intenção de recompra |
 | `technical` | requisições, % de 4xx e 5xx, p95 no período e por dia, e as 15 rotas mais chamadas nas últimas 24 h |
 | `frontend` | carregamentos, versões (commit) em uso e erros mais frequentes do navegador |

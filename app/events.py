@@ -34,6 +34,7 @@ EventName = Literal[
     "product_create_conflict",
     "product_edit_saved",
     "signup_completed",
+    "barcode_scan",
 ]
 
 EVENTS_WINDOW = timedelta(hours=1)

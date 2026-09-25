@@ -120,6 +120,9 @@ def test_event_batches_only_accept_known_names_and_small_scalars():
     batch = EventBatch(session_id=SESSION, events=[{"name": "search_performed", "properties": {"results": 3, "mode": "text"}}])
     assert batch.events[0].properties == {"results": 3, "mode": "text"}
 
+    scan = EventBatch(session_id=SESSION, events=[{"name": "barcode_scan", "properties": {"outcome": "detected", "engine": None}}])
+    assert scan.events[0].properties == {"outcome": "detected", "engine": None}
+
     long_text = EventBatch(session_id=SESSION, events=[{"name": "client_error", "properties": {"message": "x" * 500}}])
     assert len(long_text.events[0].properties["message"]) == 200
 

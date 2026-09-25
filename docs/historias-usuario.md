@@ -160,7 +160,7 @@ Cenário: serviço de e-mail indisponível
 
 > **Como** compradora no mercado, **quero** encontrar um produto pelo nome, pela marca, pela categoria ou pelo código de barras, combinando os filtros quando precisar, **para** chegar rápido à informação que me ajuda a decidir.
 
-Rastreabilidade: RF03, RF04 · RN14, RN42 · UC04 · T23–T25, T48
+Rastreabilidade: RF03, RF04 · RN14, RN42, RN43 · UC04 · T23–T25, T48, T49
 
 ```gherkin
 Cenário: busca parcial sem acento e sem caixa
@@ -171,6 +171,16 @@ Cenário: busca parcial sem acento e sem caixa
 Cenário: busca exata por código de barras
   Quando eu busco pelo código "7891234567895"
   Então vejo somente o produto com esse GTIN
+
+Cenário: ler o código com a câmera
+  Dado que estou no modo "Código de barras"
+  Quando toco em "Ler com a câmera" e aponto para a embalagem
+  Então o código é preenchido e a busca acontece sem eu digitar
+
+Cenário: câmera indisponível
+  Dado que neguei o acesso à câmera
+  Quando toco em "Ler com a câmera"
+  Então vejo como liberar a câmera e posso voltar a digitar o código
 
 Cenário: erro de digitação
   Dado que existe o produto "Arroz integral"
@@ -257,7 +267,7 @@ Cenário: privacidade dos autores
 
 > **Como** usuária autenticada, **quero** cadastrar um produto que não encontrei, **para** poder avaliá-lo e ajudar outras pessoas.
 
-Rastreabilidade: RF06 · RN05–RN12 · UC06 · T08–T11, T16, T17 · [ADR-0004](decisoes/0004-catalogo-canonico-comunitario.md)
+Rastreabilidade: RF06 · RN05–RN12, RN43 · UC06 · T08–T11, T16, T17, T49 · [ADR-0004](decisoes/0004-catalogo-canonico-comunitario.md)
 
 ```gherkin
 Cenário: cadastro com normalização de medida
@@ -273,6 +283,10 @@ Cenário: duplicata escrita de outro jeito
 Cenário: código de barras inválido
   Quando informo um GTIN com dígito verificador errado
   Então o cadastro é recusado com erro de validação
+
+Cenário: código de barras pela câmera
+  Quando toco em "Ler com a câmera" no campo GTIN e aponto para a embalagem
+  Então o campo é preenchido com o código lido
 
 Cenário: recadastro de produto removido
   Dado que um produto sem avaliações foi excluído

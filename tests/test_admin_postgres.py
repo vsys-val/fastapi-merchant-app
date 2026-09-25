@@ -190,6 +190,10 @@ def test_overview_reflects_business_usage_and_operations(api, sessions):
         event("product_create_submitted", ana)
         event("product_create_conflict", ana)
         event("app_loaded", None, "s2", commit="web123")
+        event("barcode_scan", ana, outcome="detected", engine="native", context="search")
+        event("barcode_scan", ana, outcome="cancelled", engine="zxing", context="search")
+        event("barcode_scan", None, "s2", outcome="denied", engine=None, context="product_form")
+        event("barcode_scan", None, "s2", outcome="detected", engine="zxing", context="search")
         event("client_error", None, "s2", message="TypeError: x is undefined", source="app.js")
 
     metrics = api.app.state.request_metrics
@@ -224,6 +228,7 @@ def test_overview_reflects_business_usage_and_operations(api, sessions):
     assert [step["sessions"] for step in product["review_funnel"]["steps"]] == [2, 1, 1, 1]
     assert product["review_funnel"]["abandonment_pct"] == 50.0
     assert product["product_creation"]["conflict_pct"] == 50.0
+    assert product["barcode_scanner"] == {"opened": 4, "detected_pct": 50.0, "camera_unavailable_pct": 25.0}
 
     catalog = data["catalog"]
     assert catalog["products_without_reviews_pct"] == 50.0

@@ -60,6 +60,7 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 | RN13 | O criador pode editar os dados do produto somente enquanto nenhum outro usuário o tiver avaliado. |
 | RN14 | Nome e marca devem aceitar pesquisa textual parcial; código de barras exige correspondência exata. |
 | RN42 | Quando nenhum produto contém o nome ou a marca buscados, a pesquisa devolve os produtos parecidos (semelhança de trigramas ≥ 0,5), respeitando a categoria, e informa que o resultado é aproximado. |
+| RN43 | A leitura pela câmera só aceita EAN-13, EAN-8 ou UPC-A com dígito verificador válido e sempre permite voltar a digitar o código. |
 
 ### Avaliações
 
