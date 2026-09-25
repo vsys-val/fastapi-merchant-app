@@ -35,6 +35,7 @@ flowchart TB
   end
   subgraph E6[E6 · Operação do produto]
     US16[US16 Acompanhar o produto com dados · M]
+    US17[US17 Ser avisado de problemas · S]
   end
   E1 --> E2 --> E4 --> E5
   E2 --> E3 --> E4
@@ -483,6 +484,33 @@ Cenário: quem não administra
 Cenário: privacidade
   Quando uso o app com Do Not Track ativado
   Então nenhum evento de uso é enviado
+```
+
+### US17 — Ser avisado de problemas · Should
+
+> **Como** responsável pelo produto, **quero** ser avisado quando a API falha ou fica lenta, **para** agir antes que as pessoas desistam, sem precisar abrir o painel.
+
+Rastreabilidade: RF21 · RN44, RN45 · UC18 · T50 · [ADR-0015](decisoes/0015-alertas-com-github-actions.md)
+
+```gherkin
+Cenário: guarda-corpo violado
+  Dado que 10% das requisições da última hora terminaram em erro 5xx
+  Quando o workflow de alertas roda
+  Então é aberta a issue "🚨 Alerta de produção" com a verificação violada
+  E recebo a notificação do GitHub
+
+Cenário: pouco tráfego
+  Dado que houve só 3 requisições na última hora, uma delas com erro
+  Então nenhum alerta é aberto por erros 5xx
+
+Cenário: normalizou
+  Dado que existe uma issue de alerta aberta
+  Quando uma verificação encontra tudo dentro dos limites
+  Então a issue recebe o comentário "Tudo normalizado" e é fechada
+
+Cenário: alerta no painel
+  Quando abro /admin durante um alerta
+  Então "Saúde agora" mostra quantos alertas estão ativos e quais limites foram violados
 ```
 
 ---

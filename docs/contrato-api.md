@@ -365,10 +365,31 @@ Blocos da resposta:
 | `catalog` | produtos por categoria, % sem avaliação, mais avaliados, motivos por aspecto e intenção de recompra |
 | `technical` | requisições, % de 4xx e 5xx, p95 no período e por dia, e as 15 rotas mais chamadas nas últimas 24 h |
 | `frontend` | carregamentos, versões (commit) em uso e erros mais frequentes do navegador |
+| `alerts` | guarda-corpos da última hora, no mesmo formato de `/internal/alerts`, independente de `days` |
 
 Respostas: `200 OK`; `401` sem autenticação; `403 admin_required` para quem não administra.
 
 `GET /users/me` passa a informar `is_admin`, para que a interface mostre o acesso ao painel.
+
+### Consultar alertas (verificador automático)
+
+`GET /internal/alerts` com o cabeçalho `X-Alerts-Token` (RN45). Não aparece no OpenAPI.
+
+```json
+{
+  "status": "alert",
+  "evaluated_at": "2026-09-25T15:43:00+00:00",
+  "window_minutes": 60,
+  "checks": [
+    { "key": "database", "label": "Banco de dados", "ok": true, "value": null, "threshold": "disponível", "detail": "Respondendo." },
+    { "key": "errors_5xx", "label": "Erros 5xx", "ok": false, "value": 10.0, "threshold": "< 5%", "detail": "3 de 30 requisições." },
+    { "key": "search_p95", "label": "Latência p95 da busca", "ok": true, "value": null, "threshold": "≤ 800 ms", "detail": "Volume insuficiente (4 buscas)." },
+    { "key": "client_errors", "label": "Erros no navegador", "ok": true, "value": 1, "threshold": "< 5 sessões", "detail": "1 sessões com erro na última hora." }
+  ]
+}
+```
+
+Respostas: `200 OK`; `401 invalid_alerts_token` com segredo ausente ou errado; `404` quando `ALERTS_TOKEN` não está configurado.
 
 ## Verificação de saúde
 

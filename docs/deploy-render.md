@@ -48,6 +48,17 @@ Quando um provedor HTTP for implementado, troque o valor **no `render.yaml`**: v
 
 O commit exibido no painel vem de `RENDER_GIT_COMMIT`, que o Render define sozinho. Ver [ADR-0012](decisoes/0012-painel-e-instrumentacao-propria.md).
 
+## Alertas
+
+O workflow **Production alerts** consulta a API a cada hora e abre uma issue `alerta-producao` quando algum guarda-corpo é violado ([ADR-0015](decisoes/0015-alertas-com-github-actions.md)). Para ativar:
+
+1. Gere um segredo: `python -c "import secrets; print(secrets.token_urlsafe(48))"`.
+2. No Render, em **Environment** do serviço da API, crie `ALERTS_TOKEN` com esse valor (declarada no `render.yaml` com `sync: false`).
+3. No GitHub, em **Settings → Secrets and variables → Actions** deste repositório, crie o secret `ALERTS_TOKEN` com **o mesmo valor**.
+4. Rode o workflow uma vez em **Actions → Production alerts → Run workflow** e confira o resumo.
+
+Sem o secret no GitHub, o workflow só registra um aviso. Com valores diferentes, ele falha avisando do token recusado. Para receber as notificações, acompanhe o repositório (**Watch**) ou mantenha as notificações de issues ativas.
+
 ## Inicialização e saúde
 
 Ao iniciar cada deploy, o serviço executa `alembic upgrade head` e somente então

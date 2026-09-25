@@ -20,6 +20,7 @@ As decisões 0001–0010 foram tomadas durante a ideação e a implementação d
 | [0012](0012-painel-e-instrumentacao-propria.md) | Painel administrativo com instrumentação própria | Produto / Operação | Aceita |
 | [0013](0013-busca-no-banco-com-trigramas.md) | Busca no banco com trigramas e sugestões aproximadas | Arquitetura / Produto | Aceita |
 | [0014](0014-leitura-de-codigo-de-barras-pela-camera.md) | Leitura de código de barras pela câmera | Produto / Interface | Aceita |
+| [0015](0015-alertas-com-github-actions.md) | Alertas de produção com GitHub Actions e issue automática | Operação | Aceita |
 
 ## Modelo
 

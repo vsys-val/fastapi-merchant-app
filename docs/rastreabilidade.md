@@ -31,8 +31,9 @@ Legenda de cobertura na interface: ✅ disponível · ◐ parcial · — não se
 | RF18 | Redefinir senha por código | UC16 | `POST /api/v1/auth/password-reset`, `/password-reset/confirm` | T38, T40 | Modal de acesso, "Esqueci minha senha" | ✅ ⚠️ responde 503 até haver provedor |
 | RF19 | Painel administrativo | UC17 | `GET /api/v1/admin/overview` | T41, T45 | `/admin` | ✅ exige `ADMIN_EMAILS` |
 | RF20 | Receber eventos de uso | UC17 | `POST /api/v1/events` | T42, T43, T46 | Instrumentação em busca, detalhe, avaliação, cadastro e conta | ✅ |
+| RF21 | Alertas de operação | UC18 | `GET /api/v1/internal/alerts`, bloco `alerts` do painel | T50 | `/admin` → "Saúde agora"; issue `alerta-producao` no GitHub | ✅ exige `ALERTS_TOKEN` |
 
-**Leitura rápida:** os 20 requisitos funcionais estão implementados e testados na API. Na interface, 19 estão completos e 1 parcial (RF13: a reativação acontece pelo cadastro, mas ainda não há botão de exclusão). RF16 e RF18 só entram em vigor em produção quando um provedor de e-mail for configurado ([ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)). As lacunas são escolhas de sequenciamento e estão priorizadas no [roadmap](roadmap.md).
+**Leitura rápida:** os 21 requisitos funcionais estão implementados e testados na API. Na interface, 20 estão completos e 1 parcial (RF13: a reativação acontece pelo cadastro, mas ainda não há botão de exclusão). RF16 e RF18 só entram em vigor em produção quando um provedor de e-mail for configurado ([ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)). As lacunas são escolhas de sequenciamento e estão priorizadas no [roadmap](roadmap.md).
 
 ## 2. Regras de negócio — onde cada uma é garantida
 
@@ -74,6 +75,8 @@ Uma regra crítica é garantida em **mais de uma camada**. A coluna "Banco" indi
 | RN41 | Motivos agregados por aspecto | — | `_reason_mentions` | nada armazenado | T47 |
 | RN42 | Sugestões para erro de digitação | `approximate` na página | `_approximate_matches` | `pg_trgm`, operador `<%` | T48 |
 | RN43 | Câmera só aceita GTIN válido | — (interface) | — | `isValidGtin`, `startScanner` no frontend | T49 |
+| RN44 | Guarda-corpos da última hora | — | `evaluate_alerts` | volume mínimo de 20 requisições | T50 |
+| RN45 | Segredo do verificador | cabeçalho `X-Alerts-Token` | `require_alerts_token` | — | T50 |
 
 ## 3. Requisitos não funcionais
 
@@ -96,12 +99,12 @@ Além dos RNFs formais, a fase de endurecimento (Entrega 9) acrescentou: rate li
 ```mermaid
 flowchart LR
   subgraph Especificação
-    RF[RF01–RF20] --> RN[RN01–RN43]
-    RF --> UC[UC01–UC17]
+    RF[RF01–RF21] --> RN[RN01–RN45]
+    RF --> UC[UC01–UC18]
     UC --> CT[Contrato da API]
   end
   subgraph Verificação
-    CT --> T[T01–T49]
+    CT --> T[T01–T50]
     T --> PY[pytest + PostgreSQL 17]
     PY --> SM[Smoke test diário]
   end
@@ -113,6 +116,7 @@ flowchart LR
   subgraph Operação
     UI -. eventos .-> ADM[Painel /admin]
     EP -. métricas .-> ADM
+    ADM -. a cada hora .-> GH[Issue de alerta]
   end
 ```
 

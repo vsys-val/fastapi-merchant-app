@@ -30,6 +30,7 @@ Os itens foram ordenados por **impacto no ciclo central** (buscar → decidir �
 - Atalho para o produto já cadastrado quando o cadastro é duplicado ([ADR-0004](decisoes/0004-catalogo-canonico-comunitario.md)).
 - Confirmação de conta por código, recuperação de senha, encerramento de sessões na troca de senha e limite de cadastros por IP ([ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)). A confirmação fica **inativa em produção** até o provedor de e-mail ser configurado.
 - Painel administrativo `/admin` com eventos de uso próprios e métricas técnicas da API: North Star, funil da avaliação, catálogo, latência por rota e erros do navegador ([ADR-0012](decisoes/0012-painel-e-instrumentacao-propria.md)).
+- Alertas de produção: workflow horário no GitHub Actions que abre e fecha uma issue quando erros 5xx, p95 da busca, banco ou erros do navegador passam do limite ([ADR-0015](decisoes/0015-alertas-com-github-actions.md)).
 - Leitura de código de barras pela câmera na busca e no cadastro, com leitor nativo ou ZXing sob demanda ([ADR-0014](decisoes/0014-leitura-de-codigo-de-barras-pela-camera.md)).
 - Busca no banco com índices de trigramas: ~970 ms → ~10 ms com 50 mil produtos, e sugestões para erros de digitação ([ADR-0013](decisoes/0013-busca-no-banco-com-trigramas.md)).
 - "O que a comunidade destaca" no detalhe: aspectos mais elogiados e mais criticados, e os motivos de cada avaliação visíveis na lista ([ADR-0003](decisoes/0003-motivos-estruturados-obrigatorios.md)).
@@ -40,7 +41,6 @@ Os itens foram ordenados por **impacto no ciclo central** (buscar → decidir �
 |---|---|---|---|---|
 | Escolher e configurar o provedor de e-mail (ex.: Brevo ou Resend) e implementar o `EmailSender` HTTP | Sem provedor, a produção não exige confirmação de conta e não oferece recuperação de senha | RNF07; risco R2 | [ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md) | Alto / P |
 | Ler o painel por 2–4 semanas e recalibrar as metas da visão | As metas são hipóteses; agora existem dados | Todas as métricas; valida H1 e H2 | [ADR-0012](decisoes/0012-painel-e-instrumentacao-propria.md) | Alto / P |
-| Alertas: aviso quando a taxa de 5xx ou o p95 passar do guarda-corpo | O painel só mostra problemas quando alguém abre | Latência p95; disponibilidade | [ADR-0012](decisoes/0012-painel-e-instrumentacao-propria.md) | Médio / P |
 
 ## 🔵 Próximo — escala e confiança
 

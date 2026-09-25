@@ -1,6 +1,6 @@
 # Matriz mínima de testes do MVP
 
-Estado: T01–T49 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 150 testes e ignora os 20 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 170. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
+Estado: T01–T50 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 161 testes e ignora os 22 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 183. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
 
 A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos, endpoints e telas do frontend.
 
@@ -55,6 +55,7 @@ A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos,
 | T47 | RN41 | Motivos agregados por aspecto no detalhe: contagem positiva e negativa, ordem por menções, exclusão da avaliação própria, lista vazia sem avaliações e ausência na listagem |
 | T48 | RN14, RN42 | Busca no PostgreSQL: filtro, contagem, ordem e paginação no banco; `%` e `_` literais; renomear atualiza a busca; erro de digitação devolve parecidos com `approximate`; categoria mantida; termo distante não sugere nada |
 | T49 | RN43, RF20 | Leitor: dígito verificador, leitor nativo e ZXing, permissão negada, sem câmera e sem suporte, câmera desligada ao fechar; E2E com câmera falsa lendo um EAN-13; evento `barcode_scan` aceito e métricas no painel |
+| T50 | RF21, RN44, RN45 | Alertas: volume mínimo, 5xx, p95 da busca e erros do navegador na última hora; bloco `alerts` no painel; segredo (404 sem configuração, 401 errado, 200 certo, fora do OpenAPI); workflow cria, atualiza e fecha uma única issue e trata API fora do ar e token recusado |
 
 ## Estratégia
 
@@ -72,6 +73,7 @@ A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos,
 - `tests/test_account_flows_postgres.py`: confirmação de e-mail, reenvio, expiração, recuperação de senha e limites por IP via HTTP contra PostgreSQL real (T34–T39).
 - `tests/test_account_security.py`: configuração de entrega, versão de sessão no JWT, formato e HMAC dos códigos (T35, T40).
 - `tests/test_observability.py`: faixas e percentis, agregação, middleware, acesso ao painel e validação de eventos (T41, T42, T44).
+- `tests/test_alerts.py`: segredo do endpoint e decisões do workflow de alertas (T50).
 - `tests/test_search_postgres.py`: busca exata e aproximada com pg_trgm (T48).
 - `tests/test_admin_postgres.py`: gravação e retenção das métricas, ingestão de eventos e números do painel contra PostgreSQL real (T43–T45).
 - Frontend: `src/features/barcode/*.test.ts(x)` e `e2e/barcode.spec.ts` (T49), `src/lib/analytics.test.ts` (T46) e `AdminDashboard.test.tsx` + `e2e/admin.spec.ts` (painel).

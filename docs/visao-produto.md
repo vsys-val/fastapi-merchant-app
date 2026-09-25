@@ -116,7 +116,7 @@ Todas as métricas abaixo são medidas pelo painel `/admin`, com eventos de uso 
 | Qualidade | % de avaliações com comentário além dos motivos obrigatórios | Riqueza do sinal para a comunidade | acompanhar |
 | Guarda-corpo | Taxa de conflito `409 product_conflict` no cadastro | Mede se a deduplicação funciona sem frustrar o usuário | < 10% dos cadastros |
 | Guarda-corpo | Abandono do formulário de avaliação entre as etapas 1 e 3 | Verifica se a estrutura não é pesada demais | < 30% |
-| Guarda-corpo | Latência p95 da busca | O uso no corredor exige resposta rápida | < 800 ms |
+| Guarda-corpo | Latência p95 da busca | O uso no corredor exige resposta rápida; gera alerta automático ([ADR-0015](decisoes/0015-alertas-com-github-actions.md)) | < 800 ms |
 
 ## 8. Hipóteses e riscos
 
