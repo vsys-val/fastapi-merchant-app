@@ -363,10 +363,17 @@ class ProductListCommunitySummary(BaseModel):
     repurchase_intent: RepurchaseDistribution
 
 
+class AspectMentions(BaseModel):
+    aspect: Aspect
+    positive: int
+    negative: int
+
+
 class ProductCommunitySummary(ProductListCommunitySummary):
     quality: QualityDistribution
     expectation: ExpectationDistribution
     value_for_money: ValueForMoneyDistribution
+    reasons: list[AspectMentions]
 
 
 class ProductListItem(ProductPublic):

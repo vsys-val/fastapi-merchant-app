@@ -224,7 +224,7 @@ Cenário: minha avaliação não entra nos indicadores que eu vejo
 
 > **Como** explorador, **quero** ver a distribuição das opiniões e os comentários de outras pessoas, **para** decidir se vale testar um produto novo.
 
-Rastreabilidade: RF11, RF12 · RN27 · UC05 · T26, T27, T29
+Rastreabilidade: RF11, RF12 · RN27, RN41 · UC05 · T26, T27, T29, T47
 
 ```gherkin
 Cenário: indicadores em percentuais
@@ -232,6 +232,12 @@ Cenário: indicadores em percentuais
   Quando abro o detalhe como visitante
   Então vejo "Compraria novamente?" com Sim 67% e Não 33%
   E vejo as distribuições de qualidade, expectativa e custo-benefício
+
+Cenário: o que a comunidade destaca
+  Dado que 3 pessoas avaliaram o produto e 2 citaram "Preço" como negativo
+  Quando abro o detalhe
+  Então vejo "Preço · 2 de 3" em "Mais criticado"
+  E cada avaliação da comunidade mostra os próprios motivos, com + ou −
 
 Cenário: privacidade dos autores
   Quando vejo as avaliações da comunidade

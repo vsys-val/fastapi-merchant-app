@@ -29,7 +29,7 @@ flowchart TB
     MD[Modelo de dados<br/>+ diagramas]
   end
   subgraph Verificação
-    MT[Matriz de testes<br/>T01–T46]
+    MT[Matriz de testes<br/>T01–T47]
     RT[Rastreabilidade<br/>RF → UC → endpoint → teste → tela]
   end
   subgraph Evolução
@@ -74,7 +74,7 @@ flowchart TB
 
 | Documento | Conteúdo |
 |---|---|
-| [matriz-testes.md](matriz-testes.md) | T01–T46 ligados a requisitos e casos de uso |
+| [matriz-testes.md](matriz-testes.md) | T01–T47 ligados a requisitos e casos de uso |
 | [rastreabilidade.md](rastreabilidade.md) | Cobertura ponta a ponta nos dois repositórios, incluindo lacunas |
 | [plano-implementacao.md](plano-implementacao.md) | Sequência de entregas com critérios de conclusão |
 | [deploy-render.md](deploy-render.md) | Implantação, segredos, CORS e saúde |

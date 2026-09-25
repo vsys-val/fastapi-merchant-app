@@ -12,6 +12,7 @@ from app.models import Product, Review, User
 from app.products import _public_product
 from app.reviews import _public_review
 from app.schemas import (
+    AspectMentions,
     CommunityReview,
     CommunityReviewPage,
     OwnProductPage,
@@ -38,6 +39,29 @@ def _percentage(values: list[str], choices: tuple[str, ...]) -> dict[str, float]
     return {choice: round(counts[choice] * 100 / total, 1) for choice in choices}
 
 
+def _reason_mentions(reviews: list[Review]) -> list[AspectMentions]:
+    """Quantas avaliações citam cada aspecto, e em que sentido.
+
+    Cada avaliação cita um aspecto no máximo uma vez, então a contagem é de
+    avaliações. Os aspectos mais citados vêm primeiro; o empate é resolvido
+    pelo nome, para a ordem ser estável.
+    """
+
+    counts: Counter[tuple[str, str]] = Counter(
+        (reason.aspect, reason.perception) for review in reviews for reason in review.reasons
+    )
+    aspects = {aspect for aspect, _ in counts}
+    mentions = [
+        AspectMentions(
+            aspect=aspect,
+            positive=counts[(aspect, "positive")],
+            negative=counts[(aspect, "negative")],
+        )
+        for aspect in aspects
+    ]
+    return sorted(mentions, key=lambda item: (-(item.positive + item.negative), item.aspect))
+
+
 def _community_summary(reviews: list[Review]) -> ProductCommunitySummary:
     return ProductCommunitySummary(
         total_reviews=len(reviews),
@@ -57,6 +81,7 @@ def _community_summary(reviews: list[Review]) -> ProductCommunitySummary:
             [review.value_for_money for review in reviews],
             ("good", "fair", "poor"),
         ),
+        reasons=_reason_mentions(reviews),
     )
 
 

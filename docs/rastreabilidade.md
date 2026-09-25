@@ -71,6 +71,7 @@ Uma regra crítica é garantida em **mais de uma camada**. A coluna "Banco" indi
 | RN38 | Retenção 90/180 dias | — | `RequestMetrics._cleanup` | — | T44 |
 | RN39 | Métricas por template de rota, sem `/health` | — | middleware `measure` | — | T44 |
 | RN40 | Dias no fuso de São Paulo | — | `build_overview` | — | T45 |
+| RN41 | Motivos agregados por aspecto | — | `_reason_mentions` | nada armazenado | T47 |
 
 ## 3. Requisitos não funcionais
 
@@ -93,12 +94,12 @@ Além dos RNFs formais, a fase de endurecimento (Entrega 9) acrescentou: rate li
 ```mermaid
 flowchart LR
   subgraph Especificação
-    RF[RF01–RF20] --> RN[RN01–RN40]
+    RF[RF01–RF20] --> RN[RN01–RN41]
     RF --> UC[UC01–UC17]
     UC --> CT[Contrato da API]
   end
   subgraph Verificação
-    CT --> T[T01–T46]
+    CT --> T[T01–T47]
     T --> PY[pytest + PostgreSQL 17]
     PY --> SM[Smoke test diário]
   end
