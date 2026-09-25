@@ -129,7 +129,15 @@ def _product_metrics(session: Session, since: datetime, now: datetime) -> dict[s
     ) or 0
 
     searches = _event_count(session, "search_performed", since)
-    with_results = _event_count(session, "search_performed", since, "(propriedades->>'results')::int > 0")
+    # Sugestões aproximadas não contam como cobertura do catálogo: o produto
+    # buscado pode não existir. Elas têm indicador próprio.
+    approximate = _event_count(session, "search_performed", since, "(propriedades->>'approximate')::boolean IS TRUE")
+    with_results = _event_count(
+        session,
+        "search_performed",
+        since,
+        "(propriedades->>'results')::int > 0 AND (propriedades->>'approximate')::boolean IS NOT TRUE",
+    )
     barcode = _event_count(session, "search_performed", since, "propriedades->>'mode' = 'barcode'")
 
     # Coorte: contas criadas na janela com pelo menos 7 dias de vida.
@@ -187,6 +195,7 @@ def _product_metrics(session: Session, since: datetime, now: datetime) -> dict[s
             "total": searches,
             "with_results_pct": _pct(with_results, searches),
             "barcode_pct": _pct(barcode, searches),
+            "approximate_pct": _pct(approximate, searches),
             "target_with_results_pct": 70,
         },
         "activation": {

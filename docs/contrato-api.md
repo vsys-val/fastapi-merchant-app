@@ -522,6 +522,8 @@ Regras:
 - `barcode` não pode ser combinado com nenhum outro filtro; `page` e `page_size` continuam permitidos;
 - produtos logicamente excluídos nunca aparecem;
 - resultados são ordenados por nome, depois por marca e finalmente por `id`;
+- `%` e `_` digitados são tratados como texto, não como curinga;
+- sem nenhum produto que contenha `name` ou `brand`, a resposta traz os produtos **parecidos** (erro de digitação), ordenados pela semelhança, com `approximate: true` (RN42). A categoria continua valendo; `barcode` nunca é aproximado;
 - combinações inválidas, valores controlados inválidos e limites de paginação inválidos retornam `422`.
 
 Exemplos:
@@ -535,6 +537,8 @@ GET /products?name=arroz&category=food
 GET /products?name=sorvete&brand=kibon
 GET /products?barcode=7891234567895
 ```
+
+A página tem `items`, `page`, `page_size`, `total` e `approximate` (`false`, salvo na situação acima).
 
 Formato resumido de cada item:
 

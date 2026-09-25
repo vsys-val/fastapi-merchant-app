@@ -30,6 +30,7 @@ Os itens foram ordenados por **impacto no ciclo central** (buscar → decidir �
 - Atalho para o produto já cadastrado quando o cadastro é duplicado ([ADR-0004](decisoes/0004-catalogo-canonico-comunitario.md)).
 - Confirmação de conta por código, recuperação de senha, encerramento de sessões na troca de senha e limite de cadastros por IP ([ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)). A confirmação fica **inativa em produção** até o provedor de e-mail ser configurado.
 - Painel administrativo `/admin` com eventos de uso próprios e métricas técnicas da API: North Star, funil da avaliação, catálogo, latência por rota e erros do navegador ([ADR-0012](decisoes/0012-painel-e-instrumentacao-propria.md)).
+- Busca no banco com índices de trigramas: ~970 ms → ~10 ms com 50 mil produtos, e sugestões para erros de digitação ([ADR-0013](decisoes/0013-busca-no-banco-com-trigramas.md)).
 - "O que a comunidade destaca" no detalhe: aspectos mais elogiados e mais criticados, e os motivos de cada avaliação visíveis na lista ([ADR-0003](decisoes/0003-motivos-estruturados-obrigatorios.md)).
 
 ## 🟢 Agora — medir e fechar o ciclo
@@ -44,7 +45,6 @@ Os itens foram ordenados por **impacto no ciclo central** (buscar → decidir �
 
 | Item | Problema | Move | Origem | Impacto / Esforço |
 |---|---|---|---|---|
-| Busca no banco com `pg_trgm` + `unaccent` | `search_products` carrega o catálogo ativo em memória | Latência p95 da busca; risco R3 | [Visão §8](visao-produto.md#8-hipóteses-e-riscos) | Alto / M |
 | Leitura de código de barras pela câmera | Digitar 13 dígitos no corredor é lento | Tempo até a decisão; buscas por GTIN | JTBD da persona Ana | Alto / M |
 | Sessão em cookie HttpOnly | O token em `localStorage` fica exposto a XSS | Segurança | Arquitetura do frontend | Médio / M |
 | Exclusão de produto pela interface | Cadastros indevidos só saem pela API | Qualidade do catálogo | RF13 ◐ | Baixo / P |

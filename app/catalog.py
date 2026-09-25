@@ -4,7 +4,10 @@ from __future__ import annotations
 
 from collections import Counter
 
-from sqlalchemy import func, select
+import logging
+
+from sqlalchemy import func, literal, select, text
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session, joinedload, selectinload
 
 from app.errors import ApiError
@@ -25,6 +28,9 @@ from app.schemas import (
     ProductPage,
 )
 from app.validation import identity_text, normalize_text, validate_gtin
+
+
+logger = logging.getLogger(__name__)
 
 
 def _validation_error(message: str) -> ApiError:
@@ -105,6 +111,54 @@ def _split_reviews(
     return community, own
 
 
+# Semelhança mínima (pg_trgm word_similarity) para sugerir um produto quando
+# nenhum contém o termo: aceita "arros" → "arroz", recusa "ypioca" → "ype".
+APPROXIMATE_THRESHOLD = 0.5
+
+
+def _approximate_matches(
+    session: Session, filters: list, text_terms: list, page: int, page_size: int
+) -> tuple[list[Product], int]:
+    """Produtos parecidos com o termo quando a busca exata não encontra nada.
+
+    Depende de pg_trgm, disponível só no PostgreSQL. Em qualquer falha
+    (outro banco, extensão ausente) a busca segue sem sugestões.
+    """
+
+    if session.get_bind().dialect.name != "postgresql":
+        return [], 0
+    try:
+        with session.begin_nested():
+            # No Supabase a extensão fica no schema "extensions", fora do
+            # search_path padrão; a configuração vale só para esta transação.
+            session.execute(
+                text(
+                    "SELECT set_config('search_path', current_setting('search_path') || ', extensions, public', true),"
+                    " set_config('pg_trgm.word_similarity_threshold', :threshold, true)"
+                ),
+                {"threshold": str(APPROXIMATE_THRESHOLD)},
+            )
+            # "<%" usa o índice GIN de trigramas; word_similarity() só ordena.
+            conditions = [literal(term).op("<%")(column) for column, term in text_terms]
+            similarities = [func.word_similarity(term, column) for column, term in text_terms]
+            score = sum(similarities[1:], similarities[0])
+            where = filters + conditions
+            total = session.scalar(select(func.count()).select_from(Product).where(*where)) or 0
+            selected = list(
+                session.scalars(
+                    select(Product)
+                    .where(*where)
+                    .order_by(score.desc(), Product.search_name, Product.search_brand, Product.id)
+                    .offset((page - 1) * page_size)
+                    .limit(page_size)
+                ).all()
+            )
+    except SQLAlchemyError:
+        logger.warning("Busca aproximada indisponível; seguindo sem sugestões.", exc_info=True)
+        return [], 0
+    return selected, total
+
+
 def search_products(
     session: Session,
     *,
@@ -137,30 +191,30 @@ def search_products(
     if normalized_brand is not None and len(normalized_brand) < 2:
         raise _validation_error("brand deve ter pelo menos 2 caracteres.")
 
-    products = list(
-        session.scalars(select(Product).where(Product.deleted_at.is_(None))).all()
-    )
+    filters = [Product.deleted_at.is_(None)]
     if normalized_barcode is not None:
-        products = [product for product in products if product.barcode == normalized_barcode]
+        filters.append(Product.barcode == normalized_barcode)
+    elif category is not None:
+        filters.append(Product.category == category)
+    text_terms = [
+        (column, term)
+        for column, term in ((Product.search_name, normalized_name), (Product.search_brand, normalized_brand))
+        if term is not None
+    ]
+    exact = filters + [column.contains(term, autoescape=True) for column, term in text_terms]
+    order = (Product.search_name, Product.search_brand, Product.id)
+
+    total = session.scalar(select(func.count()).select_from(Product).where(*exact)) or 0
+    approximate = False
+    if total > 0 or not text_terms:
+        selected = list(
+            session.scalars(
+                select(Product).where(*exact).order_by(*order).offset((page - 1) * page_size).limit(page_size)
+            ).all()
+        )
     else:
-        if normalized_name is not None:
-            products = [
-                product
-                for product in products
-                if normalized_name in identity_text(product.name)
-            ]
-        if normalized_brand is not None:
-            products = [
-                product
-                for product in products
-                if normalized_brand in identity_text(product.brand)
-            ]
-        if category is not None:
-            products = [product for product in products if product.category == category]
-    products.sort(key=lambda product: (identity_text(product.name), identity_text(product.brand), product.id))
-    total = len(products)
-    start = (page - 1) * page_size
-    selected = products[start : start + page_size]
+        selected, total = _approximate_matches(session, filters, text_terms, page, page_size)
+        approximate = total > 0
 
     ids = [product.id for product in selected]
     reviews = (
@@ -182,7 +236,9 @@ def search_products(
                 your_repurchase_intent=own.repurchase_intent if own else None,
             )
         )
-    return ProductPage(items=items, page=page, page_size=page_size, total=total)
+    return ProductPage(
+        items=items, page=page, page_size=page_size, total=total, approximate=approximate
+    )
 
 
 def get_product_detail(

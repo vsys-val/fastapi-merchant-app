@@ -29,7 +29,7 @@ flowchart TB
     MD[Modelo de dados<br/>+ diagramas]
   end
   subgraph Verificação
-    MT[Matriz de testes<br/>T01–T47]
+    MT[Matriz de testes<br/>T01–T48]
     RT[Rastreabilidade<br/>RF → UC → endpoint → teste → tela]
   end
   subgraph Evolução
@@ -55,7 +55,7 @@ flowchart TB
 |---|---|
 | [visao-produto.md](visao-produto.md) | Problema, proto-personas, JTBD, proposta de valor, princípios, escopo, métricas, hipóteses e riscos |
 | [ideacao.md](ideacao.md) | Registro histórico da ideação e das decisões confirmadas (14 a 18/08/2026) |
-| [decisoes/](decisoes/README.md) | 12 ADRs de produto e arquitetura, com alternativas e consequências |
+| [decisoes/](decisoes/README.md) | 13 ADRs de produto e arquitetura, com alternativas e consequências |
 | [roadmap.md](roadmap.md) | Próximos passos priorizados por impacto e esforço, ligados a métricas e lacunas |
 | [glossario.md](glossario.md) | Linguagem do domínio em português, API e banco |
 
@@ -74,7 +74,7 @@ flowchart TB
 
 | Documento | Conteúdo |
 |---|---|
-| [matriz-testes.md](matriz-testes.md) | T01–T47 ligados a requisitos e casos de uso |
+| [matriz-testes.md](matriz-testes.md) | T01–T48 ligados a requisitos e casos de uso |
 | [rastreabilidade.md](rastreabilidade.md) | Cobertura ponta a ponta nos dois repositórios, incluindo lacunas |
 | [plano-implementacao.md](plano-implementacao.md) | Sequência de entregas com critérios de conclusão |
 | [deploy-render.md](deploy-render.md) | Implantação, segredos, CORS e saúde |

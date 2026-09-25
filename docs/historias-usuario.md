@@ -160,7 +160,7 @@ Cenário: serviço de e-mail indisponível
 
 > **Como** compradora no mercado, **quero** encontrar um produto pelo nome, pela marca, pela categoria ou pelo código de barras, combinando os filtros quando precisar, **para** chegar rápido à informação que me ajuda a decidir.
 
-Rastreabilidade: RF03, RF04 · RN14 · UC04 · T23–T25
+Rastreabilidade: RF03, RF04 · RN14, RN42 · UC04 · T23–T25, T48
 
 ```gherkin
 Cenário: busca parcial sem acento e sem caixa
@@ -172,8 +172,13 @@ Cenário: busca exata por código de barras
   Quando eu busco pelo código "7891234567895"
   Então vejo somente o produto com esse GTIN
 
+Cenário: erro de digitação
+  Dado que existe o produto "Arroz integral"
+  Quando eu busco por nome "arros"
+  Então vejo "Nada exato para “arros”." e o produto "Arroz integral" como parecido
+
 Cenário: busca sem resultados
-  Quando eu busco por um termo inexistente
+  Quando eu busco por um termo sem nenhum produto parecido
   Então vejo "Nenhum produto encontrado." e o atalho "Cadastrar produto"
 
 Cenário: busca sem login

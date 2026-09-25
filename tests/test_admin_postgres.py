@@ -177,6 +177,7 @@ def test_overview_reflects_business_usage_and_operations(api, sessions):
         event("search_performed", ana, results=3, mode="text")
         event("search_performed", ana, results=0, mode="text")
         event("search_performed", None, "s2", results=1, mode="barcode")
+        event("search_performed", None, "s2", results=2, mode="text", approximate=True)
         event("product_viewed", ana, product_id=cafe.id, own_review=True)
         event("product_viewed", ana, product_id=cafe.id, own_review=True)
         event("product_viewed", bia, "s3", product_id=cafe.id, own_review=False)
@@ -214,7 +215,11 @@ def test_overview_reflects_business_usage_and_operations(api, sessions):
     product = data["product"]
     # 2 consultas a produto já avaliado / 2 usuários ativos na semana (Ana e Bia).
     assert product["north_star"]["value"] == 1.0
-    assert product["searches"] == {"total": 3, "with_results_pct": 66.7, "barcode_pct": 33.3, "target_with_results_pct": 70}
+    # A sugestão aproximada conta como busca, mas não como busca com resultado.
+    assert product["searches"] == {
+        "total": 4, "with_results_pct": 50.0, "barcode_pct": 25.0, "approximate_pct": 25.0,
+        "target_with_results_pct": 70,
+    }
     assert product["activation"]["cohort"] == 3 and product["activation"]["activated"] == 1
     assert [step["sessions"] for step in product["review_funnel"]["steps"]] == [2, 1, 1, 1]
     assert product["review_funnel"]["abandonment_pct"] == 50.0

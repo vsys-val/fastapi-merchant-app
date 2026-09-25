@@ -59,6 +59,7 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 | RN12 | Uma tentativa de cadastrar produto ativo duplicado deve retornar conflito e indicar o registro existente; produto excluído sem avaliações pode ser reativado com o mesmo ID e novo responsável. |
 | RN13 | O criador pode editar os dados do produto somente enquanto nenhum outro usuário o tiver avaliado. |
 | RN14 | Nome e marca devem aceitar pesquisa textual parcial; código de barras exige correspondência exata. |
+| RN42 | Quando nenhum produto contém o nome ou a marca buscados, a pesquisa devolve os produtos parecidos (semelhança de trigramas ≥ 0,5), respeitando a categoria, e informa que o resultado é aproximado. |
 
 ### Avaliações
 
