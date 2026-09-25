@@ -12,9 +12,9 @@ from app.catalog import (
 )
 from app.errors import ApiError
 from app.models import Base, Product, User
-from app.products import create_product, delete_product
+from app.products import create_product, delete_product, update_product
 from app.reviews import create_review
-from app.schemas import ProductCreate, ReviewCreate
+from app.schemas import ProductCreate, ProductPatch, ReviewCreate
 
 
 @pytest.fixture
@@ -163,6 +163,16 @@ def test_detail_has_full_distributions_and_own_review(session, catalog):
     assert owner.community_summary.total_reviews == 2
     assert owner.your_review.repurchase_intent == "yes"
     assert owner.community_summary.repurchase_intent.yes == 0.0
+
+
+def test_search_follows_renamed_products_and_treats_wildcards_literally(session, catalog):
+    users, products = catalog
+    update_product(products[1].id, ProductPatch(name="Feijão carioca"), users[0], session)
+    assert session.get(Product, products[1].id).search_name == "feijao carioca"
+    assert [item.name for item in search(session, name="FEIJAO").items] == ["Feijão carioca"]
+    assert search(session, name="arroz").total == 0
+    assert search(session, name="%%").total == 0
+    assert search(session, name="arroz").approximate is False
 
 
 def test_detail_aggregates_reasons_by_aspect_excluding_own_review(session, catalog):

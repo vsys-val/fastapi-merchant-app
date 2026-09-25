@@ -399,6 +399,8 @@ class ProductPage(BaseModel):
     page: int
     page_size: int
     total: int
+    # Verdadeiro quando nada contém o termo e os itens são apenas parecidos.
+    approximate: bool = False
 
 
 class CommunityReviewPage(BaseModel):

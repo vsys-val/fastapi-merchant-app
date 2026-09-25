@@ -14,6 +14,13 @@ if config.config_file_name is not None:
 
 target_metadata = Base.metadata
 
+# Índices de trigrama dependem da extensão pg_trgm e só existem nas migrações.
+MIGRATION_ONLY_INDEXES = frozenset({"ix_produtos_nome_busca_trgm", "ix_produtos_marca_busca_trgm"})
+
+
+def include_object(obj, name, type_, reflected, compare_to):
+    return not (type_ == "index" and name in MIGRATION_ONLY_INDEXES)
+
 
 def run_migrations_offline() -> None:
     settings = load_settings()
@@ -21,6 +28,7 @@ def run_migrations_offline() -> None:
         url=settings.alembic_database_url.get_secret_value(),
         target_metadata=target_metadata,
         literal_binds=True,
+        include_object=include_object,
         dialect_opts={"paramstyle": "named"},
     )
     with context.begin_transaction():
@@ -34,7 +42,9 @@ def run_migrations_online() -> None:
         poolclass=pool.NullPool,
     )
     with connectable.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata)
+        context.configure(
+            connection=connection, target_metadata=target_metadata, include_object=include_object
+        )
         with context.begin_transaction():
             context.run_migrations()
 

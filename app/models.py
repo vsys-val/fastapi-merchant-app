@@ -21,7 +21,9 @@ from sqlalchemy import (
 )
 from sqlalchemy import JSON
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship, validates
+
+from app.validation import identity_text
 
 
 class Base(DeclarativeBase):
@@ -173,6 +175,10 @@ class Product(Base):
     identity_key: Mapped[str] = mapped_column(
         "chave_identidade", Text, nullable=False, unique=True
     )
+    # Nome e marca sem acentos e em minúsculas, mantidos pelo @validates abaixo,
+    # para a busca filtrar e ordenar no banco (ADR-0013).
+    search_name: Mapped[str] = mapped_column("nome_busca", Text, nullable=False)
+    search_brand: Mapped[str] = mapped_column("marca_busca", Text, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         "criado_em", DateTime(timezone=True), nullable=False, server_default=func.now()
     )
@@ -189,6 +195,16 @@ class Product(Base):
 
     responsible: Mapped[User] = relationship(back_populates="products")
     reviews: Mapped[List["Review"]] = relationship(back_populates="product")
+
+    @validates("name")
+    def _sync_search_name(self, _key: str, value: str) -> str:
+        self.search_name = identity_text(value)
+        return value
+
+    @validates("brand")
+    def _sync_search_brand(self, _key: str, value: str) -> str:
+        self.search_brand = identity_text(value)
+        return value
 
 
 class Review(Base):
