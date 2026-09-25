@@ -18,6 +18,7 @@ As decisões 0001–0010 foram tomadas durante a ideação e a implementação d
 | [0010](0010-autenticacao-propria.md) | Autenticação própria na API, sem Supabase Auth | Arquitetura | Aceita |
 | [0011](0011-confirmacao-de-conta-por-codigo.md) | Confirmação de conta e recuperação de senha por código | Produto / Segurança | Aceita |
 | [0012](0012-painel-e-instrumentacao-propria.md) | Painel administrativo com instrumentação própria | Produto / Operação | Aceita |
+| [0013](0013-busca-no-banco-com-trigramas.md) | Busca no banco com trigramas e sugestões aproximadas | Arquitetura / Produto | Aceita |
 
 ## Modelo
 

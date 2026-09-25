@@ -93,6 +93,7 @@ A tabela não armazena e-mail nem endereço IP em texto aberto. O `UPSERT` reini
 | `categoria` | TEXT | não | valor controlado |
 | `codigo_barras` | TEXT | sim | único quando informado |
 | `chave_identidade` | TEXT | não | única; gerada a partir dos dados normalizados |
+| `nome_busca` / `marca_busca` | TEXT | não | nome e marca sem acentos e em minúsculas, mantidos pelo modelo; índices GIN de trigramas (`pg_trgm`) para a busca ([ADR-0013](decisoes/0013-busca-no-banco-com-trigramas.md)) |
 | `criado_em` | TIMESTAMPTZ | não | criação original, preservada na reativação |
 | `atualizado_em` | TIMESTAMPTZ | não | última alteração, incluindo reativação |
 | `excluido_em` | TIMESTAMPTZ | sim | null para ativo; equivale a deleted_at no contrato |

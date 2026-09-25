@@ -49,7 +49,7 @@ Uma regra crítica é garantida em **mais de uma camada**. A coluna "Banco" indi
 | RN09 | GTIN único e válido | `validate_gtin` (checksum) | `_matching_products` | UNIQUE `codigo_barras` | T10, T17 |
 | RN10–RN12 | Registro canônico; deduplicação; conflito indica existente | `normalize_quantity`, `build_identity_key` | `create_product` (bloqueio `FOR UPDATE`) | UNIQUE `chave_identidade` | T09, T11, T16, T17 |
 | RN13 | Edição bloqueada após avaliação de terceiro | — | `update_product` | — | T12, T13, T32 |
-| RN14 | Nome/marca parcial; GTIN exato | parâmetros de query | `search_products` (filtra em memória) | — | T23 |
+| RN14 | Nome/marca parcial; GTIN exato | parâmetros de query | `search_products` (filtra, conta e pagina no banco) | `nome_busca`, `marca_busca` + GIN trigram | T23, T48 |
 | RN15 | Uma avaliação por usuário e produto | — | `create_review` | UNIQUE `uq_avaliacoes_usuario_produto` | T18 |
 | RN16–RN20 | Recompra e critérios obrigatórios e controlados | `Literal` em `ReviewCreate` | — | `ck_avaliacoes_*` | T19 |
 | RN21–RN22 | ≥ 1 motivo; aspecto sem repetição | `validate_review_reasons` | `_validate_final_reasons` | UNIQUE `uq_motivos_avaliacao_aspecto`, `ck_motivos_*` | T19, T21 |
@@ -72,6 +72,7 @@ Uma regra crítica é garantida em **mais de uma camada**. A coluna "Banco" indi
 | RN39 | Métricas por template de rota, sem `/health` | — | middleware `measure` | — | T44 |
 | RN40 | Dias no fuso de São Paulo | — | `build_overview` | — | T45 |
 | RN41 | Motivos agregados por aspecto | — | `_reason_mentions` | nada armazenado | T47 |
+| RN42 | Sugestões para erro de digitação | `approximate` na página | `_approximate_matches` | `pg_trgm`, operador `<%` | T48 |
 
 ## 3. Requisitos não funcionais
 
@@ -94,12 +95,12 @@ Além dos RNFs formais, a fase de endurecimento (Entrega 9) acrescentou: rate li
 ```mermaid
 flowchart LR
   subgraph Especificação
-    RF[RF01–RF20] --> RN[RN01–RN41]
+    RF[RF01–RF20] --> RN[RN01–RN42]
     RF --> UC[UC01–UC17]
     UC --> CT[Contrato da API]
   end
   subgraph Verificação
-    CT --> T[T01–T47]
+    CT --> T[T01–T48]
     T --> PY[pytest + PostgreSQL 17]
     PY --> SM[Smoke test diário]
   end

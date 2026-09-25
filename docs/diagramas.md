@@ -90,6 +90,8 @@ erDiagram
     varchar categoria "6 valores"
     varchar codigo_barras UK "GTIN opcional"
     text chave_identidade UK
+    text nome_busca "normalizado, GIN trigram"
+    text marca_busca "normalizado, GIN trigram"
     timestamptz criado_em
     timestamptz atualizado_em
     timestamptz excluido_em "exclusão lógica"

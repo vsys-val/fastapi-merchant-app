@@ -128,7 +128,7 @@ Todas as métricas abaixo são medidas pelo painel `/admin`, com eventos de uso 
 | H4 | A deduplicação por GTIN + identidade normalizada evita duplicatas sem atrito | Catálogo poluído ou usuários bloqueados por conflito | Taxa de `409` e revisão amostral de duplicatas |
 | R1 | Catálogo vazio no início (problema do "ovo e da galinha") | Buscas sem resultado afastam novos usuários | Seed por categoria; cadastro rápido a partir do GTIN |
 | R2 | Avaliações falsas ou contas criadas em massa por bots | Indicadores comunitários perdem confiança | Uma avaliação por usuário e produto; confirmação de e-mail e limite de cadastros por IP ([ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md)); moderação no roadmap |
-| R3 | A busca atual filtra em memória | Latência cresce com o catálogo | Busca no banco com índices trigram (roadmap, *Next*) |
+| R3 | ~~A busca filtrava em memória~~ | Latência crescia com o catálogo | Resolvido: busca no banco com índices de trigramas ([ADR-0013](decisoes/0013-busca-no-banco-com-trigramas.md)) |
 
 ## 9. Como este documento se conecta ao resto
 
