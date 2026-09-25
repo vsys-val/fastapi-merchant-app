@@ -69,7 +69,11 @@ def main() -> int:
 
     status, page = request("/api/v1/products?page=1&page_size=1")
     check(status == 200, "catálogo público responde")
-    check(set(page) == {"items", "page", "page_size", "total"}, "paginação mantém o contrato")
+    check(
+        set(page) == {"items", "page", "page_size", "total", "approximate"}
+        and page["approximate"] is False,
+        "paginação mantém o contrato",
+    )
 
     status, error = request(
         "/api/v1/products",
