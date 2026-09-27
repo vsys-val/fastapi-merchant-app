@@ -110,6 +110,27 @@ def admin_overview(
     return build_overview(request, session, days)
 
 
+@router.get("/network-check", include_in_schema=False)
+def network_check(request: Request) -> dict:
+    """Mostra como o IP de quem chama chega à API (diagnóstico de proxy).
+
+    Devolve só dados da própria requisição: o endereço visto pelo servidor e
+    os cabeçalhos de encaminhamento. Serve para escolher a regra de IP dos
+    limites por IP atrás do Render e do proxy do site estático.
+    """
+
+    forwarded = request.headers.get("x-forwarded-for", "")
+    return {
+        "client_host": request.client.host if request.client else None,
+        "forwarded_for": [item.strip() for item in forwarded.split(",") if item.strip()],
+        "true_client_ip": request.headers.get("true-client-ip"),
+        "cf_connecting_ip": request.headers.get("cf-connecting-ip"),
+        "x_real_ip": request.headers.get("x-real-ip"),
+        "forwarded": request.headers.get("forwarded"),
+        "via": request.headers.get("via"),
+    }
+
+
 @router.get("/internal/alerts", dependencies=[Depends(require_alerts_token)], include_in_schema=False)
 def internal_alerts(session: Session = Depends(get_db)) -> dict:
     return evaluate_alerts(session)

@@ -136,3 +136,16 @@ def test_event_batches_only_accept_known_names_and_small_scalars():
     ):
         with pytest.raises(ValidationError):
             EventBatch(**invalid)
+
+
+def test_network_check_reports_forwarding_headers(application):
+    with TestClient(application) as client:
+        response = client.get(
+            "/api/v1/network-check",
+            headers={"X-Forwarded-For": "203.0.113.7, 10.0.0.2", "True-Client-IP": "203.0.113.7"},
+        )
+        schema = client.get("/openapi.json").json()
+    assert response.status_code == 200
+    assert response.json()["forwarded_for"] == ["203.0.113.7", "10.0.0.2"]
+    assert response.json()["true_client_ip"] == "203.0.113.7"
+    assert "/api/v1/network-check" not in schema["paths"]
