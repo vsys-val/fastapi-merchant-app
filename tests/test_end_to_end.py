@@ -72,6 +72,9 @@ def test_complete_api_journey_with_real_authentication(monkeypatch, tmp_path):
             "Authorization": f"Bearer {authenticated.json()['access_token']}"
         }
         assert client.get("/api/v1/users/me", headers=headers).json()["name"] == "Valério"
+        # Esta jornada usa o token Bearer (cliente de API); a sessão em cookie
+        # do navegador tem testes próprios.
+        client.cookies.clear()
 
         created_product = client.post(
             "/api/v1/products", json=product_payload, headers=headers

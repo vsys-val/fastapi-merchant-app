@@ -33,6 +33,7 @@ from app.errors import ApiError
 from app.models import User
 from app.products import create_product, delete_product, update_product
 from app.reviews import create_review, delete_review, update_review
+from app.session_cookie import clear_session_cookie, set_session_cookie
 from app.schemas import (
     EmailInput,
     EmailVerificationInput,
@@ -140,9 +141,12 @@ def internal_alerts(session: Session = Depends(get_db)) -> dict:
 def confirm_email(
     payload: EmailVerificationInput,
     request: Request,
+    response: Response,
     session: Session = Depends(get_db),
 ) -> TokenResponse:
-    return verify_email(payload, request, session)
+    token = verify_email(payload, request, session)
+    set_session_cookie(request, response, token.access_token)
+    return token
 
 
 @router.post("/auth/email-verification/resend", status_code=status.HTTP_202_ACCEPTED)
@@ -181,9 +185,38 @@ def finish_password_reset(
 def authenticate(
     payload: LoginInput,
     request: Request,
+    response: Response,
     session: Session = Depends(get_db),
 ) -> TokenResponse:
-    return login(payload, request, session)
+    token = login(payload, request, session)
+    set_session_cookie(request, response, token.access_token)
+    return token
+
+
+@router.post("/auth/session", status_code=status.HTTP_204_NO_CONTENT)
+def open_cookie_session(
+    request: Request,
+    credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme),
+    session: Session = Depends(get_db),
+) -> Response:
+    """Troca um token Bearer válido pelo cookie de sessão.
+
+    Migra quem entrou antes da sessão em cookie sem pedir a senha de novo.
+    """
+
+    if credentials is None:
+        raise ApiError(401, "invalid_authentication", "Autenticação ausente, inválida ou expirada.")
+    get_current_user(request, credentials, session)
+    response = Response(status_code=status.HTTP_204_NO_CONTENT)
+    set_session_cookie(request, response, credentials.credentials)
+    return response
+
+
+@router.post("/auth/logout", status_code=status.HTTP_204_NO_CONTENT)
+def logout(request: Request) -> Response:
+    response = Response(status_code=status.HTTP_204_NO_CONTENT)
+    clear_session_cookie(request, response)
+    return response
 
 
 @router.get("/users/me", response_model=UserPublic)

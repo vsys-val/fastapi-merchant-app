@@ -105,11 +105,13 @@ def optional_user_ignoring_errors(
 ) -> User | None:
     """Métricas nunca falham por causa de um token vencido: o evento fica anônimo."""
 
-    if credentials is None:
-        return None
     from app.auth import _resolve_authenticated_user
+    from app.session_cookie import session_cookie_token
 
     try:
-        return _resolve_authenticated_user(request, credentials, session)
+        token = credentials if credentials is not None else session_cookie_token(request)
+        if token is None:
+            return None
+        return _resolve_authenticated_user(request, token, session)
     except ApiError:
         return None

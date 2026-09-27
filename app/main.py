@@ -35,7 +35,7 @@ def create_app() -> FastAPI:
             allow_origins=settings.cors_origins,
             allow_credentials=False,
             allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
-            allow_headers=["Authorization", "Content-Type"],
+            allow_headers=["Authorization", "Content-Type", "X-Merchant-Client"],
         )
     install_request_metrics(application, RequestMetrics(), lambda: get_session_factory()())
     register_exception_handlers(application)

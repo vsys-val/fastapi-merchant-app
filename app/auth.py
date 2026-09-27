@@ -47,6 +47,7 @@ from app.security import (
     rate_limit_key,
     verify_password,
 )
+from app.session_cookie import session_cookie_token
 from app.verification import consume_code, discard_codes, is_pending_expired, issue_code
 
 
@@ -310,14 +311,20 @@ def confirm_password_reset(
 
 def _resolve_authenticated_user(
     request: Request,
-    credentials: HTTPAuthorizationCredentials,
+    credentials: HTTPAuthorizationCredentials | str,
     session: Session,
 ) -> User:
-    if credentials.scheme.casefold() != "bearer":
+    """Usuário do token Bearer ou, quando recebe texto, do cookie de sessão."""
+
+    if isinstance(credentials, str):
+        token = credentials
+    elif credentials.scheme.casefold() != "bearer":
         raise _authentication_error()
+    else:
+        token = credentials.credentials
     try:
         claims = decode_access_token_claims(
-            credentials.credentials,
+            token,
             request.app.state.settings.jwt_secret.get_secret_value(),
         )
     except ValueError:
@@ -338,7 +345,14 @@ def get_optional_user(
     if credentials is None:
         if request.headers.get("Authorization"):
             raise _authentication_error()
-        return None
+        cookie = session_cookie_token(request)
+        if cookie is None:
+            return None
+        # Cookie vencido não impede a leitura pública: a pessoa segue como visitante.
+        try:
+            return _resolve_authenticated_user(request, cookie, session)
+        except ApiError:
+            return None
     return _resolve_authenticated_user(request, credentials, session)
 
 
@@ -348,7 +362,10 @@ def get_current_user(
     session: Session = Depends(get_db),
 ) -> User:
     if credentials is None:
-        raise _authentication_error()
+        cookie = session_cookie_token(request)
+        if cookie is None:
+            raise _authentication_error()
+        return _resolve_authenticated_user(request, cookie, session)
     return _resolve_authenticated_user(request, credentials, session)
 
 
