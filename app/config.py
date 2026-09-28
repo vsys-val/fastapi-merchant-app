@@ -30,6 +30,10 @@ class Settings(BaseSettings):
     render_git_commit: str | None = None
     # Segredo compartilhado com o workflow de alertas; sem ele, o endpoint não existe.
     alerts_token: SecretStr | None = None
+    # Saltos confiáveis além da Cloudflare ao ler o IP do cliente, separados por
+    # vírgula. O padrão é a saída medida do site estático no Render, que repassa
+    # /api/* para cá (ADR-0016).
+    trusted_proxy_networks: str = "74.220.48.0/24"
 
     @field_validator("database_url", "migration_database_url")
     @classmethod
@@ -73,6 +77,19 @@ class Settings(BaseSettings):
         if value != 86400:
             raise ValueError("O token do MVP deve expirar em 86400 segundos.")
         return value
+
+    @field_validator("trusted_proxy_networks")
+    @classmethod
+    def validate_trusted_proxy_networks(cls, value: str) -> str:
+        from ipaddress import ip_network
+
+        items = [item.strip() for item in value.split(",") if item.strip()]
+        for item in items:
+            try:
+                ip_network(item)
+            except ValueError:
+                raise ValueError("TRUSTED_PROXY_NETWORKS deve listar redes CIDR válidas.") from None
+        return ",".join(items)
 
     @field_validator("cors_allowed_origins")
     @classmethod

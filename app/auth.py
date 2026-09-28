@@ -11,6 +11,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from app.client_ip import client_ip
 from app.database import get_db
 from app.email import EmailMessage, password_reset_email, verification_email
 from app.errors import ApiError
@@ -84,10 +85,6 @@ def _secret(request: Request) -> str:
     return request.app.state.settings.jwt_secret.get_secret_value()
 
 
-def _client_ip(request: Request) -> str:
-    return request.client.host if request.client else "unknown"
-
-
 def _limit_ip(
     request: Request,
     session: Session,
@@ -96,7 +93,7 @@ def _limit_ip(
     window: timedelta,
     limit: int,
 ) -> None:
-    key = rate_limit_key(_secret(request), scope, _client_ip(request))
+    key = rate_limit_key(_secret(request), scope, client_ip(request))
     count = consume_attempt(session, scope=scope, key_hash=key, window=window)
     session.commit()
     if count > limit:
@@ -171,8 +168,7 @@ def create_user(payload: UserCreate, request: Request, session: Session) -> Regi
 def login(payload: LoginInput, request: Request, session: Session) -> TokenResponse:
     settings = request.app.state.settings
     secret = settings.jwt_secret.get_secret_value()
-    client_ip = request.client.host if request.client else "unknown"
-    ip_key = rate_limit_key(secret, "ip", client_ip)
+    ip_key = rate_limit_key(secret, "ip", client_ip(request))
     account_key = rate_limit_key(secret, "account", str(payload.email))
 
     ip_count = consume_attempt(session, scope="ip", key_hash=ip_key, window=IP_WINDOW)

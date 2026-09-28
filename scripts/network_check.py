@@ -40,7 +40,8 @@ def main() -> None:
         chain = data.get("forwarded_for", [])
         position = chain.index(runner_ip) if runner_ip in chain else None
         print(f"posição do IP do runner no X-Forwarded-For: {position} de {len(chain)}")
-        print(f"client_host é o runner? {data.get('client_host') == runner_ip}\n")
+        print(f"client_host é o runner? {data.get('client_host') == runner_ip}")
+        print(f"IP usado nos limites é o runner? {data.get('resolved_client_ip') == runner_ip}\n")
 
 
 if __name__ == "__main__":

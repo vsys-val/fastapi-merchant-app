@@ -8,6 +8,7 @@ import jwt
 import pytest
 from fastapi.testclient import TestClient
 from pydantic import ValidationError
+from starlette.datastructures import Headers
 
 from app import auth
 from app.database import get_db
@@ -115,10 +116,12 @@ def test_unverified_account_is_blocked_only_after_the_password_matches(monkeypat
     settings = SimpleNamespace(
         jwt_secret=SimpleNamespace(get_secret_value=lambda: SECRET),
         email_verification_enabled=True,
+        trusted_proxy_networks="",
     )
     request = SimpleNamespace(
         app=SimpleNamespace(state=SimpleNamespace(settings=settings)),
         client=SimpleNamespace(host="127.0.0.1"),
+        headers=Headers(),
     )
     session = Mock()
     session.scalar.return_value = User(

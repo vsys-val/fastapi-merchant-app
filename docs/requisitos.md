@@ -96,6 +96,7 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 | RN31 | Pedidos de reenvio e de recuperação respondem da mesma forma para e-mails cadastrados ou não, sem revelar a existência da conta. |
 | RN32 | Redefinir a senha confirma o e-mail da conta e encerra todas as sessões abertas até então. |
 | RN33 | Cada endereço IP pode fazer no máximo 10 cadastros, 30 tentativas de código e 10 pedidos de e-mail por hora. |
+| RN48 | Os limites por IP identificam o cliente pelo `X-Forwarded-For` lido da direita para a esquerda, ignorando só saltos conhecidos (rede privada, Cloudflare e a saída do site). O que o próprio cliente escreve nesse cabeçalho não muda o endereço usado. |
 | RN34 | Sem entrega de e-mail configurada, contas nascem confirmadas e a recuperação de senha responde como indisponível. |
 
 ### Administração e métricas

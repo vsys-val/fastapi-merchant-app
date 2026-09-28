@@ -44,8 +44,19 @@ Um cookie `HttpOnly` resolve a leitura, mas traz duas dificuldades:
 
 ## Endereço IP do cliente
 
-_Preenchido com o resultado da medição (workflow **Network check**)._
+Antes de mudar o caminho do tráfego, o workflow **Network check** (`scripts/network_check.py`) chamou a API direto e pelo site a partir de um runner do GitHub, em 2026-09-28. O `X-Forwarded-For` que chega à API:
+
+| Caminho | Cadeia (esquerda → direita) |
+|---|---|
+| Direto | cliente · borda Cloudflare (`162.158.x`) · balanceador do Render (`10.x`) |
+| Pelo site | cliente · borda Cloudflare do site (`108.162.x`, duas vezes) · saída do site estático no Render (`74.220.48.207`) · borda Cloudflare da API · balanceador |
+
+A medição revelou um problema que **já existia**: a API usava `request.client.host`, que o uvicorn preenche com o **primeiro** item do `X-Forwarded-For`. Esse item é escrito por quem faz a requisição. Bastava enviar um `X-Forwarded-For` inventado a cada tentativa para escapar dos limites de login, cadastro, códigos e eventos. `CF-Connecting-IP` também não serve: pelo site, ele traz a saída do site estático, igual para todos os usuários.
+
+Regra adotada (`app/client_ip.py`): ler a cadeia **da direita para a esquerda** e pular apenas saltos conhecidos (endereços privados, faixas publicadas da Cloudflare e as redes de `TRUSTED_PROXY_NETWORKS`, que por padrão é a saída medida do site, `74.220.48.0/24`). O primeiro endereço que sobra é o cliente. Tudo o que está à esquerda dele, onde um cliente consegue escrever, é ignorado.
+
+Se o Render mudar a saída do site, o novo salto aparece como "cliente" e todo o tráfego do site divide o mesmo limite. A falha é para o lado seguro (mais restritiva, nunca contornável) e se corrige ajustando `TRUSTED_PROXY_NETWORKS`. O endpoint de diagnóstico continua fora do OpenAPI e agora mostra também `resolved_client_ip`, o endereço que os limites usam, para repetir a medição quando necessário.
 
 ## Rastreabilidade
 
-RN46, RN47 · RNF10 · T51 · `app/session_cookie.py`, `app/auth.py`, `app/routes.py` · frontend: `src/lib/api.ts`, `src/features/auth/AuthContext.tsx`, `render.yaml`, `vite.config.ts`
+RN33, RN46, RN47, RN48 · RNF10 · T51, T52 · `app/session_cookie.py`, `app/client_ip.py`, `app/auth.py`, `app/routes.py` · frontend: `src/lib/api.ts`, `src/features/auth/AuthContext.tsx`, `render.yaml`, `vite.config.ts`

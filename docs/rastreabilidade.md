@@ -77,6 +77,7 @@ Uma regra crítica é garantida em **mais de uma camada**. A coluna "Banco" indi
 | RN43 | Câmera só aceita GTIN válido | — (interface) | — | `isValidGtin`, `startScanner` no frontend | T49 |
 | RN44 | Guarda-corpos da última hora | — | `evaluate_alerts` | volume mínimo de 20 requisições | T50 |
 | RN45 | Segredo do verificador | cabeçalho `X-Alerts-Token` | `require_alerts_token` | — | T50 |
+| RN48 | IP do cliente pela cadeia de proxies | — | `client_ip` (usado em `login`, `_limit_ip`, `record_events`) | `TRUSTED_PROXY_NETWORKS` | T52 |
 | RN46 | Sessão em cookie HttpOnly; Bearer tem precedência | — | `set_session_cookie`, `get_current_user`, `get_optional_user` | — | T51 |
 | RN47 | Cabeçalho `X-Merchant-Client` em escritas com cookie; cookie inválido vira anônimo | — | `session_cookie_token`, `optional_user_ignoring_errors` | — | T51 |
 
@@ -89,7 +90,7 @@ Uma regra crítica é garantida em **mais de uma camada**. A coluna "Banco" indi
 | RNF03 | Documentação interativa OpenAPI | `/docs` com Bearer obrigatório/opcional por rota | `test_operations.py` |
 | RNF04 | Instruções claras | [README](../README.md), [deploy](deploy-render.md) | revisão |
 | RNF05 | Erros claros e códigos adequados | Envelope `{error:{code,message,details}}` em `app/errors.py` | T30 |
-| RNF06 | Regras críticas com testes automatizados | 152 testes; CI com PostgreSQL 17; smoke test diário em produção | CI |
+| RNF06 | Regras críticas com testes automatizados | 200 testes; CI com PostgreSQL 17; smoke test diário em produção | CI |
 | RNF07 | Resistência a contas em massa | Confirmação de e-mail obrigatória + limite de 10 cadastros por IP por hora, sem serviço pago | T34, T39 |
 | RNF08 | Métricas próprias e privadas | Eventos no próprio Postgres, sem terceiros; desligados com DNT, automação e fora de produção | T42, T46 |
 | RNF09 | Observabilidade sem custo por requisição | Agregação em memória, `UPSERT` a cada 30 s, falha só gera log | T44 |

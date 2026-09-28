@@ -42,6 +42,12 @@ A variável não é declarada no `render.yaml`; configure-a em **Environment** n
 
 Quando um provedor HTTP for implementado, troque o valor **no `render.yaml`**: variáveis com `value` no Blueprint sobrescrevem as do painel a cada sincronização. A chave de API do provedor deve entrar com `sync: false`, como as URLs de banco. Ver [ADR-0011](decisoes/0011-confirmacao-de-conta-por-codigo.md).
 
+## Sessão do navegador e IP do cliente
+
+O site estático repassa `/api/*` e `/health` para esta API (regras de rewrite no `render.yaml` do frontend). Assim o cookie de sessão `merchant_session` é da mesma origem do site ([ADR-0016](decisoes/0016-sessao-em-cookie-httponly.md)). O cookie só sai com `Secure` quando `ENVIRONMENT=production`.
+
+Os limites por IP leem o cliente no `X-Forwarded-For`, da direita para a esquerda, pulando endereços privados, a Cloudflare e as redes de `TRUSTED_PROXY_NETWORKS` (padrão `74.220.48.0/24`, a saída do site medida em 2026-09-28). Para conferir depois de mudanças no Render, rode o workflow **Network check** em **Actions**: nos dois caminhos, `IP usado nos limites é o runner?` deve dar `True`. Se der `False` pelo site, acrescente a nova saída em `TRUSTED_PROXY_NETWORKS`.
+
 ## Painel administrativo
 
 `ADMIN_EMAILS` é declarada no `render.yaml` com `sync: false`. Configure-a em **Environment** com os e-mails que podem abrir `/admin`, separados por vírgula (maiúsculas e espaços são ignorados). Vazia, ninguém acessa o painel. A troca exige reiniciar o serviço, o que o Render faz ao salvar a variável.

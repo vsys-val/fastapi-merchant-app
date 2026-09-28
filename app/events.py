@@ -16,6 +16,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 from sqlalchemy import insert
 from sqlalchemy.orm import Session
 
+from app.client_ip import client_ip
 from app.errors import ApiError
 from app.models import ProductEvent, User
 from app.rate_limit import consume_attempt
@@ -73,11 +74,10 @@ def record_events(
     user: User | None,
 ) -> None:
     secret = request.app.state.settings.jwt_secret.get_secret_value()
-    client_ip = request.client.host if request.client else "unknown"
     count = consume_attempt(
         session,
         scope="events",
-        key_hash=rate_limit_key(secret, "events", client_ip),
+        key_hash=rate_limit_key(secret, "events", client_ip(request)),
         window=EVENTS_WINDOW,
     )
     if count > EVENTS_LIMIT:

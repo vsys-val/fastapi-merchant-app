@@ -33,6 +33,7 @@ from app.errors import ApiError
 from app.models import User
 from app.products import create_product, delete_product, update_product
 from app.reviews import create_review, delete_review, update_review
+from app.client_ip import client_ip, forwarded_chain
 from app.session_cookie import clear_session_cookie, set_session_cookie
 from app.schemas import (
     EmailInput,
@@ -120,10 +121,11 @@ def network_check(request: Request) -> dict:
     limites por IP atrás do Render e do proxy do site estático.
     """
 
-    forwarded = request.headers.get("x-forwarded-for", "")
     return {
         "client_host": request.client.host if request.client else None,
-        "forwarded_for": [item.strip() for item in forwarded.split(",") if item.strip()],
+        # O endereço que os limites por IP usam (app.client_ip).
+        "resolved_client_ip": client_ip(request),
+        "forwarded_for": forwarded_chain(request),
         "true_client_ip": request.headers.get("true-client-ip"),
         "cf_connecting_ip": request.headers.get("cf-connecting-ip"),
         "x_real_ip": request.headers.get("x-real-ip"),
