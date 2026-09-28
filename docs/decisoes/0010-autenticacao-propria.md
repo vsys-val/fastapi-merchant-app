@@ -32,3 +32,7 @@ O banco de dados é hospedado no Supabase, que oferece autenticação pronta (Su
 ## Rastreabilidade
 
 RF02 · RNF01, RNF02 · UC02 · T03–T06 · `app/security.py`, `app/auth.py`, `app/rate_limit.py`, migrações `0004`, `0005`
+
+## Atualizações
+
+- 2026-09-28: o token do navegador saiu do `localStorage` e passou a viver num cookie HttpOnly ([ADR-0016](0016-sessao-em-cookie-httponly.md)). O JWT, a validade e a revogação pela troca de senha não mudaram; o Bearer continua valendo para clientes de API.

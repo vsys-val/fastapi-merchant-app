@@ -45,6 +45,8 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 | RN02 | O nome público pode se repetir entre usuários. |
 | RN03 | O e-mail deve ser único e não pode ser exibido publicamente. |
 | RN04 | Consultas ao catálogo são públicas; consultas pessoais e operações que alteram dados exigem autenticação, exceto cadastro de conta e login. |
+| RN46 | No navegador, a sessão fica num cookie `HttpOnly`, `SameSite=Lax`, restrito a `/api` e `Secure` em produção; o token nunca fica acessível ao JavaScript. Clientes de API continuam usando `Authorization: Bearer`, que tem precedência sobre o cookie. |
+| RN47 | Escritas autenticadas pelo cookie exigem o cabeçalho `X-Merchant-Client`; sem ele, a resposta é `403` (`csrf_header_required`). Cookie inválido ou expirado torna leituras públicas anônimas, sem erro. |
 
 ### Produtos
 
@@ -120,6 +122,7 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 | RNF07 | O cadastro deve resistir à criação automatizada de contas em massa, sem depender de serviços pagos. |
 | RNF08 | Métricas de uso devem ser próprias (sem terceiros) e respeitar a privacidade descrita em RN36. |
 | RNF09 | Coletar métricas técnicas não pode acrescentar uma escrita no banco por requisição nem derrubar a API em caso de falha. |
+| RNF10 | Um script injetado na página (XSS) não pode ler nem exportar o token de sessão, e outro site não pode agir em nome de quem está conectado (CSRF). |
 
 ## Fora do escopo inicial
 

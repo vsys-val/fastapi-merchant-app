@@ -77,6 +77,8 @@ Uma regra crítica é garantida em **mais de uma camada**. A coluna "Banco" indi
 | RN43 | Câmera só aceita GTIN válido | — (interface) | — | `isValidGtin`, `startScanner` no frontend | T49 |
 | RN44 | Guarda-corpos da última hora | — | `evaluate_alerts` | volume mínimo de 20 requisições | T50 |
 | RN45 | Segredo do verificador | cabeçalho `X-Alerts-Token` | `require_alerts_token` | — | T50 |
+| RN46 | Sessão em cookie HttpOnly; Bearer tem precedência | — | `set_session_cookie`, `get_current_user`, `get_optional_user` | — | T51 |
+| RN47 | Cabeçalho `X-Merchant-Client` em escritas com cookie; cookie inválido vira anônimo | — | `session_cookie_token`, `optional_user_ignoring_errors` | — | T51 |
 
 ## 3. Requisitos não funcionais
 
@@ -91,6 +93,7 @@ Uma regra crítica é garantida em **mais de uma camada**. A coluna "Banco" indi
 | RNF07 | Resistência a contas em massa | Confirmação de e-mail obrigatória + limite de 10 cadastros por IP por hora, sem serviço pago | T34, T39 |
 | RNF08 | Métricas próprias e privadas | Eventos no próprio Postgres, sem terceiros; desligados com DNT, automação e fora de produção | T42, T46 |
 | RNF09 | Observabilidade sem custo por requisição | Agregação em memória, `UPSERT` a cada 30 s, falha só gera log | T44 |
+| RNF10 | Sessão protegida contra XSS e CSRF | Cookie `HttpOnly` + `SameSite=Lax` + cabeçalho próprio; API na mesma origem do site; CSP `connect-src 'self'` no frontend ([ADR-0016](decisoes/0016-sessao-em-cookie-httponly.md)) | T51 |
 
 Além dos RNFs formais, a fase de endurecimento (Entrega 9) acrescentou: rate limiting persistido, RLS com papel de mínimo privilégio, CORS com origens explícitas e CSP estrita no frontend.
 

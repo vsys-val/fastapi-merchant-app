@@ -56,6 +56,7 @@ A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos,
 | T48 | RN14, RN42 | Busca no PostgreSQL: filtro, contagem, ordem e paginação no banco; `%` e `_` literais; renomear atualiza a busca; erro de digitação devolve parecidos com `approximate`; categoria mantida; termo distante não sugere nada |
 | T49 | RN43, RF20 | Leitor: dígito verificador, leitor nativo e ZXing, permissão negada, sem câmera e sem suporte, câmera desligada ao fechar; E2E com câmera falsa lendo um EAN-13; evento `barcode_scan` aceito e métricas no painel |
 | T50 | RF21, RN44, RN45 | Alertas: volume mínimo, 5xx, p95 da busca e erros do navegador na última hora; bloco `alerts` no painel; segredo (404 sem configuração, 401 errado, 200 certo, fora do OpenAPI); workflow cria, atualiza e fecha uma única issue e trata API fora do ar e token recusado |
+| T51 | RN46, RN47, RNF10 | Sessão em cookie: atributos (`HttpOnly`, `SameSite=Lax`, `Path=/api`, `Max-Age`, `Secure` só em produção); leitura e escrita pelo cookie; escrita sem `X-Merchant-Client` recusada com 403; logout apaga o cookie; cookie expirado deixa a leitura pública anônima; troca de Bearer por cookie; Bearer dispensa o cabeçalho. No frontend: sem token no `localStorage`, migração do token antigo e cabeçalho em todas as chamadas |
 
 ## Estratégia
 
