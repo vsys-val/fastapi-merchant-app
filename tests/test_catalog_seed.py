@@ -107,6 +107,11 @@ def test_rejects_products_the_api_would_refuse_or_that_are_ambiguous(overrides):
         (OPF, [], "Amaciante de Roupas", "ml", "cleaning"),
         (OPF, [], "Filtro de Papel 102", "un", "household_utilities"),
         (OPF, [], "Livro de História", "un", None),
+        (OFF, [], "Wafer Choc C/avela", "g", "food"),
+        (OFF, [], "Açúcar Refinado Caravelas", "g", "food"),
+        (OBF, [], "Água de Colônia sem Álcool", "ml", "personal_hygiene"),
+        (OBF, [], "Álcool em Gel 70", "g", "cleaning"),
+        (OFF, [], "Matte Leão Original", "g", "beverages"),
     ],
 )
 def test_categories_come_from_the_name_first_then_the_source(source, tags, name, unit, expected):

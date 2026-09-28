@@ -85,7 +85,7 @@ NAME_CATEGORIES = (
         re.compile(
             r"lava[ -]?lou[cç]as?|lava[ -]?roupas?|lavagem|sab[aã]o (em p[oó]|l[ií]quido|em barra)|amaciante|"
             r"detergente|desinfetante|[aá]gua sanit[aá]ria|alvejante|limpador|limpa[ -]|multiuso|"
-            r"tira[ -]?manchas|[aá]lcool",
+            r"tira[ -]?manchas|[aá]lcool (em )?(gel|l[ií]quido|70)",
             re.IGNORECASE,
         ),
     ),
@@ -93,14 +93,14 @@ NAME_CATEGORIES = (
         "household_utilities",
         re.compile(
             r"filtro de papel|coador|saco (de|para) lixo|palito|papel alum[ií]nio|filme pl[aá]stico|"
-            r"guardanapo|papel toalha|f[oó]sforo|vela",
+            r"guardanapo|papel toalha|f[oó]sforos?\b|\bvelas?\b",
             re.IGNORECASE,
         ),
     ),
     (
         "beverages",
         re.compile(
-            r"refrigerante|guaran[aá]|\bsuco|refresco|n[eé]ctar|\b[aá]gua\b|\bch[aá]\b|\bmate\b|cerveja|"
+            r"refrigerante|guaran[aá]|\bsuco|refresco|n[eé]ctar|\b[aá]gua\b|\bch[aá]\b|\bmatt?e\b|cerveja|"
             r"energ[eé]tico|\benergy\b|isot[oô]nico|\bbebida|\bcoca\b|\bsoda\b|t[oô]nica|kombucha",
             re.IGNORECASE,
         ),
@@ -239,11 +239,13 @@ def quantity_of(product: dict) -> tuple[Decimal, str] | None:
 def category_of(source: Source, tags: list[str], name: str = "", unit: str = "") -> str | None:
     """Categoria do produto; ``None`` quando a base de utilidades traz algo fora do mercado."""
 
+    if source.host.startswith("world.openbeautyfacts"):
+        # Na base de higiene, "água micelar" e "água de colônia" não são bebidas.
+        cleaning = NAME_CATEGORIES[0][1]
+        return "cleaning" if cleaning.search(name) else "personal_hygiene"
     for category, pattern in NAME_CATEGORIES:
         if pattern.search(name):
             return category
-    if source.host.startswith("world.openbeautyfacts"):
-        return "personal_hygiene"
     if source.host.startswith("world.openproductsfacts"):
         # Sem palavra reconhecida, a base de produtos traz de tudo (livros, suplementos...).
         return None
