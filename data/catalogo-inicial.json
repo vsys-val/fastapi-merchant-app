@@ -1,36 +1,8 @@
 {
- "generated_at": "2026-09-28T04:29:40+00:00",
+ "generated_at": "2026-09-28T04:40:27+00:00",
  "attribution": "Dados de produtos do Open Food Facts, Open Beauty Facts e Open Products Facts (https://openfoodfacts.org), disponíveis sob a Open Database License (ODbL).",
  "license": "ODbL-1.0",
  "products": [
-  {
-   "name": "alimento achocolatado em pó instantâneo chocolatto",
-   "brand": "3 corações",
-   "variant": null,
-   "quantity": "500",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7896224836098",
-   "identity_key": "[\"alimento achocolatado em po instantaneo chocolatto\",\"3 coracoes\",\"\",\"500\",\"g\"]",
-   "search_name": "alimento achocolatado em po instantaneo chocolatto",
-   "search_brand": "3 coracoes",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896224836098"
-  },
-  {
-   "name": "cappuccino clássi",
-   "brand": "3 corações",
-   "variant": null,
-   "quantity": "200",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7896005800157",
-   "identity_key": "[\"cappuccino classi\",\"3 coracoes\",\"\",\"200\",\"g\"]",
-   "search_name": "cappuccino classi",
-   "search_brand": "3 coracoes",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896005800157"
-  },
   {
    "name": "Bebida à Base De Amêndoa A Tal Da Castanha Caixa",
    "brand": "A Tal da Castanha",
@@ -116,7 +88,35 @@
    "source_url": "https://world.openfoodfacts.org/product/7891991001342"
   },
   {
-   "name": "guaraná antartica",
+   "name": "Guaraná Antartica lata",
+   "brand": "Antarctica",
+   "variant": null,
+   "quantity": "350",
+   "unit": "ml",
+   "category": "beverages",
+   "barcode": "7891991000826",
+   "identity_key": "[\"guarana antartica lata\",\"antarctica\",\"\",\"350\",\"ml\"]",
+   "search_name": "guarana antartica lata",
+   "search_brand": "antarctica",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891991000826"
+  },
+  {
+   "name": "Guaraná antártica zero Wandinha",
+   "brand": "Antarctica",
+   "variant": null,
+   "quantity": "350",
+   "unit": "ml",
+   "category": "beverages",
+   "barcode": "7891991000727",
+   "identity_key": "[\"guarana antartica zero wandinha\",\"antarctica\",\"\",\"350\",\"ml\"]",
+   "search_name": "guarana antartica zero wandinha",
+   "search_brand": "antarctica",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891991000727"
+  },
+  {
+   "name": "Guaraná antartica",
    "brand": "Antártica",
    "variant": null,
    "quantity": "1000",
@@ -128,20 +128,6 @@
    "search_brand": "antartica",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7891991002561"
-  },
-  {
-   "name": "Leite integral",
-   "brand": "aurora",
-   "variant": null,
-   "quantity": "1000",
-   "unit": "ml",
-   "category": "beverages",
-   "barcode": "7891164028237",
-   "identity_key": "[\"leite integral\",\"aurora\",\"\",\"1000\",\"ml\"]",
-   "search_name": "leite integral",
-   "search_brand": "aurora",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891164028237"
   },
   {
    "name": "Suco de Uva",
@@ -172,20 +158,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7891097104633"
   },
   {
-   "name": "Iogurte Batavo Pensé Zero Morango",
-   "brand": "Batavo",
-   "variant": null,
-   "quantity": "1150",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7891097103643",
-   "identity_key": "[\"iogurte batavo pense zero morango\",\"batavo\",\"\",\"1150\",\"g\"]",
-   "search_name": "iogurte batavo pense zero morango",
-   "search_brand": "batavo",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891097103643"
-  },
-  {
    "name": "Bebida à Base De Amêndoa Original Blue Diamond Almond Breeze Caixa",
    "brand": "Blue Diamond",
    "variant": null,
@@ -200,21 +172,7 @@
    "source_url": "https://world.openfoodfacts.org/product/7898215157106"
   },
   {
-   "name": "Café Torrado e Moído a Vácuo Extraforte Caboclo Pacote",
-   "brand": "Caboclo",
-   "variant": null,
-   "quantity": "500",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7896089010916",
-   "identity_key": "[\"cafe torrado e moido a vacuo extraforte caboclo pacote\",\"caboclo\",\"\",\"500\",\"g\"]",
-   "search_name": "cafe torrado e moido a vacuo extraforte caboclo pacote",
-   "search_brand": "caboclo",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896089010916"
-  },
-  {
-   "name": "água De Coco Integral Campo Largo Garrafa",
+   "name": "Água De Coco Integral Campo Largo Garrafa",
    "brand": "Campo Largo",
    "variant": null,
    "quantity": "900",
@@ -226,34 +184,6 @@
    "search_brand": "campo largo",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7896931614910"
-  },
-  {
-   "name": "Cerveza Negra",
-   "brand": "Caracu",
-   "variant": null,
-   "quantity": "350",
-   "unit": "ml",
-   "category": "beverages",
-   "barcode": "7891149210503",
-   "identity_key": "[\"cerveza negra\",\"caracu\",\"\",\"350\",\"ml\"]",
-   "search_name": "cerveza negra",
-   "search_brand": "caracu",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891149210503"
-  },
-  {
-   "name": "coca",
-   "brand": "coca cola",
-   "variant": null,
-   "quantity": "1000",
-   "unit": "ml",
-   "category": "beverages",
-   "barcode": "7894900014211",
-   "identity_key": "[\"coca\",\"coca cola\",\"\",\"1000\",\"ml\"]",
-   "search_name": "coca",
-   "search_brand": "coca cola",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7894900014211"
   },
   {
    "name": "Coca-Cola Zero",
@@ -340,20 +270,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7894900010398"
   },
   {
-   "name": "Refrigerante Café Espresso Coca Cola Lata",
-   "brand": "Coca-cola",
-   "variant": null,
-   "quantity": "220",
-   "unit": "ml",
-   "category": "beverages",
-   "barcode": "7894900025019",
-   "identity_key": "[\"refrigerante cafe espresso coca cola lata\",\"coca-cola\",\"\",\"220\",\"ml\"]",
-   "search_name": "refrigerante cafe espresso coca cola lata",
-   "search_brand": "coca-cola",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7894900025019"
-  },
-  {
    "name": "Refrigerante Coca Cola Garrafa",
    "brand": "Coca-cola",
    "variant": null,
@@ -396,20 +312,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7894900011753"
   },
   {
-   "name": "Refrigerante Coca Cola Original Garrafa 2,5l Embalagem Econômica",
-   "brand": "Coca-cola",
-   "variant": null,
-   "quantity": "2500",
-   "unit": "ml",
-   "category": "beverages",
-   "barcode": "7894900027020",
-   "identity_key": "[\"refrigerante coca cola original garrafa 2,5l embalagem economica\",\"coca-cola\",\"\",\"2500\",\"ml\"]",
-   "search_name": "refrigerante coca cola original garrafa 2,5l embalagem economica",
-   "search_brand": "coca-cola",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7894900027020"
-  },
-  {
    "name": "Refrigerante Sem Açúcar Coca Cola Garrafa",
    "brand": "Coca-cola",
    "variant": null,
@@ -438,34 +340,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7894900701159"
   },
   {
-   "name": "Crystal - sem gás",
-   "brand": "Coca-Cola Brasil",
-   "variant": null,
-   "quantity": "1500",
-   "unit": "ml",
-   "category": "beverages",
-   "barcode": "7894900530032",
-   "identity_key": "[\"crystal - sem gas\",\"coca-cola brasil\",\"\",\"1500\",\"ml\"]",
-   "search_name": "crystal - sem gas",
-   "search_brand": "coca-cola brasil",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7894900530032"
-  },
-  {
-   "name": "Coca Cola Zero Açúcar",
-   "brand": "CocaCola",
-   "variant": null,
-   "quantity": "2000",
-   "unit": "ml",
-   "category": "beverages",
-   "barcode": "7894900701517",
-   "identity_key": "[\"coca cola zero acucar\",\"cocacola\",\"\",\"2000\",\"ml\"]",
-   "search_name": "coca cola zero acucar",
-   "search_brand": "cocacola",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7894900701517"
-  },
-  {
    "name": "Agua Min Crystal S/gas",
    "brand": "Crystal",
    "variant": null,
@@ -480,21 +354,7 @@
    "source_url": "https://world.openfoodfacts.org/product/7894900530001"
   },
   {
-   "name": "Corpus Morango Triplo Zero",
-   "brand": "Danone",
-   "variant": null,
-   "quantity": "800",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7891025124177",
-   "identity_key": "[\"corpus morango triplo zero\",\"danone\",\"\",\"800\",\"g\"]",
-   "search_name": "corpus morango triplo zero",
-   "search_brand": "danone",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891025124177"
-  },
-  {
-   "name": "yoPro Chocolate",
+   "name": "YoPro Chocolate",
    "brand": "Danone",
    "variant": null,
    "quantity": "250",
@@ -548,6 +408,20 @@
    "search_brand": "del valle",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7898341430098"
+  },
+  {
+   "name": "Refresco Adoçado Uva Del Valle Kapo Caixa",
+   "brand": "Del Valle",
+   "variant": null,
+   "quantity": "200",
+   "unit": "ml",
+   "category": "beverages",
+   "barcode": "7894900593709",
+   "identity_key": "[\"refresco adocado uva del valle kapo caixa\",\"del valle\",\"\",\"200\",\"ml\"]",
+   "search_name": "refresco adocado uva del valle kapo caixa",
+   "search_brand": "del valle",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7894900593709"
   },
   {
    "name": "Suco de Maracujá",
@@ -606,15 +480,15 @@
    "source_url": "https://world.openfoodfacts.org/product/7896436100666"
   },
   {
-   "name": "Fruna 2 Cola",
+   "name": "2 Cola",
    "brand": "Fruna",
    "variant": null,
    "quantity": "2000",
    "unit": "ml",
    "category": "beverages",
    "barcode": "7802408000230",
-   "identity_key": "[\"fruna 2 cola\",\"fruna\",\"\",\"2000\",\"ml\"]",
-   "search_name": "fruna 2 cola",
+   "identity_key": "[\"2 cola\",\"fruna\",\"\",\"2000\",\"ml\"]",
+   "search_name": "2 cola",
    "search_brand": "fruna",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7802408000230"
@@ -676,20 +550,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7898080640239"
   },
   {
-   "name": "Farinha Láctea italac",
-   "brand": "Italac",
-   "variant": null,
-   "quantity": "180",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7898080642790",
-   "identity_key": "[\"farinha lactea italac\",\"italac\",\"\",\"180\",\"g\"]",
-   "search_name": "farinha lactea italac",
-   "search_brand": "italac",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7898080642790"
-  },
-  {
    "name": "Leite UHT Desnatado",
    "brand": "Italac",
    "variant": null,
@@ -702,6 +562,20 @@
    "search_brand": "italac",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7898080640635"
+  },
+  {
+   "name": "Pó para preparo de bebidas sabor morango",
+   "brand": "Italac",
+   "variant": null,
+   "quantity": "400",
+   "unit": "g",
+   "category": "beverages",
+   "barcode": "7898080640963",
+   "identity_key": "[\"po para preparo de bebidas sabor morango\",\"italac\",\"\",\"400\",\"g\"]",
+   "search_name": "po para preparo de bebidas sabor morango",
+   "search_brand": "italac",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7898080640963"
   },
   {
    "name": "Leite Integral Itambé Longa Vida",
@@ -718,20 +592,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7896051111016"
   },
   {
-   "name": "Leite Pó Integral Itambé Lata",
-   "brand": "Itambé",
-   "variant": null,
-   "quantity": "400",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7896051130284",
-   "identity_key": "[\"leite po integral itambe lata\",\"itambe\",\"\",\"400\",\"g\"]",
-   "search_name": "leite po integral itambe lata",
-   "search_brand": "itambe",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896051130284"
-  },
-  {
    "name": "Leite Jussara UHT Semidesnatado",
    "brand": "Jussara",
    "variant": null,
@@ -746,7 +606,7 @@
    "source_url": "https://world.openfoodfacts.org/product/7896283800825"
   },
   {
-   "name": "água De Coco Integral Sococo Caixa",
+   "name": "Água De Coco Integral Sococo Caixa",
    "brand": "Kellogg's",
    "variant": null,
    "quantity": "1000",
@@ -758,20 +618,6 @@
    "search_brand": "kellogg's",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7896004401409"
-  },
-  {
-   "name": "Leite Pó Instantâneo Integral Zero Lactose La Serenissima Pacote",
-   "brand": "La Serenissima",
-   "variant": null,
-   "quantity": "300",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7896048706126",
-   "identity_key": "[\"leite po instantaneo integral zero lactose la serenissima pacote\",\"la serenissima\",\"\",\"300\",\"g\"]",
-   "search_name": "leite po instantaneo integral zero lactose la serenissima pacote",
-   "search_brand": "la serenissima",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896048706126"
   },
   {
    "name": "Chá de erva Doce",
@@ -802,20 +648,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7891098010476"
   },
   {
-   "name": "Matte Leão - Matte Original",
-   "brand": "Leão",
-   "variant": null,
-   "quantity": "40",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7891098000040",
-   "identity_key": "[\"matte leao - matte original\",\"leao\",\"\",\"40\",\"g\"]",
-   "search_name": "matte leao - matte original",
-   "search_brand": "leao",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891098000040"
-  },
-  {
    "name": "Chá Preto Ice Tea Pêssego Leão Garrafa",
    "brand": "Leao Fuze",
    "variant": null,
@@ -830,43 +662,15 @@
    "source_url": "https://world.openfoodfacts.org/product/7891098040893"
   },
   {
-   "name": "Leão Fuze Hortelã",
-   "brand": "Leão Fuze",
-   "variant": null,
-   "quantity": "10",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7891098000170",
-   "identity_key": "[\"leao fuze hortela\",\"leao fuze\",\"\",\"10\",\"g\"]",
-   "search_name": "leao fuze hortela",
-   "search_brand": "leao fuze",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891098000170"
-  },
-  {
-   "name": "Leite UHT Integral",
-   "brand": "Leco",
-   "variant": null,
-   "quantity": "1000",
-   "unit": "ml",
-   "category": "beverages",
-   "barcode": "7892999150124",
-   "identity_key": "[\"leite uht integral\",\"leco\",\"\",\"1000\",\"ml\"]",
-   "search_name": "leite uht integral",
-   "search_brand": "leco",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7892999150124"
-  },
-  {
-   "name": "Lipton Ice Tea 1,5l Limao",
+   "name": "Ice Tea 1,5l Limao",
    "brand": "Lipton",
    "variant": null,
    "quantity": "1500",
    "unit": "ml",
    "category": "beverages",
    "barcode": "7891042000201",
-   "identity_key": "[\"lipton ice tea 1,5l limao\",\"lipton\",\"\",\"1500\",\"ml\"]",
-   "search_name": "lipton ice tea 1,5l limao",
+   "identity_key": "[\"ice tea 1,5l limao\",\"lipton\",\"\",\"1500\",\"ml\"]",
+   "search_name": "ice tea 1,5l limao",
    "search_brand": "lipton",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7891042000201"
@@ -884,20 +688,6 @@
    "search_brand": "maguary",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7896000554369"
-  },
-  {
-   "name": "Citrus",
-   "brand": "mas",
-   "variant": null,
-   "quantity": "600",
-   "unit": "ml",
-   "category": "beverages",
-   "barcode": "7801620009656",
-   "identity_key": "[\"citrus\",\"mas\",\"\",\"600\",\"ml\"]",
-   "search_name": "citrus",
-   "search_brand": "mas",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7801620009656"
   },
   {
    "name": "Chá Mate Limão Matte Leão Caixa 30g 25 Unidades",
@@ -956,18 +746,18 @@
    "source_url": "https://world.openfoodfacts.org/product/7891098041081"
   },
   {
-   "name": "Café Torrado E Moído Tradicional Melitta Caixa",
-   "brand": "Melitta",
+   "name": "Refresco Em Pó Caju Mid Pacote",
+   "brand": "Mid",
    "variant": null,
-   "quantity": "500",
+   "quantity": "20",
    "unit": "g",
    "category": "beverages",
-   "barcode": "7891021006125",
-   "identity_key": "[\"cafe torrado e moido tradicional melitta caixa\",\"melitta\",\"\",\"500\",\"g\"]",
-   "search_name": "cafe torrado e moido tradicional melitta caixa",
-   "search_brand": "melitta",
+   "barcode": "7891132082469",
+   "identity_key": "[\"refresco em po caju mid pacote\",\"mid\",\"\",\"20\",\"g\"]",
+   "search_name": "refresco em po caju mid pacote",
+   "search_brand": "mid",
    "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891021006125"
+   "source_url": "https://world.openfoodfacts.org/product/7891132082469"
   },
   {
    "name": "Refresco Em Pó Limão Mid Pacote",
@@ -984,6 +774,20 @@
    "source_url": "https://world.openfoodfacts.org/product/7891132082223"
   },
   {
+   "name": "Refresco Em Pó Manga Mid Pacote",
+   "brand": "Mid",
+   "variant": null,
+   "quantity": "20",
+   "unit": "g",
+   "category": "beverages",
+   "barcode": "7891132082483",
+   "identity_key": "[\"refresco em po manga mid pacote\",\"mid\",\"\",\"20\",\"g\"]",
+   "search_name": "refresco em po manga mid pacote",
+   "search_brand": "mid",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891132082483"
+  },
+  {
    "name": "Água Mineral Natural sem gás",
    "brand": "Minalba",
    "variant": null,
@@ -996,6 +800,20 @@
    "search_brand": "minalba",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7896065880069"
+  },
+  {
+   "name": "Refresco Em Pó Morango Tang Pacote",
+   "brand": "Mondelez",
+   "variant": null,
+   "quantity": "18",
+   "unit": "g",
+   "category": "beverages",
+   "barcode": "7622210571724",
+   "identity_key": "[\"refresco em po morango tang pacote\",\"mondelez\",\"\",\"18\",\"g\"]",
+   "search_name": "refresco em po morango tang pacote",
+   "search_brand": "mondelez",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7622210571724"
   },
   {
    "name": "Energético Mango Loco",
@@ -1040,20 +858,6 @@
    "source_url": "https://world.openfoodfacts.org/product/0070847022206"
   },
   {
-   "name": "monster energy",
-   "brand": "monster",
-   "variant": null,
-   "quantity": "473",
-   "unit": "ml",
-   "category": "beverages",
-   "barcode": "0070847022015",
-   "identity_key": "[\"monster energy\",\"monster\",\"\",\"473\",\"ml\"]",
-   "search_name": "monster energy",
-   "search_brand": "monster",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/0070847022015"
-  },
-  {
    "name": "Dragon Ice Tea",
    "brand": "Monster Energy",
    "variant": null,
@@ -1066,34 +870,6 @@
    "search_brand": "monster energy",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/0070847034803"
-  },
-  {
-   "name": "Suco Integral Laranja Natural One Refrigerado Garrafa",
-   "brand": "Natural One",
-   "variant": null,
-   "quantity": "300",
-   "unit": "ml",
-   "category": "beverages",
-   "barcode": "7899916900329",
-   "identity_key": "[\"suco integral laranja natural one refrigerado garrafa\",\"natural one\",\"\",\"300\",\"ml\"]",
-   "search_name": "suco integral laranja natural one refrigerado garrafa",
-   "search_brand": "natural one",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7899916900329"
-  },
-  {
-   "name": "Suco Uva E Maçã Natural One Ambiente Garrafa",
-   "brand": "Natural One",
-   "variant": null,
-   "quantity": "1500",
-   "unit": "ml",
-   "category": "beverages",
-   "barcode": "7899916904877",
-   "identity_key": "[\"suco uva e maca natural one ambiente garrafa\",\"natural one\",\"\",\"1500\",\"ml\"]",
-   "search_name": "suco uva e maca natural one ambiente garrafa",
-   "search_brand": "natural one",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7899916904877"
   },
   {
    "name": "Bebida Láctea Uht Com Café Chocolate Nescafé Smoovlatté Frasco",
@@ -1110,118 +886,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7891000110829"
   },
   {
-   "name": "Achocolatado Em Po Nesquik Lata 380G Morango",
-   "brand": "Nesquik",
-   "variant": null,
-   "quantity": "380",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7891000104101",
-   "identity_key": "[\"achocolatado em po nesquik lata 380g morango\",\"nesquik\",\"\",\"380\",\"g\"]",
-   "search_name": "achocolatado em po nesquik lata 380g morango",
-   "search_brand": "nesquik",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891000104101"
-  },
-  {
-   "name": "Chocolate em Pó Solúvel",
-   "brand": "Nestlé",
-   "variant": null,
-   "quantity": "200",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7891000451304",
-   "identity_key": "[\"chocolate em po soluvel\",\"nestle\",\"\",\"200\",\"g\"]",
-   "search_name": "chocolate em po soluvel",
-   "search_brand": "nestle",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891000451304"
-  },
-  {
-   "name": "Leite em Pó Sem Lactose",
-   "brand": "Nestlé",
-   "variant": null,
-   "quantity": "380",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7891000109908",
-   "identity_key": "[\"leite em po sem lactose\",\"nestle\",\"\",\"380\",\"g\"]",
-   "search_name": "leite em po sem lactose",
-   "search_brand": "nestle",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891000109908"
-  },
-  {
-   "name": "Nescafé Original Extraforte",
-   "brand": "Nestlé",
-   "variant": null,
-   "quantity": "100",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7891000300503",
-   "identity_key": "[\"nescafe original extraforte\",\"nestle\",\"\",\"100\",\"g\"]",
-   "search_name": "nescafe original extraforte",
-   "search_brand": "nestle",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891000300503"
-  },
-  {
-   "name": "Nescafé Tradición",
-   "brand": "Nestlé",
-   "variant": null,
-   "quantity": "120",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7891000350157",
-   "identity_key": "[\"nescafe tradicion\",\"nestle\",\"\",\"120\",\"g\"]",
-   "search_name": "nescafe tradicion",
-   "search_brand": "nestle",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891000350157"
-  },
-  {
-   "name": "Nesquik Chocolate",
-   "brand": "Nestlé",
-   "variant": null,
-   "quantity": "400",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7891000073537",
-   "identity_key": "[\"nesquik chocolate\",\"nestle\",\"\",\"400\",\"g\"]",
-   "search_name": "nesquik chocolate",
-   "search_brand": "nestle",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891000073537"
-  },
-  {
-   "name": "Leite em pó integral instantâneo Ninho",
-   "brand": "Nestlé Ninho",
-   "variant": null,
-   "quantity": "380",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7891000393284",
-   "identity_key": "[\"leite em po integral instantaneo ninho\",\"nestle ninho\",\"\",\"380\",\"g\"]",
-   "search_name": "leite em po integral instantaneo ninho",
-   "search_brand": "nestle ninho",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891000393284"
-  },
-  {
-   "name": "Leite Po Ninho Integral",
-   "brand": "Nestlé Ninho",
-   "variant": null,
-   "quantity": "380",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7891000325858",
-   "identity_key": "[\"leite po ninho integral\",\"nestle ninho\",\"\",\"380\",\"g\"]",
-   "search_name": "leite po ninho integral",
-   "search_brand": "nestle ninho",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891000325858"
-  },
-  {
    "name": "Bebida à Base De Aveia Cremosa Orgânica Sem Glúten Nude. Caixa",
    "brand": "Nude.",
    "variant": null,
@@ -1236,18 +900,18 @@
    "source_url": "https://world.openfoodfacts.org/product/7898994939764"
   },
   {
-   "name": "Suco de Uva Integral",
-   "brand": "Oq",
+   "name": "Refrigerante de Limão Pepita",
+   "brand": "Pepita",
    "variant": null,
-   "quantity": "1500",
+   "quantity": "2000",
    "unit": "ml",
    "category": "beverages",
-   "barcode": "7898942775321",
-   "identity_key": "[\"suco de uva integral\",\"oq\",\"\",\"1500\",\"ml\"]",
-   "search_name": "suco de uva integral",
-   "search_brand": "oq",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7898942775321"
+   "barcode": "7898373243178",
+   "identity_key": "[\"refrigerante de limao pepita\",\"pepita\",\"\",\"2000\",\"ml\"]",
+   "search_name": "refrigerante de limao pepita",
+   "search_brand": "pepita",
+   "source": "Open Products Facts",
+   "source_url": "https://world.openproductsfacts.org/product/7898373243178"
   },
   {
    "name": "H2OH! limão",
@@ -1276,20 +940,6 @@
    "search_brand": "pepsi",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7892840800000"
-  },
-  {
-   "name": "Pilao Traditional Coffee",
-   "brand": "Pilão",
-   "variant": null,
-   "quantity": "250",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7896089012637",
-   "identity_key": "[\"pilao traditional coffee\",\"pilao\",\"\",\"250\",\"g\"]",
-   "search_name": "pilao traditional coffee",
-   "search_brand": "pilao",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896089012637"
   },
   {
    "name": "Bebida Whey Frutas Vermelhas Zero Lactose",
@@ -1348,20 +998,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7894900504002"
   },
   {
-   "name": "Power Ade Limão",
-   "brand": "Powerade",
-   "variant": null,
-   "quantity": "500",
-   "unit": "ml",
-   "category": "beverages",
-   "barcode": "7894900500035",
-   "identity_key": "[\"power ade limao\",\"powerade\",\"\",\"500\",\"ml\"]",
-   "search_name": "power ade limao",
-   "search_brand": "powerade",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7894900500035"
-  },
-  {
    "name": "Suco de laranja integral",
    "brand": "Prats",
    "variant": null,
@@ -1390,7 +1026,7 @@
    "source_url": "https://world.openfoodfacts.org/product/0041508235785"
   },
   {
-   "name": "amêndoa sem açúcares",
+   "name": "Amêndoa sem açúcares",
    "brand": "Silk",
    "variant": null,
    "quantity": "1000",
@@ -1418,7 +1054,7 @@
    "source_url": "https://world.openfoodfacts.org/product/7892300002791"
   },
   {
-   "name": "água De Coco Integral Sococo Caixa",
+   "name": "Água De Coco Integral Sococo Caixa",
    "brand": "Sococo",
    "variant": null,
    "quantity": "200",
@@ -1446,20 +1082,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7896004400372"
   },
   {
-   "name": "Soprole 1+1 Mini Cookies Yoghurt batido con mini galletas",
-   "brand": "Soprole",
-   "variant": null,
-   "quantity": "140",
-   "unit": "g",
-   "category": "beverages",
-   "barcode": "7802900228170",
-   "identity_key": "[\"soprole 1+1 mini cookies yoghurt batido con mini galletas\",\"soprole\",\"\",\"140\",\"g\"]",
-   "search_name": "soprole 1+1 mini cookies yoghurt batido con mini galletas",
-   "search_brand": "soprole",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7802900228170"
-  },
-  {
    "name": "Refrigerante Lemon Fresh Zero Açúcar Sprite Garrafa",
    "brand": "Sprite",
    "variant": null,
@@ -1472,6 +1094,20 @@
    "search_brand": "sprite",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7894900680508"
+  },
+  {
+   "name": "Chá Branco Lichia Feel Good Caixa",
+   "brand": "Sufresh",
+   "variant": null,
+   "quantity": "1000",
+   "unit": "ml",
+   "category": "beverages",
+   "barcode": "7898192033325",
+   "identity_key": "[\"cha branco lichia feel good caixa\",\"sufresh\",\"\",\"1000\",\"ml\"]",
+   "search_name": "cha branco lichia feel good caixa",
+   "search_brand": "sufresh",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7898192033325"
   },
   {
    "name": "Refrigerante de Laranja",
@@ -1488,21 +1124,77 @@
    "source_url": "https://world.openfoodfacts.org/product/7891149440801"
   },
   {
-   "name": "Toddynho sabor Chocolate",
+   "name": "Refresco Em Pó Manga Tang Pacote",
+   "brand": "Tang",
+   "variant": null,
+   "quantity": "18",
+   "unit": "g",
+   "category": "beverages",
+   "barcode": "7622210571526",
+   "identity_key": "[\"refresco em po manga tang pacote\",\"tang\",\"\",\"18\",\"g\"]",
+   "search_name": "refresco em po manga tang pacote",
+   "search_brand": "tang",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7622210571526"
+  },
+  {
+   "name": "Refresco Em Pó Uva Intensa Tang Pacote",
+   "brand": "Tang",
+   "variant": null,
+   "quantity": "18",
+   "unit": "g",
+   "category": "beverages",
+   "barcode": "7622210571663",
+   "identity_key": "[\"refresco em po uva intensa tang pacote\",\"tang\",\"\",\"18\",\"g\"]",
+   "search_name": "refresco em po uva intensa tang pacote",
+   "search_brand": "tang",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7622210571663"
+  },
+  {
+   "name": "Suco de Laranja",
+   "brand": "The Natural One",
+   "variant": null,
+   "quantity": "1700",
+   "unit": "ml",
+   "category": "beverages",
+   "barcode": "7899916918829",
+   "identity_key": "[\"suco de laranja\",\"the natural one\",\"\",\"1700\",\"ml\"]",
+   "search_name": "suco de laranja",
+   "search_brand": "the natural one",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7899916918829"
+  },
+  {
+   "name": "Sabor Chocolate",
    "brand": "Toddynho",
    "variant": null,
    "quantity": "200",
    "unit": "ml",
    "category": "beverages",
    "barcode": "7894321722016",
-   "identity_key": "[\"toddynho sabor chocolate\",\"toddynho\",\"\",\"200\",\"ml\"]",
-   "search_name": "toddynho sabor chocolate",
+   "identity_key": "[\"sabor chocolate\",\"toddynho\",\"\",\"200\",\"ml\"]",
+   "search_name": "sabor chocolate",
    "search_brand": "toddynho",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7894321722016"
   },
   {
-   "name": "água De Coco Esterilizada Ducoco Caixa",
+   "name": "Biscoito água E Sal Tradicional Vitarella Pacote",
+   "brand": "Vitarella",
+   "variant": null,
+   "quantity": "350",
+   "unit": "g",
+   "category": "beverages",
+   "barcode": "7896213006242",
+   "identity_key": "[\"biscoito agua e sal tradicional vitarella pacote\",\"vitarella\",\"\",\"350\",\"g\"]",
+   "search_name": "biscoito agua e sal tradicional vitarella pacote",
+   "search_brand": "vitarella",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896213006242"
+  },
+  {
+   "name": "Água De Coco Esterilizada Ducoco Caixa",
    "brand": "Vizir",
    "variant": null,
    "quantity": "1000",
@@ -1544,6 +1236,20 @@
    "source_url": "https://world.openfoodfacts.org/product/7891025115649"
   },
   {
+   "name": "Amaciante de roupas",
+   "brand": "Alpes",
+   "variant": null,
+   "quantity": "5000",
+   "unit": "ml",
+   "category": "cleaning",
+   "barcode": "0554910805267",
+   "identity_key": "[\"amaciante de roupas\",\"alpes\",\"\",\"5000\",\"ml\"]",
+   "search_name": "amaciante de roupas",
+   "search_brand": "alpes",
+   "source": "Open Products Facts",
+   "source_url": "https://world.openproductsfacts.org/product/0554910805267"
+  },
+  {
    "name": "Água Sanitária Qboa",
    "brand": "Anhembi",
    "variant": null,
@@ -1556,20 +1262,6 @@
    "search_brand": "anhembi",
    "source": "Open Products Facts",
    "source_url": "https://world.openproductsfacts.org/product/7896083800025"
-  },
-  {
-   "name": "Esponja de aço",
-   "brand": "Bom Brill",
-   "variant": null,
-   "quantity": "6",
-   "unit": "un",
-   "category": "cleaning",
-   "barcode": "7891022868036",
-   "identity_key": "[\"esponja de aco\",\"bom brill\",\"\",\"6\",\"un\"]",
-   "search_name": "esponja de aco",
-   "search_brand": "bom brill",
-   "source": "Open Products Facts",
-   "source_url": "https://world.openproductsfacts.org/product/7891022868036"
   },
   {
    "name": "Limpador CIF",
@@ -1600,6 +1292,34 @@
    "source_url": "https://world.openproductsfacts.org/product/7896404605490"
   },
   {
+   "name": "Amaciante de roupas",
+   "brand": "Girando Sol",
+   "variant": null,
+   "quantity": "5000",
+   "unit": "ml",
+   "category": "cleaning",
+   "barcode": "7896404601027",
+   "identity_key": "[\"amaciante de roupas\",\"girando sol\",\"\",\"5000\",\"ml\"]",
+   "search_name": "amaciante de roupas",
+   "search_brand": "girando sol",
+   "source": "Open Products Facts",
+   "source_url": "https://world.openproductsfacts.org/product/7896404601027"
+  },
+  {
+   "name": "Água sanitária",
+   "brand": "Ki Joia",
+   "variant": null,
+   "quantity": "2000",
+   "unit": "ml",
+   "category": "cleaning",
+   "barcode": "7896061515224",
+   "identity_key": "[\"agua sanitaria\",\"ki joia\",\"\",\"2000\",\"ml\"]",
+   "search_name": "agua sanitaria",
+   "search_brand": "ki joia",
+   "source": "Open Products Facts",
+   "source_url": "https://world.openproductsfacts.org/product/7896061515224"
+  },
+  {
    "name": "Detergente Limpol Cristal",
    "brand": "Limpol",
    "variant": null,
@@ -1628,32 +1348,32 @@
    "source_url": "https://world.openproductsfacts.org/product/7896333033470"
   },
   {
-   "name": "Intra Patito Bebê",
-   "brand": "Patito",
+   "name": "Mamãe e bebê água de colônia sem álcool",
+   "brand": "Natura",
    "variant": null,
-   "quantity": "640",
-   "unit": "g",
+   "quantity": "100",
+   "unit": "ml",
    "category": "cleaning",
-   "barcode": "7751851008754",
-   "identity_key": "[\"intra patito bebe\",\"patito\",\"\",\"640\",\"g\"]",
-   "search_name": "intra patito bebe",
-   "search_brand": "patito",
-   "source": "Open Products Facts",
-   "source_url": "https://world.openproductsfacts.org/product/7751851008754"
+   "barcode": "7908132208406",
+   "identity_key": "[\"mamae e bebe agua de colonia sem alcool\",\"natura\",\"\",\"100\",\"ml\"]",
+   "search_name": "mamae e bebe agua de colonia sem alcool",
+   "search_brand": "natura",
+   "source": "Open Beauty Facts",
+   "source_url": "https://world.openbeautyfacts.org/product/7908132208406"
   },
   {
-   "name": "Intra Patito Floral",
-   "brand": "Patito",
+   "name": "Lavagem Perfeita",
+   "brand": "Omo",
    "variant": null,
-   "quantity": "640",
+   "quantity": "400",
    "unit": "g",
    "category": "cleaning",
-   "barcode": "7750243070430",
-   "identity_key": "[\"intra patito floral\",\"patito\",\"\",\"640\",\"g\"]",
-   "search_name": "intra patito floral",
-   "search_brand": "patito",
+   "barcode": "7891150065284",
+   "identity_key": "[\"lavagem perfeita\",\"omo\",\"\",\"400\",\"g\"]",
+   "search_name": "lavagem perfeita",
+   "search_brand": "omo",
    "source": "Open Products Facts",
-   "source_url": "https://world.openproductsfacts.org/product/7750243070430"
+   "source_url": "https://world.openproductsfacts.org/product/7891150065284"
   },
   {
    "name": "Esponja multiuso",
@@ -1684,6 +1404,34 @@
    "source_url": "https://world.openproductsfacts.org/product/7896021626915"
   },
   {
+   "name": "Lava Roupas em Pó Surf Rosas e Flor de Lis",
+   "brand": "Surf",
+   "variant": null,
+   "quantity": "1600",
+   "unit": "g",
+   "category": "cleaning",
+   "barcode": "7891150086821",
+   "identity_key": "[\"lava roupas em po surf rosas e flor de lis\",\"surf\",\"\",\"1600\",\"g\"]",
+   "search_name": "lava roupas em po surf rosas e flor de lis",
+   "search_brand": "surf",
+   "source": "Open Products Facts",
+   "source_url": "https://world.openproductsfacts.org/product/7891150086821"
+  },
+  {
+   "name": "Sabão em pó",
+   "brand": "Tixan",
+   "variant": null,
+   "quantity": "1600",
+   "unit": "g",
+   "category": "cleaning",
+   "barcode": "7896098909768",
+   "identity_key": "[\"sabao em po\",\"tixan\",\"\",\"1600\",\"g\"]",
+   "search_name": "sabao em po",
+   "search_brand": "tixan",
+   "source": "Open Products Facts",
+   "source_url": "https://world.openproductsfacts.org/product/7896098909768"
+  },
+  {
    "name": "Limpador perfumes Requinte",
    "brand": "Uau",
    "variant": null,
@@ -1696,6 +1444,20 @@
    "search_brand": "uau",
    "source": "Open Products Facts",
    "source_url": "https://world.openproductsfacts.org/product/7891242457829"
+  },
+  {
+   "name": "Lava Roupas Omo Miltiação",
+   "brand": "Unilever",
+   "variant": null,
+   "quantity": "1000",
+   "unit": "g",
+   "category": "cleaning",
+   "barcode": "7891039023701",
+   "identity_key": "[\"lava roupas omo miltiacao\",\"unilever\",\"\",\"1000\",\"g\"]",
+   "search_name": "lava roupas omo miltiacao",
+   "search_brand": "unilever",
+   "source": "Open Products Facts",
+   "source_url": "https://world.openproductsfacts.org/product/7891039023701"
   },
   {
    "name": "Desinfetante Gold Multiuso",
@@ -1726,6 +1488,48 @@
    "source_url": "https://world.openproductsfacts.org/product/7896098900253"
   },
   {
+   "name": "Lava louças (coco)",
+   "brand": "Ypê",
+   "variant": null,
+   "quantity": "500",
+   "unit": "ml",
+   "category": "cleaning",
+   "barcode": "7896098900239",
+   "identity_key": "[\"lava loucas (coco)\",\"ype\",\"\",\"500\",\"ml\"]",
+   "search_name": "lava loucas (coco)",
+   "search_brand": "ype",
+   "source": "Open Products Facts",
+   "source_url": "https://world.openproductsfacts.org/product/7896098900239"
+  },
+  {
+   "name": "Lava louças (maçã)",
+   "brand": "Ypê",
+   "variant": null,
+   "quantity": "500",
+   "unit": "ml",
+   "category": "cleaning",
+   "barcode": "7896098900215",
+   "identity_key": "[\"lava loucas (maca)\",\"ype\",\"\",\"500\",\"ml\"]",
+   "search_name": "lava loucas (maca)",
+   "search_brand": "ype",
+   "source": "Open Products Facts",
+   "source_url": "https://world.openproductsfacts.org/product/7896098900215"
+  },
+  {
+   "name": "Álcool Gel Bactericida Zeppelin 70°",
+   "brand": "Zeppelin",
+   "variant": null,
+   "quantity": "500",
+   "unit": "g",
+   "category": "cleaning",
+   "barcode": "7896474600555",
+   "identity_key": "[\"alcool gel bactericida zeppelin 70°\",\"zeppelin\",\"\",\"500\",\"g\"]",
+   "search_name": "alcool gel bactericida zeppelin 70°",
+   "search_brand": "zeppelin",
+   "source": "Open Products Facts",
+   "source_url": "https://world.openproductsfacts.org/product/7896474600555"
+  },
+  {
    "name": "Achocolatado Pó 3 Corações Chocolatto Pacote",
    "brand": "3 Coracoes",
    "variant": null,
@@ -1740,8 +1544,22 @@
    "source_url": "https://world.openfoodfacts.org/product/7896005804391"
   },
   {
+   "name": "Cappuccino clássi",
+   "brand": "3 Corações",
+   "variant": null,
+   "quantity": "200",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896005800157",
+   "identity_key": "[\"cappuccino classi\",\"3 coracoes\",\"\",\"200\",\"g\"]",
+   "search_name": "cappuccino classi",
+   "search_brand": "3 coracoes",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896005800157"
+  },
+  {
    "name": "Gourmet Cerrado Mineiro",
-   "brand": "3 corações",
+   "brand": "3 Corações",
    "variant": null,
    "quantity": "250",
    "unit": "g",
@@ -1794,6 +1612,20 @@
    "search_brand": "ajinomoto",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7891079000205"
+  },
+  {
+   "name": "Macarrão Instantâneo Lámen Galinha Nissin Miojo Pacote",
+   "brand": "Ajinomoto",
+   "variant": null,
+   "quantity": "85",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891079000212",
+   "identity_key": "[\"macarrao instantaneo lamen galinha nissin miojo pacote\",\"ajinomoto\",\"\",\"85\",\"g\"]",
+   "search_name": "macarrao instantaneo lamen galinha nissin miojo pacote",
+   "search_brand": "ajinomoto",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891079000212"
   },
   {
    "name": "Bolo Baunilha Com Gotas De Chocolate Recheio Chocolate Ana Maria Pacote",
@@ -1850,34 +1682,6 @@
    "search_brand": "andorinha",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/5601216120152"
-  },
-  {
-   "name": "Guaraná Antartica lata",
-   "brand": "Antarctica",
-   "variant": null,
-   "quantity": "350",
-   "unit": "ml",
-   "category": "food",
-   "barcode": "7891991000826",
-   "identity_key": "[\"guarana antartica lata\",\"antarctica\",\"\",\"350\",\"ml\"]",
-   "search_name": "guarana antartica lata",
-   "search_brand": "antarctica",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891991000826"
-  },
-  {
-   "name": "guaraná antártica zero Wandinha",
-   "brand": "Antarctica",
-   "variant": null,
-   "quantity": "350",
-   "unit": "ml",
-   "category": "food",
-   "barcode": "7891991000727",
-   "identity_key": "[\"guarana antartica zero wandinha\",\"antarctica\",\"\",\"350\",\"ml\"]",
-   "search_name": "guarana antartica zero wandinha",
-   "search_brand": "antarctica",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891991000727"
   },
   {
    "name": "Formula Infantil Aptamil 800g Lt Premium 1",
@@ -1950,15 +1754,29 @@
    "source_url": "https://world.openfoodfacts.org/product/7896331100327"
   },
   {
-   "name": "BALDONI Mel Baldoni Chef",
+   "name": "Manteiga com Sal",
+   "brand": "Aviação",
+   "variant": null,
+   "quantity": "200",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896331100051",
+   "identity_key": "[\"manteiga com sal\",\"aviacao\",\"\",\"200\",\"g\"]",
+   "search_name": "manteiga com sal",
+   "search_brand": "aviacao",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896331100051"
+  },
+  {
+   "name": "Mel Baldoni Chef",
    "brand": "Baldoni",
    "variant": null,
    "quantity": "300",
    "unit": "g",
    "category": "food",
    "barcode": "7898258950313",
-   "identity_key": "[\"baldoni mel baldoni chef\",\"baldoni\",\"\",\"300\",\"g\"]",
-   "search_name": "baldoni mel baldoni chef",
+   "identity_key": "[\"mel baldoni chef\",\"baldoni\",\"\",\"300\",\"g\"]",
+   "search_name": "mel baldoni chef",
    "search_brand": "baldoni",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7898258950313"
@@ -1978,7 +1796,7 @@
    "source_url": "https://world.openfoodfacts.org/product/7898258950542"
   },
   {
-   "name": "Massa Italiana para Lasanha BARILLA",
+   "name": "Massa Italiana para Lasanha Barilla",
    "brand": "Barilla",
    "variant": null,
    "quantity": "250",
@@ -2034,6 +1852,20 @@
    "source_url": "https://world.openfoodfacts.org/product/7891097106422"
   },
   {
+   "name": "Iogurte Batavo Pensé Zero Morango",
+   "brand": "Batavo",
+   "variant": null,
+   "quantity": "1150",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891097103643",
+   "identity_key": "[\"iogurte batavo pense zero morango\",\"batavo\",\"\",\"1150\",\"g\"]",
+   "search_name": "iogurte batavo pense zero morango",
+   "search_brand": "batavo",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891097103643"
+  },
+  {
    "name": "Iogurte natural integral",
    "brand": "Batavo",
    "variant": null,
@@ -2048,15 +1880,15 @@
    "source_url": "https://world.openfoodfacts.org/product/7891097101533"
   },
   {
-   "name": "Baton Ao Leite",
+   "name": "Ao Leite",
    "brand": "Baton",
    "variant": null,
    "quantity": "16",
    "unit": "g",
    "category": "food",
    "barcode": "78912359",
-   "identity_key": "[\"baton ao leite\",\"baton\",\"\",\"16\",\"g\"]",
-   "search_name": "baton ao leite",
+   "identity_key": "[\"ao leite\",\"baton\",\"\",\"16\",\"g\"]",
+   "search_name": "ao leite",
    "search_brand": "baton",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/78912359"
@@ -2230,6 +2062,34 @@
    "source_url": "https://world.openfoodfacts.org/product/7891962060460"
   },
   {
+   "name": "Wafer Chocolate",
+   "brand": "Bauducco",
+   "variant": null,
+   "quantity": "140",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891962032290",
+   "identity_key": "[\"wafer chocolate\",\"bauducco\",\"\",\"140\",\"g\"]",
+   "search_name": "wafer chocolate",
+   "search_brand": "bauducco",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891962032290"
+  },
+  {
+   "name": "Wafertriplo Choc 140g Bauducco",
+   "brand": "Bauducco",
+   "variant": null,
+   "quantity": "140",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891962037028",
+   "identity_key": "[\"wafertriplo choc 140g bauducco\",\"bauducco\",\"\",\"140\",\"g\"]",
+   "search_name": "wafertriplo choc 140g bauducco",
+   "search_brand": "bauducco",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891962037028"
+  },
+  {
    "name": "Margarina Original Com Sal",
    "brand": "Becel",
    "variant": null,
@@ -2258,18 +2118,18 @@
    "source_url": "https://world.openfoodfacts.org/product/7622210661814"
   },
   {
-   "name": "Tortilha Rap10 Original - Bimbo",
-   "brand": "Bimbo",
+   "name": "Wafer Oreo Cobertura Chocolate Branco E Biscoito Lacta Bis Xtra",
+   "brand": "Bis",
    "variant": null,
-   "quantity": "297",
+   "quantity": "45",
    "unit": "g",
    "category": "food",
-   "barcode": "7896002363792",
-   "identity_key": "[\"tortilha rap10 original - bimbo\",\"bimbo\",\"\",\"297\",\"g\"]",
-   "search_name": "tortilha rap10 original - bimbo",
-   "search_brand": "bimbo",
+   "barcode": "7622300988517",
+   "identity_key": "[\"wafer oreo cobertura chocolate branco e biscoito lacta bis xtra\",\"bis\",\"\",\"45\",\"g\"]",
+   "search_name": "wafer oreo cobertura chocolate branco e biscoito lacta bis xtra",
+   "search_brand": "bis",
    "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896002363792"
+   "source_url": "https://world.openfoodfacts.org/product/7622300988517"
   },
   {
    "name": "Wafer recheado com cobertura sabor chocolate",
@@ -2342,20 +2202,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7896006779674"
   },
   {
-   "name": "Açúcar Refinado Caravelas Pacote",
-   "brand": "Caravelas",
-   "variant": null,
-   "quantity": "1000",
-   "unit": "g",
-   "category": "food",
-   "barcode": "7896894900013",
-   "identity_key": "[\"acucar refinado caravelas pacote\",\"caravelas\",\"\",\"1000\",\"g\"]",
-   "search_name": "acucar refinado caravelas pacote",
-   "search_brand": "caravelas",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896894900013"
-  },
-  {
    "name": "Óleo De Soja Tipo 1",
    "brand": "Cargill Brasil",
    "variant": null,
@@ -2396,6 +2242,20 @@
    "search_brand": "cassini",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7898416780028"
+  },
+  {
+   "name": "Sal fina",
+   "brand": "Celusal",
+   "variant": null,
+   "quantity": "500",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7790072001014",
+   "identity_key": "[\"sal fina\",\"celusal\",\"\",\"500\",\"g\"]",
+   "search_name": "sal fina",
+   "search_brand": "celusal",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7790072001014"
   },
   {
    "name": "Leite condensado",
@@ -2636,6 +2496,20 @@
    "source_url": "https://world.openfoodfacts.org/product/7898994081623"
   },
   {
+   "name": "&quot;Paçoquinha&quot; com Açúcar Mascavo",
+   "brand": "DaColônia",
+   "variant": null,
+   "quantity": "210",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896181709244",
+   "identity_key": "[\"&quot;pacoquinha&quot; com acucar mascavo\",\"dacolonia\",\"\",\"210\",\"g\"]",
+   "search_name": "&quot;pacoquinha&quot; com acucar mascavo",
+   "search_brand": "dacolonia",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896181709244"
+  },
+  {
    "name": "Amendo Power Crunchy",
    "brand": "DaColônia",
    "variant": null,
@@ -2648,6 +2522,20 @@
    "search_brand": "dacolonia",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7896181711162"
+  },
+  {
+   "name": "Pasta de Amendoim Dacolônia Amendo Power Zero Açúcar",
+   "brand": "DaColônia",
+   "variant": null,
+   "quantity": "500",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896181710202",
+   "identity_key": "[\"pasta de amendoim dacolonia amendo power zero acucar\",\"dacolonia\",\"\",\"500\",\"g\"]",
+   "search_name": "pasta de amendoim dacolonia amendo power zero acucar",
+   "search_brand": "dacolonia",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896181710202"
   },
   {
    "name": "Cookies Special Selection",
@@ -2664,20 +2552,6 @@
    "source_url": "https://world.openfoodfacts.org/product/5601069102961"
   },
   {
-   "name": "Danone Natural Desnatado",
-   "brand": "Danone",
-   "variant": null,
-   "quantity": "160",
-   "unit": "g",
-   "category": "food",
-   "barcode": "7891025120223",
-   "identity_key": "[\"danone natural desnatado\",\"danone\",\"\",\"160\",\"g\"]",
-   "search_name": "danone natural desnatado",
-   "search_brand": "danone",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891025120223"
-  },
-  {
    "name": "Iogurte Integral Natural Danone Copo",
    "brand": "Danone",
    "variant": null,
@@ -2692,18 +2566,18 @@
    "source_url": "https://world.openfoodfacts.org/product/7891025120230"
   },
   {
-   "name": "Refresco Adoçado Uva Del Valle Kapo Caixa",
-   "brand": "Del Valle",
+   "name": "Natural Desnatado",
+   "brand": "Danone",
    "variant": null,
-   "quantity": "200",
-   "unit": "ml",
+   "quantity": "160",
+   "unit": "g",
    "category": "food",
-   "barcode": "7894900593709",
-   "identity_key": "[\"refresco adocado uva del valle kapo caixa\",\"del valle\",\"\",\"200\",\"ml\"]",
-   "search_name": "refresco adocado uva del valle kapo caixa",
-   "search_brand": "del valle",
+   "barcode": "7891025120223",
+   "identity_key": "[\"natural desnatado\",\"danone\",\"\",\"160\",\"g\"]",
+   "search_name": "natural desnatado",
+   "search_brand": "danone",
    "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7894900593709"
+   "source_url": "https://world.openfoodfacts.org/product/7891025120223"
   },
   {
    "name": "Margarina Com Sal E Creme De Leite",
@@ -2720,15 +2594,15 @@
    "source_url": "https://world.openfoodfacts.org/product/7894904271528"
   },
   {
-   "name": "Doritos Queijo Nacho 75g Elma Chips M",
+   "name": "Queijo Nacho 75g Elma Chips M",
    "brand": "Doritos",
    "variant": null,
    "quantity": "75",
    "unit": "g",
    "category": "food",
    "barcode": "7892840822347",
-   "identity_key": "[\"doritos queijo nacho 75g elma chips m\",\"doritos\",\"\",\"75\",\"g\"]",
-   "search_name": "doritos queijo nacho 75g elma chips m",
+   "identity_key": "[\"queijo nacho 75g elma chips m\",\"doritos\",\"\",\"75\",\"g\"]",
+   "search_name": "queijo nacho 75g elma chips m",
    "search_brand": "doritos",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7892840822347"
@@ -2788,20 +2662,6 @@
    "search_brand": "elefante",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7896036000724"
-  },
-  {
-   "name": "Leite UHT Integral",
-   "brand": "Elegê",
-   "variant": null,
-   "quantity": "1000",
-   "unit": "ml",
-   "category": "food",
-   "barcode": "7896079500151",
-   "identity_key": "[\"leite uht integral\",\"elege\",\"\",\"1000\",\"ml\"]",
-   "search_name": "leite uht integral",
-   "search_brand": "elege",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896079500151"
   },
   {
    "name": "Cheetos sabor parmesão",
@@ -2930,29 +2790,29 @@
    "source_url": "https://world.openfoodfacts.org/product/7790045824886"
   },
   {
-   "name": "Frutigran Avena, Chía y Lino",
+   "name": "Avena, Chía y Lino",
    "brand": "Frutigran",
    "variant": null,
    "quantity": "240",
    "unit": "g",
    "category": "food",
    "barcode": "7790045825395",
-   "identity_key": "[\"frutigran avena, chia y lino\",\"frutigran\",\"\",\"240\",\"g\"]",
-   "search_name": "frutigran avena, chia y lino",
+   "identity_key": "[\"avena, chia y lino\",\"frutigran\",\"\",\"240\",\"g\"]",
+   "search_name": "avena, chia y lino",
    "search_brand": "frutigran",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7790045825395"
   },
   {
-   "name": "Frutigran Chisps de Chocolate",
+   "name": "Chisps de Chocolate",
    "brand": "Frutigran",
    "variant": null,
    "quantity": "255",
    "unit": "g",
    "category": "food",
    "barcode": "7790045824893",
-   "identity_key": "[\"frutigran chisps de chocolate\",\"frutigran\",\"\",\"255\",\"g\"]",
-   "search_name": "frutigran chisps de chocolate",
+   "identity_key": "[\"chisps de chocolate\",\"frutigran\",\"\",\"255\",\"g\"]",
+   "search_name": "chisps de chocolate",
    "search_brand": "frutigran",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7790045824893"
@@ -3112,34 +2972,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7891167021013"
   },
   {
-   "name": "Vainilla",
-   "brand": "gourmet",
-   "variant": null,
-   "quantity": "100",
-   "unit": "ml",
-   "category": "food",
-   "barcode": "7802410545323",
-   "identity_key": "[\"vainilla\",\"gourmet\",\"\",\"100\",\"ml\"]",
-   "search_name": "vainilla",
-   "search_brand": "gourmet",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7802410545323"
-  },
-  {
-   "name": "Frutigran Avena y Pasas",
-   "brand": "Granix",
-   "variant": null,
-   "quantity": "250",
-   "unit": "g",
-   "category": "food",
-   "barcode": "7790045001188",
-   "identity_key": "[\"frutigran avena y pasas\",\"granix\",\"\",\"250\",\"g\"]",
-   "search_name": "frutigran avena y pasas",
-   "search_brand": "granix",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7790045001188"
-  },
-  {
    "name": "Bala Mentol Extra Forte Halls Pacote",
    "brand": "Halls",
    "variant": null,
@@ -3152,6 +2984,34 @@
    "search_brand": "halls",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/78938816"
+  },
+  {
+   "name": "Havannets Chocolate",
+   "brand": "Havanna",
+   "variant": null,
+   "quantity": "456",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7791875000471",
+   "identity_key": "[\"havannets chocolate\",\"havanna\",\"\",\"456\",\"g\"]",
+   "search_name": "havannets chocolate",
+   "search_brand": "havanna",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7791875000471"
+  },
+  {
+   "name": "Hemmer ketchup tradicional",
+   "brand": "Heinz",
+   "variant": null,
+   "quantity": "1000",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891031409091",
+   "identity_key": "[\"hemmer ketchup tradicional\",\"heinz\",\"\",\"1000\",\"g\"]",
+   "search_name": "hemmer ketchup tradicional",
+   "search_brand": "heinz",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891031409091"
   },
   {
    "name": "Maionese Tradicional",
@@ -3238,7 +3098,7 @@
    "source_url": "https://world.openfoodfacts.org/product/7896102501872"
   },
   {
-   "name": "hellmann's maionese",
+   "name": "Hellmann's maionese",
    "brand": "Hellmann's",
    "variant": null,
    "quantity": "500",
@@ -3336,15 +3196,15 @@
    "source_url": "https://world.openfoodfacts.org/product/7891150027794"
   },
   {
-   "name": "Herdade Do Esporão Extra Virgem",
+   "name": "Extra Virgem",
    "brand": "Herdade do Esporão",
    "variant": null,
    "quantity": "500",
    "unit": "ml",
    "category": "food",
    "barcode": "5601989003126",
-   "identity_key": "[\"herdade do esporao extra virgem\",\"herdade do esporao\",\"\",\"500\",\"ml\"]",
-   "search_name": "herdade do esporao extra virgem",
+   "identity_key": "[\"extra virgem\",\"herdade do esporao\",\"\",\"500\",\"ml\"]",
+   "search_name": "extra virgem",
    "search_brand": "herdade do esporao",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/5601989003126"
@@ -3532,6 +3392,20 @@
    "source_url": "https://world.openfoodfacts.org/product/7896051111764"
   },
   {
+   "name": "Manteiga Itambé",
+   "brand": "Itambé",
+   "variant": null,
+   "quantity": "500",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896051135425",
+   "identity_key": "[\"manteiga itambe\",\"itambe\",\"\",\"500\",\"g\"]",
+   "search_name": "manteiga itambe",
+   "search_brand": "itambe",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896051135425"
+  },
+  {
    "name": "Requeijão Light Itambé Copo",
    "brand": "Itambé",
    "variant": null,
@@ -3560,8 +3434,22 @@
    "source_url": "https://world.openfoodfacts.org/product/7896283000898"
   },
   {
-   "name": "granola tradicional com coco e uvas-passas",
-   "brand": "jasmine",
+   "name": "Granola Integral Cereais Maltados",
+   "brand": "Jasmine",
+   "variant": null,
+   "quantity": "850",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896283001093",
+   "identity_key": "[\"granola integral cereais maltados\",\"jasmine\",\"\",\"850\",\"g\"]",
+   "search_name": "granola integral cereais maltados",
+   "search_brand": "jasmine",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896283001093"
+  },
+  {
+   "name": "Granola tradicional com coco e uvas-passas",
+   "brand": "Jasmine",
    "variant": null,
    "quantity": "1000",
    "unit": "g",
@@ -3586,6 +3474,34 @@
    "search_brand": "karo",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7894000021249"
+  },
+  {
+   "name": "Corn Flakes",
+   "brand": "Kellogg's",
+   "variant": null,
+   "quantity": "200",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896004000534",
+   "identity_key": "[\"corn flakes\",\"kellogg's\",\"\",\"200\",\"g\"]",
+   "search_name": "corn flakes",
+   "search_brand": "kellogg's",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896004000534"
+  },
+  {
+   "name": "Feijão carioca kicaldo",
+   "brand": "Kicaldo",
+   "variant": null,
+   "quantity": "1000",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896116900029",
+   "identity_key": "[\"feijao carioca kicaldo\",\"kicaldo\",\"\",\"1000\",\"g\"]",
+   "search_name": "feijao carioca kicaldo",
+   "search_brand": "kicaldo",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896116900029"
   },
   {
    "name": "Chocolate kinder",
@@ -3728,32 +3644,32 @@
    "source_url": "https://world.openfoodfacts.org/product/7892840823405"
   },
   {
-   "name": "Leite UHT integral",
-   "brand": "Lider",
+   "name": "Matte Leão - Matte Original",
+   "brand": "Leão",
    "variant": null,
-   "quantity": "1000",
-   "unit": "ml",
-   "category": "food",
-   "barcode": "7896569405003",
-   "identity_key": "[\"leite uht integral\",\"lider\",\"\",\"1000\",\"ml\"]",
-   "search_name": "leite uht integral",
-   "search_brand": "lider",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896569405003"
-  },
-  {
-   "name": "predilecta",
-   "brand": "Lightsweet",
-   "variant": null,
-   "quantity": "340",
+   "quantity": "40",
    "unit": "g",
    "category": "food",
-   "barcode": "7896292333000",
-   "identity_key": "[\"predilecta\",\"lightsweet\",\"\",\"340\",\"g\"]",
-   "search_name": "predilecta",
-   "search_brand": "lightsweet",
+   "barcode": "7891098000040",
+   "identity_key": "[\"matte leao - matte original\",\"leao\",\"\",\"40\",\"g\"]",
+   "search_name": "matte leao - matte original",
+   "search_brand": "leao",
    "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896292333000"
+   "source_url": "https://world.openfoodfacts.org/product/7891098000040"
+  },
+  {
+   "name": "Leão Fuze Hortelã",
+   "brand": "Leão Fuze",
+   "variant": null,
+   "quantity": "10",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891098000170",
+   "identity_key": "[\"leao fuze hortela\",\"leao fuze\",\"\",\"10\",\"g\"]",
+   "search_name": "leao fuze hortela",
+   "search_brand": "leao fuze",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891098000170"
   },
   {
    "name": "Óleo de girassol Liza",
@@ -3826,18 +3742,18 @@
    "source_url": "https://world.openfoodfacts.org/product/7898636660018"
   },
   {
-   "name": "Doriana Cremosa com sal",
-   "brand": "margarina",
+   "name": "Flocão",
+   "brand": "Maratá",
    "variant": null,
    "quantity": "500",
    "unit": "g",
    "category": "food",
-   "barcode": "7894904571956",
-   "identity_key": "[\"doriana cremosa com sal\",\"margarina\",\"\",\"500\",\"g\"]",
-   "search_name": "doriana cremosa com sal",
-   "search_brand": "margarina",
+   "barcode": "7898932426042",
+   "identity_key": "[\"flocao\",\"marata\",\"\",\"500\",\"g\"]",
+   "search_name": "flocao",
+   "search_brand": "marata",
    "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7894904571956"
+   "source_url": "https://world.openfoodfacts.org/product/7898932426042"
   },
   {
    "name": "Lev Magic Toast Integral",
@@ -3854,6 +3770,20 @@
    "source_url": "https://world.openfoodfacts.org/product/7896003739343"
   },
   {
+   "name": "Café Torrado E Moído Tradicional Melitta Caixa",
+   "brand": "Melitta",
+   "variant": null,
+   "quantity": "500",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891021006125",
+   "identity_key": "[\"cafe torrado e moido tradicional melitta caixa\",\"melitta\",\"\",\"500\",\"g\"]",
+   "search_name": "cafe torrado e moido tradicional melitta caixa",
+   "search_brand": "melitta",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891021006125"
+  },
+  {
    "name": "Tradicional",
    "brand": "Melitta",
    "variant": null,
@@ -3868,15 +3798,15 @@
    "source_url": "https://world.openfoodfacts.org/product/7891021006071"
   },
   {
-   "name": "MILKA Chocolate Milka Branco",
+   "name": "Chocolate Milka Branco",
    "brand": "Milka",
    "variant": null,
    "quantity": "100",
    "unit": "g",
    "category": "food",
    "barcode": "7622210999634",
-   "identity_key": "[\"milka chocolate milka branco\",\"milka\",\"\",\"100\",\"g\"]",
-   "search_name": "milka chocolate milka branco",
+   "identity_key": "[\"chocolate milka branco\",\"milka\",\"\",\"100\",\"g\"]",
+   "search_name": "chocolate milka branco",
    "search_brand": "milka",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7622210999634"
@@ -3896,43 +3826,43 @@
    "source_url": "https://world.openfoodfacts.org/product/7897047000031"
   },
   {
-   "name": "Açúcar Demerara Native Orgânico (1 kg)",
+   "name": "Açúcar Demerara Native Orgânico",
    "brand": "Native",
    "variant": null,
    "quantity": "1000",
    "unit": "g",
    "category": "food",
    "barcode": "7898206500027",
-   "identity_key": "[\"acucar demerara native organico (1 kg)\",\"native\",\"\",\"1000\",\"g\"]",
-   "search_name": "acucar demerara native organico (1 kg)",
+   "identity_key": "[\"acucar demerara native organico\",\"native\",\"\",\"1000\",\"g\"]",
+   "search_name": "acucar demerara native organico",
    "search_brand": "native",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7898206500027"
   },
   {
-   "name": "Nescafé Café Soluvel Matinal",
+   "name": "Café Soluvel Matinal",
    "brand": "Nescafé",
    "variant": null,
    "quantity": "100",
    "unit": "g",
    "category": "food",
    "barcode": "7891000315507",
-   "identity_key": "[\"nescafe cafe soluvel matinal\",\"nescafe\",\"\",\"100\",\"g\"]",
-   "search_name": "nescafe cafe soluvel matinal",
+   "identity_key": "[\"cafe soluvel matinal\",\"nescafe\",\"\",\"100\",\"g\"]",
+   "search_name": "cafe soluvel matinal",
    "search_brand": "nescafe",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7891000315507"
   },
   {
-   "name": "Nescafe Classic Coffee",
+   "name": "Classic Coffee",
    "brand": "Nescafé",
    "variant": null,
    "quantity": "30",
    "unit": "g",
    "category": "food",
    "barcode": "7891000071823",
-   "identity_key": "[\"nescafe classic coffee\",\"nescafe\",\"\",\"30\",\"g\"]",
-   "search_name": "nescafe classic coffee",
+   "identity_key": "[\"classic coffee\",\"nescafe\",\"\",\"30\",\"g\"]",
+   "search_name": "classic coffee",
    "search_brand": "nescafe",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7891000071823"
@@ -3952,7 +3882,21 @@
    "source_url": "https://world.openfoodfacts.org/product/7891000258613"
   },
   {
-   "name": "achocolatado em pó, NESCAU",
+   "name": "Achocolatado Em Po Nesquik Lata 380G Morango",
+   "brand": "Nesquik",
+   "variant": null,
+   "quantity": "380",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891000104101",
+   "identity_key": "[\"achocolatado em po nesquik lata 380g morango\",\"nesquik\",\"\",\"380\",\"g\"]",
+   "search_name": "achocolatado em po nesquik lata 380g morango",
+   "search_brand": "nesquik",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891000104101"
+  },
+  {
+   "name": "Achocolatado em pó, Nescau",
    "brand": "Nestlé",
    "variant": null,
    "quantity": "350",
@@ -4120,6 +4064,20 @@
    "source_url": "https://world.openfoodfacts.org/product/7891000008119"
   },
   {
+   "name": "Chocolate Ao Leite Aerado Suflair Pacote",
+   "brand": "Nestlé",
+   "variant": null,
+   "quantity": "50",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891000107836",
+   "identity_key": "[\"chocolate ao leite aerado suflair pacote\",\"nestle\",\"\",\"50\",\"g\"]",
+   "search_name": "chocolate ao leite aerado suflair pacote",
+   "search_brand": "nestle",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891000107836"
+  },
+  {
    "name": "Chocolate ao leite Alpino",
    "brand": "Nestlé",
    "variant": null,
@@ -4132,6 +4090,20 @@
    "search_brand": "nestle",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7891000336373"
+  },
+  {
+   "name": "Chocolate em Pó Solúvel",
+   "brand": "Nestlé",
+   "variant": null,
+   "quantity": "200",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891000451304",
+   "identity_key": "[\"chocolate em po soluvel\",\"nestle\",\"\",\"200\",\"g\"]",
+   "search_name": "chocolate em po soluvel",
+   "search_brand": "nestle",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891000451304"
   },
   {
    "name": "Chocolate KitKat Dark",
@@ -4274,6 +4246,20 @@
    "source_url": "https://world.openfoodfacts.org/product/7891000340981"
   },
   {
+   "name": "Leite em Pó Sem Lactose",
+   "brand": "Nestlé",
+   "variant": null,
+   "quantity": "380",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891000109908",
+   "identity_key": "[\"leite em po sem lactose\",\"nestle\",\"\",\"380\",\"g\"]",
+   "search_name": "leite em po sem lactose",
+   "search_brand": "nestle",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891000109908"
+  },
+  {
    "name": "Leite Ninho Integral",
    "brand": "Nestlé",
    "variant": null,
@@ -4300,6 +4286,20 @@
    "search_brand": "nestle",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7898215157427"
+  },
+  {
+   "name": "Nescafé Original Extraforte",
+   "brand": "Nestlé",
+   "variant": null,
+   "quantity": "100",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891000300503",
+   "identity_key": "[\"nescafe original extraforte\",\"nestle\",\"\",\"100\",\"g\"]",
+   "search_name": "nescafe original extraforte",
+   "search_brand": "nestle",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891000300503"
   },
   {
    "name": "Nescafé Tradição Forte",
@@ -4400,18 +4400,46 @@
    "source_url": "https://world.openfoodfacts.org/product/7891000073018"
   },
   {
-   "name": "Aveia Em Flocos Nestlé Caixa",
-   "brand": "Nestlé Aveia",
+   "name": "Molicoleite Pó Desnatado Molico Lata",
+   "brand": "Nestlé Molico",
    "variant": null,
-   "quantity": "170",
+   "quantity": "280",
    "unit": "g",
    "category": "food",
-   "barcode": "7891000102640",
-   "identity_key": "[\"aveia em flocos nestle caixa\",\"nestle aveia\",\"\",\"170\",\"g\"]",
-   "search_name": "aveia em flocos nestle caixa",
-   "search_brand": "nestle aveia",
+   "barcode": "7891000101506",
+   "identity_key": "[\"molicoleite po desnatado molico lata\",\"nestle molico\",\"\",\"280\",\"g\"]",
+   "search_name": "molicoleite po desnatado molico lata",
+   "search_brand": "nestle molico",
    "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891000102640"
+   "source_url": "https://world.openfoodfacts.org/product/7891000101506"
+  },
+  {
+   "name": "Leite em pó integral instantâneo Ninho",
+   "brand": "Nestlé Ninho",
+   "variant": null,
+   "quantity": "380",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891000393284",
+   "identity_key": "[\"leite em po integral instantaneo ninho\",\"nestle ninho\",\"\",\"380\",\"g\"]",
+   "search_name": "leite em po integral instantaneo ninho",
+   "search_brand": "nestle ninho",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891000393284"
+  },
+  {
+   "name": "Leite Po Ninho Integral",
+   "brand": "Nestlé Ninho",
+   "variant": null,
+   "quantity": "380",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891000325858",
+   "identity_key": "[\"leite po ninho integral\",\"nestle ninho\",\"\",\"380\",\"g\"]",
+   "search_name": "leite po ninho integral",
+   "search_brand": "nestle ninho",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891000325858"
   },
   {
    "name": "Flocos De Cereais Neston 3 Cereais Lata",
@@ -4456,6 +4484,20 @@
    "source_url": "https://world.openfoodfacts.org/product/78907188"
   },
   {
+   "name": "Lámen Galinha Caipira",
+   "brand": "Nissin",
+   "variant": null,
+   "quantity": "85",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891079000229",
+   "identity_key": "[\"lamen galinha caipira\",\"nissin\",\"\",\"85\",\"g\"]",
+   "search_name": "lamen galinha caipira",
+   "search_brand": "nissin",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891079000229"
+  },
+  {
    "name": "Macarrão Instantâneo Lámen Tomate Suave Turma Da Mônica Nissin Miojo Pacote",
    "brand": "Nissin",
    "variant": null,
@@ -4468,20 +4510,6 @@
    "search_brand": "nissin",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7891079001028"
-  },
-  {
-   "name": "Nissin Lámen Galinha Caipira",
-   "brand": "Nissin",
-   "variant": null,
-   "quantity": "85",
-   "unit": "g",
-   "category": "food",
-   "barcode": "7891079000229",
-   "identity_key": "[\"nissin lamen galinha caipira\",\"nissin\",\"\",\"85\",\"g\"]",
-   "search_name": "nissin lamen galinha caipira",
-   "search_brand": "nissin",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891079000229"
   },
   {
    "name": "Nutella B-ready",
@@ -4499,7 +4527,7 @@
   },
   {
    "name": "Pão de frutas, grãos e castanhas",
-   "brand": "nutrella",
+   "brand": "Nutrella",
    "variant": null,
    "quantity": "550",
    "unit": "g",
@@ -4524,6 +4552,20 @@
    "search_brand": "nutrella",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7896002300360"
+  },
+  {
+   "name": "Barra de cereal sabor aveia, banana e mel",
+   "brand": "Nutry",
+   "variant": null,
+   "quantity": "22",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891331010508",
+   "identity_key": "[\"barra de cereal sabor aveia, banana e mel\",\"nutry\",\"\",\"22\",\"g\"]",
+   "search_name": "barra de cereal sabor aveia, banana e mel",
+   "search_brand": "nutry",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891331010508"
   },
   {
    "name": "Azeite It Ev Verd500",
@@ -4552,6 +4594,20 @@
    "search_brand": "oreo",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7622300830151"
+  },
+  {
+   "name": "Doce de amendoim",
+   "brand": "Paçoquita",
+   "variant": null,
+   "quantity": "1170",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896336001971",
+   "identity_key": "[\"doce de amendoim\",\"pacoquita\",\"\",\"1170\",\"g\"]",
+   "search_name": "doce de amendoim",
+   "search_brand": "pacoquita",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896336001971"
   },
   {
    "name": "Bisnaguinhas Originais",
@@ -4596,6 +4652,20 @@
    "source_url": "https://world.openfoodfacts.org/product/7891203010056"
   },
   {
+   "name": "Pão de Mel",
+   "brand": "Panco",
+   "variant": null,
+   "quantity": "200",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891203020260",
+   "identity_key": "[\"pao de mel\",\"panco\",\"\",\"200\",\"g\"]",
+   "search_name": "pao de mel",
+   "search_brand": "panco",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891203020260"
+  },
+  {
    "name": "Pão de forma tradicional",
    "brand": "Pandurata",
    "variant": null,
@@ -4608,6 +4678,20 @@
    "search_brand": "pandurata",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7891962051338"
+  },
+  {
+   "name": "Mantega de primeira qualidade",
+   "brand": "Paracatu",
+   "variant": null,
+   "quantity": "500",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896583400060",
+   "identity_key": "[\"mantega de primeira qualidade\",\"paracatu\",\"\",\"500\",\"g\"]",
+   "search_name": "mantega de primeira qualidade",
+   "search_brand": "paracatu",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896583400060"
   },
   {
    "name": "Leite Uht Paulista Int",
@@ -4638,6 +4722,20 @@
    "source_url": "https://world.openfoodfacts.org/product/7893333325109"
   },
   {
+   "name": "Traditional Coffee",
+   "brand": "Pilão",
+   "variant": null,
+   "quantity": "250",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896089012637",
+   "identity_key": "[\"traditional coffee\",\"pilao\",\"\",\"250\",\"g\"]",
+   "search_name": "traditional coffee",
+   "search_brand": "pilao",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896089012637"
+  },
+  {
    "name": "Creme de Leite Piracanjuba",
    "brand": "Piracanjuba",
    "variant": null,
@@ -4652,7 +4750,7 @@
    "source_url": "https://world.openfoodfacts.org/product/7898215151784"
   },
   {
-   "name": "leite condensado Piracanjuba",
+   "name": "Leite condensado Piracanjuba",
    "brand": "Piracanjuba",
    "variant": null,
    "quantity": "395",
@@ -4723,7 +4821,7 @@
   },
   {
    "name": "Biscoito doce maizena",
-   "brand": "piraquê",
+   "brand": "Piraquê",
    "variant": null,
    "quantity": "175",
    "unit": "g",
@@ -4776,20 +4874,6 @@
    "search_brand": "pomarola",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7896036099988"
-  },
-  {
-   "name": "maionese",
-   "brand": "Pramesa",
-   "variant": null,
-   "quantity": "500",
-   "unit": "g",
-   "category": "food",
-   "barcode": "7898556013406",
-   "identity_key": "[\"maionese\",\"pramesa\",\"\",\"500\",\"g\"]",
-   "search_name": "maionese",
-   "search_brand": "pramesa",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7898556013406"
   },
   {
    "name": "Goiabada Cascão",
@@ -4904,15 +4988,15 @@
    "source_url": "https://world.openfoodfacts.org/product/7896002304153"
   },
   {
-   "name": "pullman tradicional pão",
+   "name": "Tradicional pão",
    "brand": "Pullman",
    "variant": null,
    "quantity": "480",
    "unit": "g",
    "category": "food",
    "barcode": "7896002360326",
-   "identity_key": "[\"pullman tradicional pao\",\"pullman\",\"\",\"480\",\"g\"]",
-   "search_name": "pullman tradicional pao",
+   "identity_key": "[\"tradicional pao\",\"pullman\",\"\",\"480\",\"g\"]",
+   "search_name": "tradicional pao",
    "search_brand": "pullman",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7896002360326"
@@ -5017,7 +5101,7 @@
   },
   {
    "name": "Leite UHT Integral Quatá",
-   "brand": "quatá",
+   "brand": "Quatá",
    "variant": null,
    "quantity": "1000",
    "unit": "ml",
@@ -5028,6 +5112,20 @@
    "search_brand": "quata",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7898598750437"
+  },
+  {
+   "name": "Ketchup Tradicional",
+   "brand": "Quero",
+   "variant": null,
+   "quantity": "400",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896102502756",
+   "identity_key": "[\"ketchup tradicional\",\"quero\",\"\",\"400\",\"g\"]",
+   "search_name": "ketchup tradicional",
+   "search_brand": "quero",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896102502756"
   },
   {
    "name": "Molho de Tomate Tradicional",
@@ -5058,20 +5156,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7896102509144"
   },
   {
-   "name": "Tortilha Rap10 Fit - Bimbo",
-   "brand": "Rap 10",
-   "variant": null,
-   "quantity": "330",
-   "unit": "g",
-   "category": "food",
-   "barcode": "7896002364546",
-   "identity_key": "[\"tortilha rap10 fit - bimbo\",\"rap 10\",\"\",\"330\",\"g\"]",
-   "search_name": "tortilha rap10 fit - bimbo",
-   "search_brand": "rap 10",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896002364546"
-  },
-  {
    "name": "Tortilha Integral Rap10 - Bimbo",
    "brand": "Rap10",
    "variant": null,
@@ -5086,21 +5170,35 @@
    "source_url": "https://world.openfoodfacts.org/product/7896002365420"
   },
   {
-   "name": "RISO SCOTTI - Arroz Basmati Natural Scotti",
+   "name": "Nudeln Spaghetti",
+   "brand": "Riscossa",
+   "variant": null,
+   "quantity": "500",
+   "unit": "g",
+   "category": "food",
+   "barcode": "8011780000922",
+   "identity_key": "[\"nudeln spaghetti\",\"riscossa\",\"\",\"500\",\"g\"]",
+   "search_name": "nudeln spaghetti",
+   "search_brand": "riscossa",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/8011780000922"
+  },
+  {
+   "name": "Arroz Basmati Natural Scotti",
    "brand": "Riso Scotti",
    "variant": null,
    "quantity": "500",
    "unit": "g",
    "category": "food",
    "barcode": "8001860260315",
-   "identity_key": "[\"riso scotti - arroz basmati natural scotti\",\"riso scotti\",\"\",\"500\",\"g\"]",
-   "search_name": "riso scotti - arroz basmati natural scotti",
+   "identity_key": "[\"arroz basmati natural scotti\",\"riso scotti\",\"\",\"500\",\"g\"]",
+   "search_name": "arroz basmati natural scotti",
    "search_brand": "riso scotti",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/8001860260315"
   },
   {
-   "name": "fermento Royal",
+   "name": "Fermento Royal",
    "brand": "Royal",
    "variant": null,
    "quantity": "100",
@@ -5112,20 +5210,6 @@
    "search_brand": "royal",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7622300119621"
-  },
-  {
-   "name": "deline",
-   "brand": "Sadia",
-   "variant": null,
-   "quantity": "250",
-   "unit": "g",
-   "category": "food",
-   "barcode": "7893000979932",
-   "identity_key": "[\"deline\",\"sadia\",\"\",\"250\",\"g\"]",
-   "search_name": "deline",
-   "search_brand": "sadia",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7893000979932"
   },
   {
    "name": "Salsa de Soja",
@@ -5142,20 +5226,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7896007811007"
   },
   {
-   "name": "Leite Integral",
-   "brand": "Santa Clara",
-   "variant": null,
-   "quantity": "1000",
-   "unit": "ml",
-   "category": "food",
-   "barcode": "7896504305078",
-   "identity_key": "[\"leite integral\",\"santa clara\",\"\",\"1000\",\"ml\"]",
-   "search_name": "leite integral",
-   "search_brand": "santa clara",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896504305078"
-  },
-  {
    "name": "Paçoquita",
    "brand": "Santa Helena",
    "variant": null,
@@ -5170,6 +5240,20 @@
    "source_url": "https://world.openfoodfacts.org/product/7896336005917"
   },
   {
+   "name": "Paçoquita",
+   "brand": "Santa Helena",
+   "variant": null,
+   "quantity": "1000",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896336006631",
+   "identity_key": "[\"pacoquita\",\"santa helena\",\"\",\"1000\",\"g\"]",
+   "search_name": "pacoquita",
+   "search_brand": "santa helena",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896336006631"
+  },
+  {
    "name": "Café Instantáneo",
    "brand": "Selección",
    "variant": null,
@@ -5182,6 +5266,20 @@
    "search_brand": "seleccion",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/0400050248214"
+  },
+  {
+   "name": "Benefice 7 grãos pão com 7 grãos",
+   "brand": "Seven Boys",
+   "variant": null,
+   "quantity": "400",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891193010180",
+   "identity_key": "[\"benefice 7 graos pao com 7 graos\",\"seven boys\",\"\",\"400\",\"g\"]",
+   "search_name": "benefice 7 graos pao com 7 graos",
+   "search_brand": "seven boys",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891193010180"
   },
   {
    "name": "Pão De Leite Seven Boys Pacote",
@@ -5254,15 +5352,15 @@
    "source_url": "https://world.openfoodfacts.org/product/7891000357460"
   },
   {
-   "name": "SOYA Óleo de Soja",
+   "name": "Óleo de Soja",
    "brand": "Soya",
    "variant": null,
    "quantity": "500",
    "unit": "ml",
    "category": "food",
    "barcode": "7891107101621",
-   "identity_key": "[\"soya oleo de soja\",\"soya\",\"\",\"500\",\"ml\"]",
-   "search_name": "soya oleo de soja",
+   "identity_key": "[\"oleo de soja\",\"soya\",\"\",\"500\",\"ml\"]",
+   "search_name": "oleo de soja",
    "search_brand": "soya",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7891107101621"
@@ -5282,32 +5380,32 @@
    "source_url": "https://world.openfoodfacts.org/product/7896004004679"
   },
   {
-   "name": "TABASCO Molho de Pimenta Jalapeño",
+   "name": "Molho de Pimenta Jalapeño",
    "brand": "Tabasco",
    "variant": null,
    "quantity": "60",
    "unit": "ml",
    "category": "food",
    "barcode": "0011210009530",
-   "identity_key": "[\"tabasco molho de pimenta jalapeno\",\"tabasco\",\"\",\"60\",\"ml\"]",
-   "search_name": "tabasco molho de pimenta jalapeno",
+   "identity_key": "[\"molho de pimenta jalapeno\",\"tabasco\",\"\",\"60\",\"ml\"]",
+   "search_name": "molho de pimenta jalapeno",
    "search_brand": "tabasco",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/0011210009530"
   },
   {
-   "name": "Refresco Em Pó Manga Tang Pacote",
-   "brand": "Tang",
+   "name": "Bananinha Sem Adição De Açúcares",
+   "brand": "Tachao de ubatuba",
    "variant": null,
-   "quantity": "18",
+   "quantity": "200",
    "unit": "g",
    "category": "food",
-   "barcode": "7622210571526",
-   "identity_key": "[\"refresco em po manga tang pacote\",\"tang\",\"\",\"18\",\"g\"]",
-   "search_name": "refresco em po manga tang pacote",
-   "search_brand": "tang",
+   "barcode": "7897594100086",
+   "identity_key": "[\"bananinha sem adicao de acucares\",\"tachao de ubatuba\",\"\",\"200\",\"g\"]",
+   "search_name": "bananinha sem adicao de acucares",
+   "search_brand": "tachao de ubatuba",
    "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7622210571526"
+   "source_url": "https://world.openfoodfacts.org/product/7897594100086"
   },
   {
    "name": "Azeite de Oliva Extra Virgem",
@@ -5324,32 +5422,18 @@
    "source_url": "https://world.openfoodfacts.org/product/5601855121008"
   },
   {
-   "name": "Terry's CHOCOLATE ORANGE",
+   "name": "Chocolate Orange",
    "brand": "Terry's",
    "variant": null,
    "quantity": "145",
    "unit": "g",
    "category": "food",
    "barcode": "3664346348997",
-   "identity_key": "[\"terry's chocolate orange\",\"terry's\",\"\",\"145\",\"g\"]",
-   "search_name": "terry's chocolate orange",
+   "identity_key": "[\"chocolate orange\",\"terry's\",\"\",\"145\",\"g\"]",
+   "search_name": "chocolate orange",
    "search_brand": "terry's",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/3664346348997"
-  },
-  {
-   "name": "Suco de Laranja",
-   "brand": "The Natural One",
-   "variant": null,
-   "quantity": "1700",
-   "unit": "ml",
-   "category": "food",
-   "barcode": "7899916918829",
-   "identity_key": "[\"suco de laranja\",\"the natural one\",\"\",\"1700\",\"ml\"]",
-   "search_name": "suco de laranja",
-   "search_brand": "the natural one",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7899916918829"
   },
   {
    "name": "União Refinado",
@@ -5392,6 +5476,34 @@
    "search_brand": "tirol",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7896256601848"
+  },
+  {
+   "name": "Leite UHT Semidesnatado",
+   "brand": "Tirol",
+   "variant": null,
+   "quantity": "1000",
+   "unit": "ml",
+   "category": "food",
+   "barcode": "7896256603446",
+   "identity_key": "[\"leite uht semidesnatado\",\"tirol\",\"\",\"1000\",\"ml\"]",
+   "search_name": "leite uht semidesnatado",
+   "search_brand": "tirol",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896256603446"
+  },
+  {
+   "name": "Manteiga com sal",
+   "brand": "Tirol",
+   "variant": null,
+   "quantity": "200",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896256601275",
+   "identity_key": "[\"manteiga com sal\",\"tirol\",\"\",\"200\",\"g\"]",
+   "search_name": "manteiga com sal",
+   "search_brand": "tirol",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896256601275"
   },
   {
    "name": "Creme de ricota light",
@@ -5464,15 +5576,15 @@
    "source_url": "https://world.openfoodfacts.org/product/7894321711171"
   },
   {
-   "name": "Bacon - Torcida - Torcida",
-   "brand": "torcida",
+   "name": "Bacon",
+   "brand": "Torcida",
    "variant": null,
    "quantity": "60",
    "unit": "g",
    "category": "food",
    "barcode": "7892840822552",
-   "identity_key": "[\"bacon - torcida - torcida\",\"torcida\",\"\",\"60\",\"g\"]",
-   "search_name": "bacon - torcida - torcida",
+   "identity_key": "[\"bacon\",\"torcida\",\"\",\"60\",\"g\"]",
+   "search_name": "bacon",
    "search_brand": "torcida",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7892840822552"
@@ -5492,20 +5604,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7622210592781"
   },
   {
-   "name": "Achoc Pó 3 Corações lata",
-   "brand": "Três corações",
-   "variant": null,
-   "quantity": "350",
-   "unit": "g",
-   "category": "food",
-   "barcode": "7896045115365",
-   "identity_key": "[\"achoc po 3 coracoes lata\",\"tres coracoes\",\"\",\"350\",\"g\"]",
-   "search_name": "achoc po 3 coracoes lata",
-   "search_brand": "tres coracoes",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896045115365"
-  },
-  {
    "name": "Goma De Mascar Melancia Zero Açúcar Trident Caixa 25,2g 14 Unidades Leve Mais Pague Menos",
    "brand": "Trident",
    "variant": null,
@@ -5520,18 +5618,32 @@
    "source_url": "https://world.openfoodfacts.org/product/7622300847753"
   },
   {
-   "name": "Trident X Senses Spearmint 54g Mdlz",
+   "name": "X Senses Spearmint 54g Mdlz",
    "brand": "Trident",
    "variant": null,
    "quantity": "54",
    "unit": "g",
    "category": "food",
    "barcode": "7622210573292",
-   "identity_key": "[\"trident x senses spearmint 54g mdlz\",\"trident\",\"\",\"54\",\"g\"]",
-   "search_name": "trident x senses spearmint 54g mdlz",
+   "identity_key": "[\"x senses spearmint 54g mdlz\",\"trident\",\"\",\"54\",\"g\"]",
+   "search_name": "x senses spearmint 54g mdlz",
    "search_brand": "trident",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7622210573292"
+  },
+  {
+   "name": "Light Banana com Aveia e Mel",
+   "brand": "Trio",
+   "variant": null,
+   "quantity": "22",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7897900310604",
+   "identity_key": "[\"light banana com aveia e mel\",\"trio\",\"\",\"22\",\"g\"]",
+   "search_name": "light banana com aveia e mel",
+   "search_brand": "trio",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7897900310604"
   },
   {
    "name": "Grão de bico cozido no vapor",
@@ -5548,18 +5660,18 @@
    "source_url": "https://world.openfoodfacts.org/product/7897122600286"
   },
   {
-   "name": "grego",
-   "brand": "vigor",
+   "name": "Doce De Leite Em Pasta 400g",
+   "brand": "Viçosa",
    "variant": null,
-   "quantity": "90",
+   "quantity": "400",
    "unit": "g",
    "category": "food",
-   "barcode": "7896625211104",
-   "identity_key": "[\"grego\",\"vigor\",\"\",\"90\",\"g\"]",
-   "search_name": "grego",
-   "search_brand": "vigor",
+   "barcode": "7896706900422",
+   "identity_key": "[\"doce de leite em pasta 400g\",\"vicosa\",\"\",\"400\",\"g\"]",
+   "search_name": "doce de leite em pasta 400g",
+   "search_brand": "vicosa",
    "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7896625211104"
+   "source_url": "https://world.openfoodfacts.org/product/7896706900422"
   },
   {
    "name": "Iogurte Parcialmente Desnatado Natural Vigor Viv",
@@ -5574,6 +5686,20 @@
    "search_brand": "vigor",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7896625210763"
+  },
+  {
+   "name": "Queijo Parmesão Ralado",
+   "brand": "Vigor",
+   "variant": null,
+   "quantity": "100",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891999970107",
+   "identity_key": "[\"queijo parmesao ralado\",\"vigor\",\"\",\"100\",\"g\"]",
+   "search_name": "queijo parmesao ralado",
+   "search_brand": "vigor",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891999970107"
   },
   {
    "name": "Requeijão Cremoso Gordura Reduzida",
@@ -5604,20 +5730,6 @@
    "source_url": "https://world.openfoodfacts.org/product/7891999144485"
   },
   {
-   "name": "Pão de forma integral (36% Cereais integrais)",
-   "brand": "Visconti",
-   "variant": null,
-   "quantity": "400",
-   "unit": "g",
-   "category": "food",
-   "barcode": "7891962051345",
-   "identity_key": "[\"pao de forma integral (36% cereais integrais)\",\"visconti\",\"\",\"400\",\"g\"]",
-   "search_name": "pao de forma integral (36% cereais integrais)",
-   "search_brand": "visconti",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891962051345"
-  },
-  {
    "name": "Do Forno, Pão Na Chapa",
    "brand": "Wickbold",
    "variant": null,
@@ -5632,8 +5744,22 @@
    "source_url": "https://world.openfoodfacts.org/product/7896066301747"
   },
   {
-   "name": "Grão Sabor QUINOA",
-   "brand": "wickbold",
+   "name": "Grão Sabor Castanha-do-Pará & Quinoa Wickbold",
+   "brand": "Wickbold",
+   "variant": null,
+   "quantity": "400",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7896066301297",
+   "identity_key": "[\"grao sabor castanha-do-para & quinoa wickbold\",\"wickbold\",\"\",\"400\",\"g\"]",
+   "search_name": "grao sabor castanha-do-para & quinoa wickbold",
+   "search_brand": "wickbold",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896066301297"
+  },
+  {
+   "name": "Grão Sabor Quinoa",
+   "brand": "Wickbold",
    "variant": null,
    "quantity": "500",
    "unit": "g",
@@ -5646,15 +5772,15 @@
    "source_url": "https://world.openfoodfacts.org/product/7896066343242"
   },
   {
-   "name": "Pão de Fôrma Integral - Wickbold",
+   "name": "Pão de Fôrma Integral",
    "brand": "Wickbold",
    "variant": null,
    "quantity": "550",
    "unit": "g",
    "category": "food",
    "barcode": "7896066301778",
-   "identity_key": "[\"pao de forma integral - wickbold\",\"wickbold\",\"\",\"550\",\"g\"]",
-   "search_name": "pao de forma integral - wickbold",
+   "identity_key": "[\"pao de forma integral\",\"wickbold\",\"\",\"550\",\"g\"]",
+   "search_name": "pao de forma integral",
    "search_brand": "wickbold",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7896066301778"
@@ -5730,18 +5856,32 @@
    "source_url": "https://world.openfoodfacts.org/product/7896066301235"
   },
   {
-   "name": "Yakult Leite Fermentado Desnatado Adoçado L. casei Shirota",
+   "name": "Leite Fermentado Desnatado Adoçado L. casei Shirota",
    "brand": "Yakult",
    "variant": null,
    "quantity": "80",
    "unit": "g",
    "category": "food",
    "barcode": "78911000",
-   "identity_key": "[\"yakult leite fermentado desnatado adocado l. casei shirota\",\"yakult\",\"\",\"80\",\"g\"]",
-   "search_name": "yakult leite fermentado desnatado adocado l. casei shirota",
+   "identity_key": "[\"leite fermentado desnatado adocado l. casei shirota\",\"yakult\",\"\",\"80\",\"g\"]",
+   "search_name": "leite fermentado desnatado adocado l. casei shirota",
    "search_brand": "yakult",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/78911000"
+  },
+  {
+   "name": "Batata Palha Tradicional",
+   "brand": "Yoki",
+   "variant": null,
+   "quantity": "105",
+   "unit": "g",
+   "category": "food",
+   "barcode": "7891095031115",
+   "identity_key": "[\"batata palha tradicional\",\"yoki\",\"\",\"105\",\"g\"]",
+   "search_name": "batata palha tradicional",
+   "search_brand": "yoki",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891095031115"
   },
   {
    "name": "Farofa De Mandioca Tradicional",
@@ -5758,7 +5898,7 @@
    "source_url": "https://world.openfoodfacts.org/product/7891095911486"
   },
   {
-   "name": "Milho para pipoca TIPO 1",
+   "name": "Milho para pipoca Tipo 1",
    "brand": "Yoki",
    "variant": null,
    "quantity": "400",
@@ -5784,20 +5924,6 @@
    "search_brand": "yoki",
    "source": "Open Food Facts",
    "source_url": "https://world.openfoodfacts.org/product/7891095100125"
-  },
-  {
-   "name": "YOKI Batata Palha Tradicional",
-   "brand": "Yoki",
-   "variant": null,
-   "quantity": "105",
-   "unit": "g",
-   "category": "food",
-   "barcode": "7891095031115",
-   "identity_key": "[\"yoki batata palha tradicional\",\"yoki\",\"\",\"105\",\"g\"]",
-   "search_name": "yoki batata palha tradicional",
-   "search_brand": "yoki",
-   "source": "Open Food Facts",
-   "source_url": "https://world.openfoodfacts.org/product/7891095031115"
   },
   {
    "name": "Adoçante dietético líquido",
@@ -5828,20 +5954,6 @@
    "source_url": "https://world.openproductsfacts.org/product/7896005803714"
   },
   {
-   "name": "Amaciante de roupas",
-   "brand": "Alpes",
-   "variant": null,
-   "quantity": "5000",
-   "unit": "ml",
-   "category": "household_utilities",
-   "barcode": "0554910805267",
-   "identity_key": "[\"amaciante de roupas\",\"alpes\",\"\",\"5000\",\"ml\"]",
-   "search_name": "amaciante de roupas",
-   "search_brand": "alpes",
-   "source": "Open Products Facts",
-   "source_url": "https://world.openproductsfacts.org/product/0554910805267"
-  },
-  {
    "name": "Saco de lixo",
    "brand": "Alvorada",
    "variant": null,
@@ -5856,18 +5968,32 @@
    "source_url": "https://world.openproductsfacts.org/product/7898947355238"
   },
   {
-   "name": "Livro de história Jovens Sapiens 7 ano",
-   "brand": "Editora scipione",
+   "name": "Wafer Choc C/avela",
+   "brand": "Bauducco",
+   "variant": null,
+   "quantity": "140",
+   "unit": "g",
+   "category": "household_utilities",
+   "barcode": "7891962036991",
+   "identity_key": "[\"wafer choc c/avela\",\"bauducco\",\"\",\"140\",\"g\"]",
+   "search_name": "wafer choc c/avela",
+   "search_brand": "bauducco",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7891962036991"
+  },
+  {
+   "name": "Açúcar Refinado Caravelas Pacote",
+   "brand": "Caravelas",
    "variant": null,
    "quantity": "1000",
    "unit": "g",
    "category": "household_utilities",
-   "barcode": "9786557632437",
-   "identity_key": "[\"livro de historia jovens sapiens 7 ano\",\"editora scipione\",\"\",\"1000\",\"g\"]",
-   "search_name": "livro de historia jovens sapiens 7 ano",
-   "search_brand": "editora scipione",
-   "source": "Open Products Facts",
-   "source_url": "https://world.openproductsfacts.org/product/9786557632437"
+   "barcode": "7896894900013",
+   "identity_key": "[\"acucar refinado caravelas pacote\",\"caravelas\",\"\",\"1000\",\"g\"]",
+   "search_name": "acucar refinado caravelas pacote",
+   "search_brand": "caravelas",
+   "source": "Open Food Facts",
+   "source_url": "https://world.openfoodfacts.org/product/7896894900013"
   },
   {
    "name": "Palitos de Bambu",
@@ -5884,62 +6010,6 @@
    "source_url": "https://world.openproductsfacts.org/product/7896007972142"
   },
   {
-   "name": "Amaciante de roupas",
-   "brand": "Girando Sol",
-   "variant": null,
-   "quantity": "5000",
-   "unit": "ml",
-   "category": "household_utilities",
-   "barcode": "7896404601027",
-   "identity_key": "[\"amaciante de roupas\",\"girando sol\",\"\",\"5000\",\"ml\"]",
-   "search_name": "amaciante de roupas",
-   "search_brand": "girando sol",
-   "source": "Open Products Facts",
-   "source_url": "https://world.openproductsfacts.org/product/7896404601027"
-  },
-  {
-   "name": "Protein Extra Proteína",
-   "brand": "Lonco Leche",
-   "variant": null,
-   "quantity": "140",
-   "unit": "g",
-   "category": "household_utilities",
-   "barcode": "9763252997979",
-   "identity_key": "[\"protein extra proteina\",\"lonco leche\",\"\",\"140\",\"g\"]",
-   "search_name": "protein extra proteina",
-   "search_brand": "lonco leche",
-   "source": "Open Products Facts",
-   "source_url": "https://world.openproductsfacts.org/product/9763252997979"
-  },
-  {
-   "name": "OMO Lavagem Perfeita",
-   "brand": "Omo",
-   "variant": null,
-   "quantity": "400",
-   "unit": "g",
-   "category": "household_utilities",
-   "barcode": "7891150065284",
-   "identity_key": "[\"omo lavagem perfeita\",\"omo\",\"\",\"400\",\"g\"]",
-   "search_name": "omo lavagem perfeita",
-   "search_brand": "omo",
-   "source": "Open Products Facts",
-   "source_url": "https://world.openproductsfacts.org/product/7891150065284"
-  },
-  {
-   "name": "Refrigerante de Limão Pepita",
-   "brand": "Pepita",
-   "variant": null,
-   "quantity": "2000",
-   "unit": "ml",
-   "category": "household_utilities",
-   "barcode": "7898373243178",
-   "identity_key": "[\"refrigerante de limao pepita\",\"pepita\",\"\",\"2000\",\"ml\"]",
-   "search_name": "refrigerante de limao pepita",
-   "search_brand": "pepita",
-   "source": "Open Products Facts",
-   "source_url": "https://world.openproductsfacts.org/product/7898373243178"
-  },
-  {
    "name": "Coador de Papel Médio 102 Qualitá",
    "brand": "Qualitá",
    "variant": null,
@@ -5954,85 +6024,15 @@
    "source_url": "https://world.openproductsfacts.org/product/7895000334148"
   },
   {
-   "name": "Lava Roupas em Pó Surf Rosas e Flor de Lis",
-   "brand": "Surf",
-   "variant": null,
-   "quantity": "1600",
-   "unit": "g",
-   "category": "household_utilities",
-   "barcode": "7891150086821",
-   "identity_key": "[\"lava roupas em po surf rosas e flor de lis\",\"surf\",\"\",\"1600\",\"g\"]",
-   "search_name": "lava roupas em po surf rosas e flor de lis",
-   "search_brand": "surf",
-   "source": "Open Products Facts",
-   "source_url": "https://world.openproductsfacts.org/product/7891150086821"
-  },
-  {
-   "name": "Sabão em pó",
-   "brand": "Tixan",
-   "variant": null,
-   "quantity": "1600",
-   "unit": "g",
-   "category": "household_utilities",
-   "barcode": "7896098909768",
-   "identity_key": "[\"sabao em po\",\"tixan\",\"\",\"1600\",\"g\"]",
-   "search_name": "sabao em po",
-   "search_brand": "tixan",
-   "source": "Open Products Facts",
-   "source_url": "https://world.openproductsfacts.org/product/7896098909768"
-  },
-  {
-   "name": "Lava louças (coco)",
-   "brand": "Ypê",
-   "variant": null,
-   "quantity": "500",
-   "unit": "ml",
-   "category": "household_utilities",
-   "barcode": "7896098900239",
-   "identity_key": "[\"lava loucas (coco)\",\"ype\",\"\",\"500\",\"ml\"]",
-   "search_name": "lava loucas (coco)",
-   "search_brand": "ype",
-   "source": "Open Products Facts",
-   "source_url": "https://world.openproductsfacts.org/product/7896098900239"
-  },
-  {
-   "name": "Lava louças (maçã)",
-   "brand": "Ypê",
-   "variant": null,
-   "quantity": "500",
-   "unit": "ml",
-   "category": "household_utilities",
-   "barcode": "7896098900215",
-   "identity_key": "[\"lava loucas (maca)\",\"ype\",\"\",\"500\",\"ml\"]",
-   "search_name": "lava loucas (maca)",
-   "search_brand": "ype",
-   "source": "Open Products Facts",
-   "source_url": "https://world.openproductsfacts.org/product/7896098900215"
-  },
-  {
-   "name": "Álcool Gel Bactericida Zeppelin 70°",
-   "brand": "Zeppelin",
-   "variant": null,
-   "quantity": "500",
-   "unit": "g",
-   "category": "household_utilities",
-   "barcode": "7896474600555",
-   "identity_key": "[\"alcool gel bactericida zeppelin 70°\",\"zeppelin\",\"\",\"500\",\"g\"]",
-   "search_name": "alcool gel bactericida zeppelin 70°",
-   "search_brand": "zeppelin",
-   "source": "Open Products Facts",
-   "source_url": "https://world.openproductsfacts.org/product/7896474600555"
-  },
-  {
-   "name": "ANAI RUI Caffeine Bakuchiol Firming Eye Cream",
+   "name": "Caffeine Bakuchiol Firming Eye Cream",
    "brand": "Anai Rui",
    "variant": null,
    "quantity": "15",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "0010879574052",
-   "identity_key": "[\"anai rui caffeine bakuchiol firming eye cream\",\"anai rui\",\"\",\"15\",\"ml\"]",
-   "search_name": "anai rui caffeine bakuchiol firming eye cream",
+   "identity_key": "[\"caffeine bakuchiol firming eye cream\",\"anai rui\",\"\",\"15\",\"ml\"]",
+   "search_name": "caffeine bakuchiol firming eye cream",
    "search_brand": "anai rui",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/0010879574052"
@@ -6066,8 +6066,8 @@
    "source_url": "https://world.openbeautyfacts.org/product/7896020160083"
   },
   {
-   "name": "esmaltes Bellia metálico branco",
-   "brand": "bellia",
+   "name": "Esmaltes Bellia metálico branco",
+   "brand": "Bellia",
    "variant": null,
    "quantity": "9",
    "unit": "ml",
@@ -6094,43 +6094,29 @@
    "source_url": "https://world.openbeautyfacts.org/product/4005808980239"
   },
   {
-   "name": "Sabonete Glicerina Tradicional Granado",
-   "brand": "Casa Granado Laboratórios Farmácias e Drogarias S.A",
-   "variant": null,
-   "quantity": "90",
-   "unit": "g",
-   "category": "personal_hygiene",
-   "barcode": "7896512905222",
-   "identity_key": "[\"sabonete glicerina tradicional granado\",\"casa granado laboratorios farmacias e drogarias s.a\",\"\",\"90\",\"g\"]",
-   "search_name": "sabonete glicerina tradicional granado",
-   "search_brand": "casa granado laboratorios farmacias e drogarias s.a",
-   "source": "Open Beauty Facts",
-   "source_url": "https://world.openbeautyfacts.org/product/7896512905222"
-  },
-  {
-   "name": "CeraVe Eye Repair Cream",
+   "name": "Eye Repair Cream",
    "brand": "CeraVe",
    "variant": null,
    "quantity": "14",
    "unit": "g",
    "category": "personal_hygiene",
    "barcode": "3606000537613",
-   "identity_key": "[\"cerave eye repair cream\",\"cerave\",\"\",\"14\",\"g\"]",
-   "search_name": "cerave eye repair cream",
+   "identity_key": "[\"eye repair cream\",\"cerave\",\"\",\"14\",\"g\"]",
+   "search_name": "eye repair cream",
    "search_brand": "cerave",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/3606000537613"
   },
   {
-   "name": "CeraVe Foaming Facial Cleanser",
+   "name": "Foaming Facial Cleanser",
    "brand": "CeraVe",
    "variant": null,
    "quantity": "180",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "0085275710434",
-   "identity_key": "[\"cerave foaming facial cleanser\",\"cerave\",\"\",\"180\",\"ml\"]",
-   "search_name": "cerave foaming facial cleanser",
+   "identity_key": "[\"foaming facial cleanser\",\"cerave\",\"\",\"180\",\"ml\"]",
+   "search_name": "foaming facial cleanser",
    "search_brand": "cerave",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/0085275710434"
@@ -6150,22 +6136,8 @@
    "source_url": "https://world.openbeautyfacts.org/product/3499320004473"
   },
   {
-   "name": "Enxaguante Bucal Colgate",
-   "brand": "Clean Mint",
-   "variant": null,
-   "quantity": "500",
-   "unit": "ml",
-   "category": "personal_hygiene",
-   "barcode": "7891024028018",
-   "identity_key": "[\"enxaguante bucal colgate\",\"clean mint\",\"\",\"500\",\"ml\"]",
-   "search_name": "enxaguante bucal colgate",
-   "search_brand": "clean mint",
-   "source": "Open Beauty Facts",
-   "source_url": "https://world.openbeautyfacts.org/product/7891024028018"
-  },
-  {
    "name": "Creme dental carvão e emnta closeup",
-   "brand": "closeup",
+   "brand": "Closeup",
    "variant": null,
    "quantity": "85",
    "unit": "g",
@@ -6248,15 +6220,15 @@
    "source_url": "https://world.openbeautyfacts.org/product/7908132258012"
   },
   {
-   "name": "Eucerin Daily Hydration Cream SPF 30",
+   "name": "Daily Hydration Cream SPF 30",
    "brand": "Eucerin",
    "variant": null,
    "quantity": "120",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "0072140020910",
-   "identity_key": "[\"eucerin daily hydration cream spf 30\",\"eucerin\",\"\",\"120\",\"ml\"]",
-   "search_name": "eucerin daily hydration cream spf 30",
+   "identity_key": "[\"daily hydration cream spf 30\",\"eucerin\",\"\",\"120\",\"ml\"]",
+   "search_name": "daily hydration cream spf 30",
    "search_brand": "eucerin",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/0072140020910"
@@ -6290,15 +6262,15 @@
    "source_url": "https://world.openbeautyfacts.org/product/0047400179240"
   },
   {
-   "name": "GIOVANNI 2chic Ultra-Sleek Blow Out Styling Mist",
+   "name": "2chic Ultra-Sleek Blow Out Styling Mist",
    "brand": "Giovanni",
    "variant": null,
    "quantity": "250",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "0716237183675",
-   "identity_key": "[\"giovanni 2chic ultra-sleek blow out styling mist\",\"giovanni\",\"\",\"250\",\"ml\"]",
-   "search_name": "giovanni 2chic ultra-sleek blow out styling mist",
+   "identity_key": "[\"2chic ultra-sleek blow out styling mist\",\"giovanni\",\"\",\"250\",\"ml\"]",
+   "search_name": "2chic ultra-sleek blow out styling mist",
    "search_brand": "giovanni",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/0716237183675"
@@ -6416,43 +6388,43 @@
    "source_url": "https://world.openbeautyfacts.org/product/0720212570626"
   },
   {
-   "name": "L'Occitane au Brésil Condicionador Cumaru Essência",
+   "name": "Condicionador Cumaru Essência",
    "brand": "L'Occitane au Brésil",
    "variant": null,
    "quantity": "180",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "3253581704158",
-   "identity_key": "[\"l'occitane au bresil condicionador cumaru essencia\",\"l'occitane au bresil\",\"\",\"180\",\"ml\"]",
-   "search_name": "l'occitane au bresil condicionador cumaru essencia",
+   "identity_key": "[\"condicionador cumaru essencia\",\"l'occitane au bresil\",\"\",\"180\",\"ml\"]",
+   "search_name": "condicionador cumaru essencia",
    "search_brand": "l'occitane au bresil",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/3253581704158"
   },
   {
-   "name": "La Roche-Posay Effaclar Duo+",
+   "name": "Effaclar Duo+",
    "brand": "La Roche-Posay",
    "variant": null,
    "quantity": "40",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "3337875598071",
-   "identity_key": "[\"la roche-posay effaclar duo+\",\"la roche-posay\",\"\",\"40\",\"ml\"]",
-   "search_name": "la roche-posay effaclar duo+",
+   "identity_key": "[\"effaclar duo+\",\"la roche-posay\",\"\",\"40\",\"ml\"]",
+   "search_name": "effaclar duo+",
    "search_brand": "la roche-posay",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/3337875598071"
   },
   {
-   "name": "La Roche-Posay Effaclar Medicated Gel Cleanser",
+   "name": "Effaclar Medicated Gel Cleanser",
    "brand": "La Roche-Posay",
    "variant": null,
    "quantity": "200",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "0883140040231",
-   "identity_key": "[\"la roche-posay effaclar medicated gel cleanser\",\"la roche-posay\",\"\",\"200\",\"ml\"]",
-   "search_name": "la roche-posay effaclar medicated gel cleanser",
+   "identity_key": "[\"effaclar medicated gel cleanser\",\"la roche-posay\",\"\",\"200\",\"ml\"]",
+   "search_name": "effaclar medicated gel cleanser",
    "search_brand": "la roche-posay",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/0883140040231"
@@ -6473,7 +6445,7 @@
   },
   {
    "name": "Puro Gel de Aloe",
-   "brand": "livealoe",
+   "brand": "Livealoe",
    "variant": null,
    "quantity": "210",
    "unit": "ml",
@@ -6484,20 +6456,6 @@
    "search_brand": "livealoe",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/7898516730589"
-  },
-  {
-   "name": "Nivea",
-   "brand": "loção hidratante",
-   "variant": null,
-   "quantity": "200",
-   "unit": "ml",
-   "category": "personal_hygiene",
-   "barcode": "4005808309436",
-   "identity_key": "[\"nivea\",\"locao hidratante\",\"\",\"200\",\"ml\"]",
-   "search_name": "nivea",
-   "search_brand": "locao hidratante",
-   "source": "Open Beauty Facts",
-   "source_url": "https://world.openbeautyfacts.org/product/4005808309436"
   },
   {
    "name": "Umidificador de cachos",
@@ -6528,32 +6486,74 @@
    "source_url": "https://world.openbeautyfacts.org/product/7891350034639"
   },
   {
-   "name": "Monange Creme Para Mãos Anti-Idade Q10 E Vitamina E Com Ação Desodorante",
+   "name": "Creme Para Mãos Anti-Idade Q10 E Vitamina E Com Ação Desodorante",
    "brand": "Monange",
    "variant": null,
    "quantity": "75",
    "unit": "g",
    "category": "personal_hygiene",
    "barcode": "7896235354185",
-   "identity_key": "[\"monange creme para maos anti-idade q10 e vitamina e com acao desodorante\",\"monange\",\"\",\"75\",\"g\"]",
-   "search_name": "monange creme para maos anti-idade q10 e vitamina e com acao desodorante",
+   "identity_key": "[\"creme para maos anti-idade q10 e vitamina e com acao desodorante\",\"monange\",\"\",\"75\",\"g\"]",
+   "search_name": "creme para maos anti-idade q10 e vitamina e com acao desodorante",
    "search_brand": "monange",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/7896235354185"
   },
   {
-   "name": "Moroccan Argan Oil Hair Serum",
+   "name": "Argan Oil Hair Serum",
    "brand": "Moroccan",
    "variant": null,
    "quantity": "100",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "8718375522622",
-   "identity_key": "[\"moroccan argan oil hair serum\",\"moroccan\",\"\",\"100\",\"ml\"]",
-   "search_name": "moroccan argan oil hair serum",
+   "identity_key": "[\"argan oil hair serum\",\"moroccan\",\"\",\"100\",\"ml\"]",
+   "search_name": "argan oil hair serum",
    "search_brand": "moroccan",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/8718375522622"
+  },
+  {
+   "name": "Andiroba Sabonete",
+   "brand": "Natura",
+   "variant": null,
+   "quantity": "100",
+   "unit": "g",
+   "category": "personal_hygiene",
+   "barcode": "7908371629192",
+   "identity_key": "[\"andiroba sabonete\",\"natura\",\"\",\"100\",\"g\"]",
+   "search_name": "andiroba sabonete",
+   "search_brand": "natura",
+   "source": "Open Beauty Facts",
+   "source_url": "https://world.openbeautyfacts.org/product/7908371629192"
+  },
+  {
+   "name": "Poland Para as Mãos Andiroba",
+   "brand": "Natura",
+   "variant": null,
+   "quantity": "75",
+   "unit": "g",
+   "category": "personal_hygiene",
+   "barcode": "7908371628713",
+   "identity_key": "[\"poland para as maos andiroba\",\"natura\",\"\",\"75\",\"g\"]",
+   "search_name": "poland para as maos andiroba",
+   "search_brand": "natura",
+   "source": "Open Beauty Facts",
+   "source_url": "https://world.openbeautyfacts.org/product/7908371628713"
+  },
+  {
+   "name": "Sabonetes Cremosos",
+   "brand": "Natura Ekos",
+   "variant": null,
+   "quantity": "100",
+   "unit": "g",
+   "category": "personal_hygiene",
+   "barcode": "7908132256544",
+   "identity_key": "[\"sabonetes cremosos\",\"natura ekos\",\"\",\"100\",\"g\"]",
+   "search_name": "sabonetes cremosos",
+   "search_brand": "natura ekos",
+   "source": "Open Beauty Facts",
+   "source_url": "https://world.openbeautyfacts.org/product/7908132256544"
   },
   {
    "name": "Gel de Limpeza Facial Neutrogena Hydro Boost",
@@ -6570,15 +6570,15 @@
    "source_url": "https://world.openbeautyfacts.org/product/7891010009250"
   },
   {
-   "name": "Neutrogena Hydro Boost Water Gel",
+   "name": "Hydro Boost Water Gel",
    "brand": "Neutrogena",
    "variant": null,
    "quantity": "50",
    "unit": "g",
    "category": "personal_hygiene",
    "barcode": "7891010882983",
-   "identity_key": "[\"neutrogena hydro boost water gel\",\"neutrogena\",\"\",\"50\",\"g\"]",
-   "search_name": "neutrogena hydro boost water gel",
+   "identity_key": "[\"hydro boost water gel\",\"neutrogena\",\"\",\"50\",\"g\"]",
+   "search_name": "hydro boost water gel",
    "search_brand": "neutrogena",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/7891010882983"
@@ -6612,15 +6612,15 @@
    "source_url": "https://world.openbeautyfacts.org/product/4005900004956"
   },
   {
-   "name": "Nivea pearl & beauty",
+   "name": "Pearl & beauty",
    "brand": "Nivea",
    "variant": null,
    "quantity": "50",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "4005808257669",
-   "identity_key": "[\"nivea pearl & beauty\",\"nivea\",\"\",\"50\",\"ml\"]",
-   "search_name": "nivea pearl & beauty",
+   "identity_key": "[\"pearl & beauty\",\"nivea\",\"\",\"50\",\"ml\"]",
+   "search_name": "pearl & beauty",
    "search_brand": "nivea",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/4005808257669"
@@ -6640,29 +6640,29 @@
    "source_url": "https://world.openbeautyfacts.org/product/7896013563594"
   },
   {
-   "name": "Olaplex No. 4 Bond Maintenance Shampoo",
+   "name": "No. 4 Bond Maintenance Shampoo",
    "brand": "Olaplex",
    "variant": null,
    "quantity": "250",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "0850018802444",
-   "identity_key": "[\"olaplex no. 4 bond maintenance shampoo\",\"olaplex\",\"\",\"250\",\"ml\"]",
-   "search_name": "olaplex no. 4 bond maintenance shampoo",
+   "identity_key": "[\"no. 4 bond maintenance shampoo\",\"olaplex\",\"\",\"250\",\"ml\"]",
+   "search_name": "no. 4 bond maintenance shampoo",
    "search_brand": "olaplex",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/0850018802444"
   },
   {
-   "name": "Olay Complete Daily Moisturizer with Sunscreen SPF 30",
+   "name": "Complete Daily Moisturizer with Sunscreen SPF 30",
    "brand": "Olay",
    "variant": null,
    "quantity": "74",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "0075609011016",
-   "identity_key": "[\"olay complete daily moisturizer with sunscreen spf 30\",\"olay\",\"\",\"74\",\"ml\"]",
-   "search_name": "olay complete daily moisturizer with sunscreen spf 30",
+   "identity_key": "[\"complete daily moisturizer with sunscreen spf 30\",\"olay\",\"\",\"74\",\"ml\"]",
+   "search_name": "complete daily moisturizer with sunscreen spf 30",
    "search_brand": "olay",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/0075609011016"
@@ -6696,8 +6696,8 @@
    "source_url": "https://world.openbeautyfacts.org/product/7500435260374"
   },
   {
-   "name": "creme de cabelo",
-   "brand": "pantene",
+   "name": "Creme de cabelo",
+   "brand": "Pantene",
    "variant": null,
    "quantity": "240",
    "unit": "g",
@@ -6766,15 +6766,15 @@
    "source_url": "https://world.openbeautyfacts.org/product/7896014090938"
   },
   {
-   "name": "Redken Brews Maneuver - Pasta Modeladora",
+   "name": "Brews Maneuver - Pasta Modeladora",
    "brand": "Redken",
    "variant": null,
    "quantity": "85",
    "unit": "g",
    "category": "personal_hygiene",
    "barcode": "0884486341518",
-   "identity_key": "[\"redken brews maneuver - pasta modeladora\",\"redken\",\"\",\"85\",\"g\"]",
-   "search_name": "redken brews maneuver - pasta modeladora",
+   "identity_key": "[\"brews maneuver - pasta modeladora\",\"redken\",\"\",\"85\",\"g\"]",
+   "search_name": "brews maneuver - pasta modeladora",
    "search_brand": "redken",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/0884486341518"
@@ -6822,15 +6822,15 @@
    "source_url": "https://world.openbeautyfacts.org/product/4045787726671"
   },
   {
-   "name": "Seda Cachos Definidos",
-   "brand": "seda",
+   "name": "Cachos Definidos",
+   "brand": "Seda",
    "variant": null,
    "quantity": "670",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "7891150078260",
-   "identity_key": "[\"seda cachos definidos\",\"seda\",\"\",\"670\",\"ml\"]",
-   "search_name": "seda cachos definidos",
+   "identity_key": "[\"cachos definidos\",\"seda\",\"\",\"670\",\"ml\"]",
+   "search_name": "cachos definidos",
    "search_brand": "seda",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/7891150078260"
@@ -6850,15 +6850,15 @@
    "source_url": "https://world.openbeautyfacts.org/product/7896013402534"
   },
   {
-   "name": "Tea Tree Special Conditioner",
+   "name": "Special Conditioner",
    "brand": "Tea Tree",
    "variant": null,
    "quantity": "250",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "0090174184309",
-   "identity_key": "[\"tea tree special conditioner\",\"tea tree\",\"\",\"250\",\"ml\"]",
-   "search_name": "tea tree special conditioner",
+   "identity_key": "[\"special conditioner\",\"tea tree\",\"\",\"250\",\"ml\"]",
+   "search_name": "special conditioner",
    "search_brand": "tea tree",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/0090174184309"
@@ -6878,15 +6878,15 @@
    "source_url": "https://world.openbeautyfacts.org/product/7898908026054"
   },
   {
-   "name": "The Ordinary Glycolic Acid 7% Toning Solution (Solução tonificante de ácido glicólico 7%)",
+   "name": "Glycolic Acid 7% Toning Solution (Solução tonificante de ácido glicólico 7%)",
    "brand": "The Ordinary",
    "variant": null,
    "quantity": "240",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "0769915190977",
-   "identity_key": "[\"the ordinary glycolic acid 7% toning solution (solucao tonificante de acido glicolico 7%)\",\"the ordinary\",\"\",\"240\",\"ml\"]",
-   "search_name": "the ordinary glycolic acid 7% toning solution (solucao tonificante de acido glicolico 7%)",
+   "identity_key": "[\"glycolic acid 7% toning solution (solucao tonificante de acido glicolico 7%)\",\"the ordinary\",\"\",\"240\",\"ml\"]",
+   "search_name": "glycolic acid 7% toning solution (solucao tonificante de acido glicolico 7%)",
    "search_brand": "the ordinary",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/0769915190977"
@@ -6906,15 +6906,15 @@
    "source_url": "https://world.openbeautyfacts.org/product/7891150091153"
   },
   {
-   "name": "TRESemmé DC Detox Capilar CO 100ml gratis",
+   "name": "DC Detox Capilar CO 100ml gratis",
    "brand": "TRESemmé",
    "variant": null,
    "quantity": "400",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "7891150078093",
-   "identity_key": "[\"tresemme dc detox capilar co 100ml gratis\",\"tresemme\",\"\",\"400\",\"ml\"]",
-   "search_name": "tresemme dc detox capilar co 100ml gratis",
+   "identity_key": "[\"dc detox capilar co 100ml gratis\",\"tresemme\",\"\",\"400\",\"ml\"]",
+   "search_name": "dc detox capilar co 100ml gratis",
    "search_brand": "tresemme",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/7891150078093"
@@ -6948,22 +6948,22 @@
    "source_url": "https://world.openbeautyfacts.org/product/7506306233362"
   },
   {
-   "name": "Veet Hair Removal Gel Cream",
+   "name": "Hair Removal Gel Cream",
    "brand": "Veet",
    "variant": null,
    "quantity": "400",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "0062200809951",
-   "identity_key": "[\"veet hair removal gel cream\",\"veet\",\"\",\"400\",\"ml\"]",
-   "search_name": "veet hair removal gel cream",
+   "identity_key": "[\"hair removal gel cream\",\"veet\",\"\",\"400\",\"ml\"]",
+   "search_name": "hair removal gel cream",
    "search_brand": "veet",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/0062200809951"
   },
   {
    "name": "Mineral 89",
-   "brand": "vichy",
+   "brand": "Vichy",
    "variant": null,
    "quantity": "50",
    "unit": "ml",
@@ -6976,15 +6976,15 @@
    "source_url": "https://world.openbeautyfacts.org/product/3337875543248"
   },
   {
-   "name": "Vitamins Keratin Protein Hair Serum",
+   "name": "Keratin Protein Hair Serum",
    "brand": "Vitamins",
    "variant": null,
    "quantity": "100",
    "unit": "ml",
    "category": "personal_hygiene",
    "barcode": "0074590516876",
-   "identity_key": "[\"vitamins keratin protein hair serum\",\"vitamins\",\"\",\"100\",\"ml\"]",
-   "search_name": "vitamins keratin protein hair serum",
+   "identity_key": "[\"keratin protein hair serum\",\"vitamins\",\"\",\"100\",\"ml\"]",
+   "search_name": "keratin protein hair serum",
    "search_brand": "vitamins",
    "source": "Open Beauty Facts",
    "source_url": "https://world.openbeautyfacts.org/product/0074590516876"
