@@ -116,6 +116,7 @@ def test_create_product_returns_canonical_public_representation(session, users):
         "unit": "g",
         "category": "food",
         "barcode": "7891000100103",
+        "image_url": None,
     }
 
 

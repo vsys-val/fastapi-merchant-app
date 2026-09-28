@@ -67,6 +67,7 @@ Este documento transforma as decisões de `docs/ideacao.md` em comportamentos es
 | RN44 | Há alerta quando, na última hora, o banco não responde, os erros 5xx chegam a 5%, o p95 da busca passa de 800 ms ou 5 sessões têm erro no navegador. Erros 5xx e p95 só contam com pelo menos 20 requisições na janela. |
 | RN45 | O verificador automático se autentica com um segredo compartilhado (`ALERTS_TOKEN`); sem o segredo configurado, o endpoint não existe. |
 | RN49 | O catálogo inicial (~500 produtos do Open Food Facts, sob ODbL) pertence à conta "Catálogo Merchant", que não tem senha conhecida. Ele só acrescenta produtos que ainda não existem, conta no tamanho do catálogo e fica fora das métricas de crescimento do painel. |
+| RN50 | A foto do produto é o endereço público da frente da embalagem nos servidores de imagem do Open Food Facts, do Open Beauty Facts ou do Open Products Facts. Só o catálogo inicial a preenche, e o site credita as fotos (CC BY-SA). |
 
 ### Avaliações
 

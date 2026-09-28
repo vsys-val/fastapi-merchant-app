@@ -52,7 +52,7 @@ def test_product_http_create_conflict_delete_and_reactivate(product_client):
     assert created.json()["quantity"] == 1500
     assert created.json()["unit"] == "g"
     assert set(created.json()) == {
-        "id", "name", "brand", "variant", "quantity", "unit", "category", "barcode"
+        "id", "name", "brand", "variant", "quantity", "unit", "category", "barcode", "image_url"
     }
 
     conflict = product_client.post("/api/v1/products", json=payload())

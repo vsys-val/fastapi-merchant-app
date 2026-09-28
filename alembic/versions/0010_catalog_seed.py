@@ -14,8 +14,8 @@ from alembic import op
 import sqlalchemy as sa
 from pwdlib import PasswordHash
 
-revision = "0009_catalog_seed"
-down_revision = "0008_database_search"
+revision = "0010_catalog_seed"
+down_revision = "0009_product_image"
 branch_labels = None
 depends_on = None
 
@@ -27,10 +27,10 @@ _INSERT_PRODUCT = sa.text(
     """
     INSERT INTO produtos (
         criador_id, nome, marca, variante, quantidade, unidade, categoria,
-        codigo_barras, chave_identidade, nome_busca, marca_busca
+        codigo_barras, chave_identidade, nome_busca, marca_busca, imagem_url
     ) VALUES (
         :curator_id, :name, :brand, :variant, CAST(:quantity AS numeric), :unit, :category,
-        :barcode, :identity_key, :search_name, :search_brand
+        :barcode, :identity_key, :search_name, :search_brand, :image_url
     )
     ON CONFLICT DO NOTHING
     """
@@ -70,7 +70,10 @@ def seed(connection, products: list[dict]) -> int:
     before = connection.execute(
         sa.text("SELECT count(*) FROM produtos WHERE criador_id = :id"), {"id": owner}
     ).scalar_one()
-    rows = [{"curator_id": owner, **{column: product[column] for column in columns}} for product in products]
+    rows = [
+        {"curator_id": owner, "image_url": product.get("image_url"), **{column: product[column] for column in columns}}
+        for product in products
+    ]
     if rows:
         connection.execute(_INSERT_PRODUCT, rows)
     after = connection.execute(

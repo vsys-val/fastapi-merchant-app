@@ -33,7 +33,7 @@ Os itens foram ordenados por **impacto no ciclo central** (buscar → decidir �
 - Alertas de produção: workflow horário no GitHub Actions que abre e fecha uma issue quando erros 5xx, p95 da busca, banco ou erros do navegador passam do limite ([ADR-0015](decisoes/0015-alertas-com-github-actions.md)).
 - Leitura de código de barras pela câmera na busca e no cadastro, com leitor nativo ou ZXing sob demanda ([ADR-0014](decisoes/0014-leitura-de-codigo-de-barras-pela-camera.md)).
 - Busca no banco com índices de trigramas: ~970 ms → ~10 ms com 50 mil produtos, e sugestões para erros de digitação ([ADR-0013](decisoes/0013-busca-no-banco-com-trigramas.md)).
-- Catálogo inicial com ~500 produtos brasileiros do Open Food Facts, com código de barras, fora das métricas de crescimento ([ADR-0017](decisoes/0017-catalogo-inicial-open-food-facts.md)).
+- Catálogo inicial com ~500 produtos brasileiros do Open Food Facts, com código de barras e foto da embalagem, fora das métricas de crescimento ([ADR-0017](decisoes/0017-catalogo-inicial-open-food-facts.md), [ADR-0018](decisoes/0018-fotos-dos-produtos-open-food-facts.md)).
 - Sessão do navegador em cookie HttpOnly, com a API na mesma origem do site e proteção contra CSRF; quem já estava conectado migra sem digitar a senha ([ADR-0016](decisoes/0016-sessao-em-cookie-httponly.md)).
 - "O que a comunidade destaca" no detalhe: aspectos mais elogiados e mais criticados, e os motivos de cada avaliação visíveis na lista ([ADR-0003](decisoes/0003-motivos-estruturados-obrigatorios.md)).
 
@@ -48,6 +48,7 @@ Os itens foram ordenados por **impacto no ciclo central** (buscar → decidir �
 
 | Item | Problema | Move | Origem | Impacto / Esforço |
 |---|---|---|---|---|
+| Envio de foto pelo cadastro e cópia das fotos para armazenamento próprio | Produtos da comunidade ficam sem foto; o navegador busca as fotos no Open Food Facts | Identificação na busca; privacidade | [ADR-0018](decisoes/0018-fotos-dos-produtos-open-food-facts.md) | Médio / M |
 | Exclusão de produto pela interface | Cadastros indevidos só saem pela API | Qualidade do catálogo | RF13 ◐ | Baixo / P |
 
 ## 🟣 Depois — apostas que dependem de evidência

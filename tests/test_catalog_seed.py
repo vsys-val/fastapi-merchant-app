@@ -30,7 +30,7 @@ def _load(path: Path, name: str):
 
 
 builder = _load(ROOT / "scripts" / "build_catalog_seed.py", "build_catalog_seed")
-migration = _load(ROOT / "alembic" / "versions" / "0009_catalog_seed.py", "migration_0009")
+migration = _load(ROOT / "alembic" / "versions" / "0010_catalog_seed.py", "migration_0010")
 
 OFF = builder.SOURCES[0]
 OBF = builder.SOURCES[1]
@@ -50,6 +50,23 @@ def _off(**overrides):
     }
     product.update(overrides)
     return product
+
+
+@pytest.mark.parametrize(
+    ("url", "expected"),
+    [
+        ("https://images.openfoodfacts.org/images/products/789/100/010/0103/front_pt.12.400.jpg", True),
+        ("https://images.openbeautyfacts.org/images/products/789/100/010/0103/front_pt.3.400.jpg", True),
+        ("http://images.openfoodfacts.org/images/products/789/100/010/0103/front_pt.12.400.jpg", False),
+        ("https://example.com/images/products/789/front_pt.12.400.jpg", False),
+        ("https://images.openfoodfacts.org/images/products/789/front_pt.12.full.jpg", False),
+        ("", False),
+    ],
+)
+def test_keeps_only_front_photos_from_the_open_food_facts_image_servers(url, expected):
+    row = builder.to_seed_row(OFF, _off(image_front_url=url))
+    assert (row["image_url"] == url) is expected
+    assert row["image_url"] is None or expected
 
 
 def test_converts_an_open_food_facts_product_with_the_api_rules():
@@ -201,6 +218,7 @@ def test_every_seed_row_passes_the_api_rules_and_matches_its_derived_fields():
             quantity=payload.quantity, unit=payload.unit,
         )
         assert (row["search_name"], row["search_brand"]) == (identity_text(payload.name), identity_text(payload.brand))
+        assert row.get("image_url") is None or builder.IMAGE_URL.match(row["image_url"])
 
 
 # Migração no PostgreSQL efêmero do CI.

@@ -37,6 +37,7 @@ def _public_product(product: Product) -> ProductPublic:
         unit=product.unit,
         category=product.category,
         barcode=product.barcode,
+        image_url=product.image_url,
     )
 
 

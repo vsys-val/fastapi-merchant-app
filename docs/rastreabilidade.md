@@ -79,7 +79,8 @@ Uma regra crítica é garantida em **mais de uma camada**. A coluna "Banco" indi
 | RN45 | Segredo do verificador | cabeçalho `X-Alerts-Token` | `require_alerts_token` | — | T50 |
 | RN48 | IP do cliente pela cadeia de proxies | — | `client_ip` (usado em `login`, `_limit_ip`, `record_events`) | `TRUSTED_PROXY_NETWORKS` | T52 |
 | RN46 | Sessão em cookie HttpOnly; Bearer tem precedência | — | `set_session_cookie`, `get_current_user`, `get_optional_user` | — | T51 |
-| RN49 | Catálogo inicial em nome do "Catálogo Merchant" | `data/catalogo-inicial.json` validado por `ProductCreate` | migração `0009_catalog_seed` (`ON CONFLICT DO NOTHING`); `_totals`, `_daily` e coorte sem a conta | `CATALOG_CURATOR_EMAIL` | T53 |
+| RN49 | Catálogo inicial em nome do "Catálogo Merchant" | `data/catalogo-inicial.json` validado por `ProductCreate` | migração `0010_catalog_seed` (`ON CONFLICT DO NOTHING`); `_totals`, `_daily` e coorte sem a conta | `CATALOG_CURATOR_EMAIL` | T53 |
+| RN50 | Foto do produto do Open Food Facts | fora de `ProductCreate`; `image_url` em `ProductPublic` | `IMAGE_URL` no gerador aceita só os três hosts | coluna `imagem_url` (migração `0009_product_image`) | T54 |
 | RN47 | Cabeçalho `X-Merchant-Client` em escritas com cookie; cookie inválido vira anônimo | — | `session_cookie_token`, `optional_user_ignoring_errors` | — | T51 |
 
 ## 3. Requisitos não funcionais

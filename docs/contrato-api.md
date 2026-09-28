@@ -464,7 +464,8 @@ Campos públicos:
 - `quantity`;
 - `unit`;
 - `category`;
-- `barcode`, opcional.
+- `barcode`, opcional;
+- `image_url`, opcional: foto da frente da embalagem (400 px) nos servidores de imagem do Open Food Facts. Vem só do catálogo inicial e não é aceita no cadastro nem na edição ([ADR-0018](decisoes/0018-fotos-dos-produtos-open-food-facts.md)).
 
 A chave de identidade e o ID do criador são internos.
 

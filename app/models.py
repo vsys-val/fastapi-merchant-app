@@ -35,7 +35,7 @@ JsonObject = JSON().with_variant(JSONB(), "postgresql")
 IntegerList = JSON().with_variant(ARRAY(Integer), "postgresql")
 
 
-# Conta dona do catálogo inicial (migração 0009). Ninguém conhece a senha; o
+# Conta dona do catálogo inicial (migração 0010). Ninguém conhece a senha; o
 # painel a exclui das métricas de crescimento.
 CATALOG_CURATOR_EMAIL = "catalogo@merchant-app.invalid"
 
@@ -177,6 +177,8 @@ class Product(Base):
     barcode: Mapped[Optional[str]] = mapped_column(
         "codigo_barras", String(14), nullable=True, unique=True
     )
+    # Foto da embalagem no Open Food Facts (catálogo inicial, ADR-0018); sem envio pela API.
+    image_url: Mapped[Optional[str]] = mapped_column("imagem_url", Text, nullable=True)
     identity_key: Mapped[str] = mapped_column(
         "chave_identidade", Text, nullable=False, unique=True
     )

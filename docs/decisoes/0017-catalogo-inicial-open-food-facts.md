@@ -43,7 +43,7 @@ O catálogo nasce vazio. A primeira pessoa que busca "arroz" não encontra nada,
   | Utilidades | 15 |
 
   O que faltar numa categoria é completado com alimentos.
-- O resultado vai para `data/catalogo-inicial.json`. A migração `0009_catalog_seed`:
+- O resultado vai para `data/catalogo-inicial.json`. A migração `0010_catalog_seed`:
   - cria a conta `Catálogo Merchant` (e-mail `catalogo@merchant-app.invalid`, senha aleatória descartada);
   - insere os produtos com `ON CONFLICT DO NOTHING`, de modo que produto já cadastrado por alguém, inclusive excluído, fica como está;
   - no `downgrade`, remove só os produtos sem avaliação.
@@ -63,4 +63,4 @@ O catálogo nasce vazio. A primeira pessoa que busca "arroz" não encontra nada,
 
 ## Rastreabilidade
 
-RN49 · T53 · `scripts/build_catalog_seed.py`, `.github/workflows/catalog-seed.yml`, `data/catalogo-inicial.json`, `alembic/versions/0009_catalog_seed.py`, `app/admin.py`
+RN49 · T53 · `scripts/build_catalog_seed.py`, `.github/workflows/catalog-seed.yml`, `data/catalogo-inicial.json`, `alembic/versions/0010_catalog_seed.py`, `app/admin.py`

@@ -11,7 +11,7 @@ Cada produto passa pelas mesmas regras de entrada da API (``ProductCreate``):
 nome, marca, quantidade canônica e código de barras com dígito verificador.
 Produtos repetidos pela identidade (RN08) ou pelo código são descartados.
 O resultado vai para ``data/catalogo-inicial.json`` com a atribuição exigida
-pela licença ODbL, e a migração 0009 o insere no banco.
+pela licença ODbL, e a migração 0010 o insere no banco.
 """
 
 from __future__ import annotations
@@ -49,7 +49,12 @@ FIELDS = ",".join(
         "product_quantity_unit",
         "categories_tags",
         "unique_scans_n",
+        "image_front_url",
     ]
+)
+# Só fotos servidas pelas próprias bases (CC BY-SA); o site libera esses hosts na CSP.
+IMAGE_URL = re.compile(
+    r"^https://images\.open(food|beauty|products)facts\.org/images/products/[0-9/]+/front_[a-z]{2}\.\d+\.400\.jpg$"
 )
 # A API de busca aceita 10 requisições por minuto.
 PAUSE_SECONDS = 7
@@ -255,6 +260,11 @@ def category_of(source: Source, tags: list[str], name: str = "", unit: str = "")
     return "food"
 
 
+def image_url_of(product: dict) -> str | None:
+    url = (product.get("image_front_url") or "").strip()
+    return url if IMAGE_URL.match(url) else None
+
+
 def to_seed_row(source: Source, product: dict) -> dict | None:
     raw_name = (product.get("product_name_pt") or product.get("product_name") or "").strip()
     brand = clean_brand(product.get("brands") or "")
@@ -303,6 +313,7 @@ def to_seed_row(source: Source, product: dict) -> dict | None:
         "search_brand": identity_text(payload.brand),
         "source": source.name,
         "source_url": f"https://{source.host}/product/{payload.barcode}" if payload.barcode else None,
+        "image_url": image_url_of(product),
         "scans": int(product.get("unique_scans_n") or 0),
     }
 
@@ -397,6 +408,7 @@ def main() -> None:
     print(f"\nCandidatos por categoria: { {key: len(value) for key, value in candidates.items()} }")
     print(f"Rejeitados: {dict(rejected)}")
     print(f"Selecionados: {len(selected)} {dict(by_category)}")
+    print(f"Com foto: {sum(1 for row in selected if row['image_url'])}")
 
 
 if __name__ == "__main__":
