@@ -77,18 +77,38 @@ SOURCES = (
     Source("Open Products Facts", "world.openproductsfacts.org", 6),
 )
 
-CLEANING_TAGS = (
-    "clean",
-    "detergent",
-    "laundry",
-    "dishwash",
-    "disinfect",
-    "bleach",
-    "soap-for-dishes",
-    "fabric-softener",
-    "limpeza",
+# Categoria pelo nome: as etiquetas das bases abertas são irregulares. A ordem
+# importa (limpeza antes de utilidades antes de bebidas).
+NAME_CATEGORIES = (
+    (
+        "cleaning",
+        re.compile(
+            r"lava[ -]?lou[cç]as?|lava[ -]?roupas?|lavagem|sab[aã]o (em p[oó]|l[ií]quido|em barra)|amaciante|"
+            r"detergente|desinfetante|[aá]gua sanit[aá]ria|alvejante|limpador|limpa[ -]|multiuso|"
+            r"tira[ -]?manchas|[aá]lcool",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "household_utilities",
+        re.compile(
+            r"filtro de papel|coador|saco (de|para) lixo|palito|papel alum[ií]nio|filme pl[aá]stico|"
+            r"guardanapo|papel toalha|f[oó]sforo|vela",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "beverages",
+        re.compile(
+            r"refrigerante|guaran[aá]|\bsuco|refresco|n[eé]ctar|\b[aá]gua\b|\bch[aá]\b|\bmate\b|cerveja|"
+            r"energ[eé]tico|\benergy\b|isot[oô]nico|\bbebida|\bcoca\b|\bsoda\b|t[oô]nica|kombucha",
+            re.IGNORECASE,
+        ),
+    ),
 )
 BEVERAGE_TAGS = ("en:beverages", "en:waters", "en:sodas", "en:juices")
+# Marcas que são nomes de produto, não marcas (erros de preenchimento na fonte).
+GENERIC_BRANDS = {"mas", "margarina", "locao hidratante", "gourmet", "generico", "sem marca", "creme"}
 QUANTITY = re.compile(
     r"^\s*(\d+(?:[.,]\d+)?)\s*(kg|g|gr|grs|gramas|mg|l|lt|litros?|ml|cl|un|und|unid|unidades?)\b",
     re.IGNORECASE,
@@ -112,6 +132,8 @@ UNIT_ALIASES = {
 }
 # Palavras que ficam em minúsculas quando o nome vem todo em maiúsculas.
 LOWER_WORDS = {"de", "da", "do", "das", "dos", "e", "com", "sem", "em", "para", "a", "o", "ao"}
+# Siglas que continuam em maiúsculas.
+ACRONYMS = {"UHT", "UHT.", "PET", "TP", "BR", "ZMA", "DHA", "SPF", "FPS"}
 
 
 def fetch(source: Source, page: int) -> list[dict]:
@@ -148,16 +170,44 @@ def tidy_case(value: str) -> str:
     )
 
 
-def clean_name(raw: str, brand: str) -> str:
-    name = re.sub(r"\s+", " ", unicodedata.normalize("NFKC", raw)).strip(" -–,.")
-    # Quantidade no fim do nome ("Arroz Tipo 1 5kg") já vai no campo próprio.
-    name = re.sub(r"\s*[-–,]?\s*\d+(?:[.,]\d+)?\s*(kg|g|gr|ml|l|lt|un)\.?$", "", name, flags=re.IGNORECASE)
-    return tidy_case(name.strip()) if name.strip() else ""
+def _soften_shouting(word: str) -> str:
+    """Uma palavra gritada no meio do nome ("NESCAU") vira "Nescau"; siglas ficam."""
+
+    letters = [char for char in word if char.isalpha()]
+    if len(letters) >= 4 and all(char.isupper() for char in letters) and word not in ACRONYMS:
+        return word[:1] + word[1:].lower()
+    return word
 
 
 def clean_brand(raw: str) -> str:
-    brand = raw.split(",")[0].strip()
-    return tidy_case(brand)
+    brand = tidy_case(raw.split(",")[0].strip())
+    # Marca toda em minúsculas ("quatá", "coca cola") ganha iniciais maiúsculas.
+    if brand and brand == brand.lower():
+        brand = " ".join(word[:1].upper() + word[1:] for word in brand.split())
+    return brand
+
+
+def clean_name(raw: str, brand: str) -> str:
+    name = re.sub(r"\s+", " ", unicodedata.normalize("NFKC", raw)).strip(" -–,.")
+    # Quantidade no fim do nome ("Arroz Tipo 1 5kg", "Açúcar (1 kg)") já vai no campo próprio.
+    name = re.sub(
+        r"\s*[-–,]?\s*\(?\d+(?:[.,]\d+)?\s*(kg|g|gr|ml|l|lt|un)\.?\)?$", "", name, flags=re.IGNORECASE
+    ).strip(" -–,.")
+    if not name:
+        return ""
+    name = tidy_case(name)
+    words = [_soften_shouting(word) for word in name.split()]
+    brand_words = identity_text(brand).split()
+    # "YOKI Batata Palha" → "Batata Palha": a marca repetida no começo sai quando sobra nome.
+    if brand_words and len(words) > len(brand_words) + 1 and [identity_text(w) for w in words[: len(brand_words)]] == brand_words:
+        words = words[len(brand_words):]
+        if words and words[0] in {"-", "–"}:
+            words = words[1:]
+    # "Bacon - Torcida - Torcida": a marca repetida no fim sai.
+    while len(words) > 2 and words[-2] in {"-", "–"} and identity_text(words[-1]) == identity_text(brand):
+        words = words[:-2]
+    name = " ".join(words)
+    return name[:1].upper() + name[1:]
 
 
 def quantity_of(product: dict) -> tuple[Decimal, str] | None:
@@ -186,21 +236,39 @@ def quantity_of(product: dict) -> tuple[Decimal, str] | None:
     return value, UNIT_ALIASES[unit]
 
 
-def category_of(source: Source, tags: list[str]) -> str:
+def category_of(source: Source, tags: list[str], name: str = "", unit: str = "") -> str | None:
+    """Categoria do produto; ``None`` quando a base de utilidades traz algo fora do mercado."""
+
+    for category, pattern in NAME_CATEGORIES:
+        if pattern.search(name):
+            return category
     if source.host.startswith("world.openbeautyfacts"):
         return "personal_hygiene"
     if source.host.startswith("world.openproductsfacts"):
-        joined = " ".join(tags)
-        return "cleaning" if any(tag in joined for tag in CLEANING_TAGS) else "household_utilities"
-    return "beverages" if any(tag in tags for tag in BEVERAGE_TAGS) else "food"
+        # Sem palavra reconhecida, a base de produtos traz de tudo (livros, suplementos...).
+        return None
+    # Pós para preparar (leite em pó, achocolatado, café) ficam em alimentos.
+    if any(tag in tags for tag in BEVERAGE_TAGS) and unit != "g":
+        return "beverages"
+    return "food"
 
 
 def to_seed_row(source: Source, product: dict) -> dict | None:
+    raw_name = (product.get("product_name_pt") or product.get("product_name") or "").strip()
     brand = clean_brand(product.get("brands") or "")
-    name = clean_name(product.get("product_name_pt") or product.get("product_name") or "", brand)
+    name = clean_name(raw_name, brand)
     quantity = quantity_of(product)
     code = (product.get("code") or "").strip()
     if not brand or not name or quantity is None or identity_text(name) == identity_text(brand):
+        return None
+    if identity_text(brand) in GENERIC_BRANDS:
+        return None
+    # Nome de uma palavra só, todo em minúsculas ("predilecta", "maionese"): dado incompleto.
+    if " " not in raw_name and raw_name == raw_name.lower():
+        return None
+    normalized_unit = "g" if quantity[1] in {"g", "kg"} else "ml" if quantity[1] in {"ml", "L"} else "un"
+    category = category_of(source, product.get("categories_tags") or [], name, normalized_unit)
+    if category is None:
         return None
     try:
         payload = ProductCreate(
@@ -209,7 +277,7 @@ def to_seed_row(source: Source, product: dict) -> dict | None:
             variant=None,
             quantity=quantity[0],
             unit=quantity[1],
-            category=category_of(source, product.get("categories_tags") or []),
+            category=category,
             barcode=code or None,
         )
     except ValidationError:
@@ -237,6 +305,31 @@ def to_seed_row(source: Source, product: dict) -> dict | None:
     }
 
 
+def drop_brand_conflicts(candidates: dict[str, list[dict]]) -> tuple[dict[str, list[dict]], int]:
+    """Descarta produtos com a marca trocada na fonte ("Água de coco Sococo", marca Kellogg's).
+
+    Só quando a marca aparece uma única vez no catálogo, não está no nome, e o
+    nome cita outra marca da mesma categoria. Submarcas ("Nescau", da Nestlé)
+    ficam, porque a marca-mãe se repete em outros produtos.
+    """
+
+    counts = Counter(row["search_brand"] for rows in candidates.values() for row in rows)
+    kept: dict[str, list[dict]] = {}
+    dropped = 0
+    for category, rows in candidates.items():
+        brands = {row["search_brand"] for row in rows if len(row["search_brand"]) >= 5}
+        kept[category] = []
+        for row in rows:
+            name = f" {row['search_name']} "
+            own = row["search_brand"]
+            cites_other = any(f" {brand} " in name for brand in brands if brand != own)
+            if counts[own] == 1 and f" {own} " not in name and cites_other:
+                dropped += 1
+                continue
+            kept[category].append(row)
+    return kept, dropped
+
+
 def main() -> None:
     candidates: dict[str, list[dict]] = {category: [] for category in TARGETS}
     seen_keys: set[str] = set()
@@ -262,6 +355,9 @@ def main() -> None:
                     seen_codes.add(row["barcode"])
                 candidates[row["category"]].append(row)
             time.sleep(PAUSE_SECONDS)
+
+    candidates, conflicting = drop_brand_conflicts(candidates)
+    rejected["marca trocada"] = conflicting
 
     selected: list[dict] = []
     shortfall = 0

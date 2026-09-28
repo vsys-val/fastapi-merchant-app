@@ -95,17 +95,72 @@ def test_rejects_products_the_api_would_refuse_or_that_are_ambiguous(overrides):
     assert builder.to_seed_row(OFF, _off(**overrides)) is None
 
 
-def test_categories_follow_the_source_and_tags():
-    assert builder.category_of(OFF, ["en:beverages", "en:sodas"]) == "beverages"
-    assert builder.category_of(OFF, ["en:snacks"]) == "food"
-    assert builder.category_of(OBF, []) == "personal_hygiene"
-    assert builder.category_of(OPF, ["en:laundry-detergents"]) == "cleaning"
-    assert builder.category_of(OPF, ["en:kitchen-utensils"]) == "household_utilities"
+@pytest.mark.parametrize(
+    ("source", "tags", "name", "unit", "expected"),
+    [
+        (OFF, ["en:beverages", "en:sodas"], "Sabor Laranja", "ml", "beverages"),
+        (OFF, ["en:snacks"], "Guaraná Antarctica Lata", "ml", "beverages"),
+        (OFF, ["en:beverages"], "Leite em Pó Integral", "g", "food"),
+        (OFF, ["en:snacks"], "Biscoito Recheado", "g", "food"),
+        (OBF, [], "Creme Dental", "g", "personal_hygiene"),
+        (OPF, [], "Lava Louças Neutro", "ml", "cleaning"),
+        (OPF, [], "Amaciante de Roupas", "ml", "cleaning"),
+        (OPF, [], "Filtro de Papel 102", "un", "household_utilities"),
+        (OPF, [], "Livro de História", "un", None),
+    ],
+)
+def test_categories_come_from_the_name_first_then_the_source(source, tags, name, unit, expected):
+    assert builder.category_of(source, tags, name, unit) == expected
 
 
-def test_mixed_case_names_are_kept():
-    assert builder.tidy_case("Leite Condensado Moça") == "Leite Condensado Moça"
-    assert builder.tidy_case("ARROZ TIPO 1 E FEIJÃO") == "Arroz Tipo 1 e Feijão"
+@pytest.mark.parametrize(
+    ("raw", "brand", "expected"),
+    [
+        ("Leite Condensado Moça", "Nestlé", "Leite Condensado Moça"),
+        ("ARROZ TIPO 1 E FEIJÃO", "Tio João", "Arroz Tipo 1 e Feijão"),
+        ("achocolatado em pó, NESCAU", "Nestlé", "Achocolatado em pó, Nescau"),
+        ("YOKI Batata Palha Tradicional", "Yoki", "Batata Palha Tradicional"),
+        ("Bacon - Torcida - Torcida", "Torcida", "Bacon"),
+        ("Açúcar Demerara Orgânico (1 kg)", "Native", "Açúcar Demerara Orgânico"),
+        ("Leite UHT Integral", "Italac", "Leite UHT Integral"),
+    ],
+)
+def test_names_are_tidied_without_losing_information(raw, brand, expected):
+    assert builder.clean_name(raw, brand) == expected
+
+
+def test_lowercase_brands_get_initial_capitals():
+    assert builder.clean_brand("coca cola") == "Coca Cola"
+    assert builder.clean_brand("NESTLÉ,Nestlé Brasil") == "Nestlé"
+    assert builder.clean_brand("Hershey's") == "Hershey's"
+
+
+@pytest.mark.parametrize(
+    "overrides",
+    [
+        {"product_name_pt": "predilecta"},
+        {"product_name_pt": "Nivea", "brands": "loção hidratante"},
+    ],
+    ids=["nome-de-uma-palavra-minusculo", "marca-generica"],
+)
+def test_rejects_incomplete_source_data(overrides):
+    assert builder.to_seed_row(OFF, _off(**overrides)) is None
+
+
+def test_drops_products_whose_brand_was_swapped_at_the_source():
+    def row(name, brand):
+        return {"search_name": identity_text(name), "search_brand": identity_text(brand)}
+
+    kept, dropped = builder.drop_brand_conflicts({
+        "beverages": [
+            row("Água de Coco Sococo Caixa", "Kellogg's"),  # marca trocada
+            row("Água de Coco Integral", "Sococo"),
+            row("Nescau Lata", "Nestlé"),  # submarca: a Nestlé se repete
+            row("Leite Ninho", "Nestlé"),
+        ],
+    })
+    assert dropped == 1
+    assert [r["search_brand"] for r in kept["beverages"]] == ["sococo", "nestle", "nestle"]
 
 
 # O arquivo versionado precisa continuar válido para a API atual.
