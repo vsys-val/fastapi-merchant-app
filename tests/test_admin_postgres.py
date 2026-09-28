@@ -19,6 +19,7 @@ from sqlalchemy.orm import sessionmaker
 from app.database import get_db
 from app.main import create_app
 from app.models import (
+    CATALOG_CURATOR_EMAIL,
     Base,
     LoginAttempt,
     Product,
@@ -162,6 +163,9 @@ def test_overview_reflects_business_usage_and_operations(api, sessions):
         ana = _user(session, "ana@example.com", created_at=now - timedelta(days=10))
         bia = _user(session, "bia@example.com", created_at=now - timedelta(days=9))
         _user(session, "pendente@example.com", verified=False)
+        # O catálogo inicial conta no tamanho do catálogo, mas não como crescimento.
+        curator = _user(session, CATALOG_CURATOR_EMAIL, created_at=now - timedelta(days=2))
+        session.add(Product(responsible_id=curator.id, name="Arroz", brand="Tio João", quantity=Decimal("1000"), unit="g", category="food", identity_key="arroz", created_at=now - timedelta(days=2)))
         cafe = Product(responsible_id=ana.id, name="Café", brand="Pilão", quantity=Decimal("500"), unit="g", category="food", identity_key="cafe")
         sabao = Product(responsible_id=ana.id, name="Sabão", brand="Omo", quantity=Decimal("1000"), unit="g", category="cleaning", identity_key="sabao")
         session.add_all([cafe, sabao])
@@ -210,11 +214,12 @@ def test_overview_reflects_business_usage_and_operations(api, sessions):
     assert data["system"]["api_commit"] == "abc1234"
     assert data["system"]["database"]["status"] == "available"
     assert data["totals"] == {
-        "users": 4, "users_verified": 3, "users_pending": 1, "products_active": 2,
-        "products_deleted": 0, "reviews": 1, "reviews_with_comment": 0,
+        "users": 4, "users_verified": 3, "users_pending": 1, "products_active": 3,
+        "products_seeded": 1, "products_deleted": 0, "reviews": 1, "reviews_with_comment": 0,
     }
     assert len(data["daily"]) == 30
     assert sum(day["new_users"] for day in data["daily"]) == 4
+    assert sum(day["new_products"] for day in data["daily"]) == 2
 
     product = data["product"]
     # 2 consultas a produto já avaliado / 2 usuários ativos na semana (Ana e Bia).
@@ -231,7 +236,8 @@ def test_overview_reflects_business_usage_and_operations(api, sessions):
     assert product["barcode_scanner"] == {"opened": 4, "detected_pct": 50.0, "camera_unavailable_pct": 25.0}
 
     catalog = data["catalog"]
-    assert catalog["products_without_reviews_pct"] == 50.0
+    # Arroz (catálogo inicial) e Sabão sem avaliação, de três produtos: o catálogo inicial conta aqui.
+    assert catalog["products_without_reviews_pct"] == 66.7
     assert catalog["top_products"][0]["name"] == "Café"
     assert {row["aspect"]: (row["positive"], row["negative"]) for row in catalog["aspects"]} == {"taste": (1, 0), "price": (0, 1)}
     assert catalog["repurchase"] == {"yes": 1, "maybe": 0, "no": 0}

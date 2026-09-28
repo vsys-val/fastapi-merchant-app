@@ -35,6 +35,11 @@ JsonObject = JSON().with_variant(JSONB(), "postgresql")
 IntegerList = JSON().with_variant(ARRAY(Integer), "postgresql")
 
 
+# Conta dona do catálogo inicial (migração 0009). Ninguém conhece a senha; o
+# painel a exclui das métricas de crescimento.
+CATALOG_CURATOR_EMAIL = "catalogo@merchant-app.invalid"
+
+
 class User(Base):
     __tablename__ = "usuarios"
 
