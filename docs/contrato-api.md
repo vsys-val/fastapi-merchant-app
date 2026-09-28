@@ -395,8 +395,8 @@ Blocos da resposta:
 | Bloco | Conteúdo |
 |---|---|
 | `system` | ambiente, commit da API (`RENDER_GIT_COMMIT`), entrega de e-mail, tempo no ar e latência do banco |
-| `totals` | contas (confirmadas e pendentes), produtos (ativos e excluídos) e avaliações |
-| `daily` | por dia: novas contas, produtos e avaliações; usuários ativos, sessões e buscas |
+| `totals` | contas (confirmadas e pendentes, sem a conta do catálogo inicial), produtos (ativos, excluídos e `products_seeded`, os ativos do catálogo inicial) e avaliações |
+| `daily` | por dia: novas contas, produtos e avaliações (sem o catálogo inicial); usuários ativos, sessões e buscas |
 | `product` | North Star, buscas com resultado, ativação em 7 dias, avaliações por usuário ativo, funil da avaliação e conflitos no cadastro, cada um com a meta da [visão de produto](visao-produto.md#7-métricas-de-sucesso); uso do leitor de código de barras (`barcode_scanner`) |
 | `catalog` | produtos por categoria, % sem avaliação, mais avaliados, motivos por aspecto e intenção de recompra |
 | `technical` | requisições, % de 4xx e 5xx, p95 no período e por dia, e as 15 rotas mais chamadas nas últimas 24 h |
@@ -464,7 +464,8 @@ Campos públicos:
 - `quantity`;
 - `unit`;
 - `category`;
-- `barcode`, opcional.
+- `barcode`, opcional;
+- `image_url`, opcional: foto da frente da embalagem (400 px) nos servidores de imagem do Open Food Facts. Vem só do catálogo inicial e não é aceita no cadastro nem na edição ([ADR-0018](decisoes/0018-fotos-dos-produtos-open-food-facts.md)).
 
 A chave de identidade e o ID do criador são internos.
 

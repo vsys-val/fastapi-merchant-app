@@ -14,7 +14,7 @@ from sqlalchemy.orm import Session
 from app.alerts import evaluate_alerts
 from app.auth import get_current_user
 from app.errors import ApiError
-from app.models import User
+from app.models import CATALOG_CURATOR_EMAIL as CURATOR_EMAIL, User
 from app.observability import LATENCY_BUCKETS_MS, percentile_from_buckets
 
 
@@ -67,14 +67,17 @@ def _totals(session: Session) -> dict[str, int]:
         text(
             """
             SELECT
-              (SELECT count(*) FROM usuarios) AS users,
-              (SELECT count(*) FROM usuarios WHERE email_verificado_em IS NOT NULL) AS users_verified,
+              (SELECT count(*) FROM usuarios WHERE email <> :curator) AS users,
+              (SELECT count(*) FROM usuarios WHERE email <> :curator AND email_verificado_em IS NOT NULL) AS users_verified,
               (SELECT count(*) FROM produtos WHERE excluido_em IS NULL) AS products_active,
+              (SELECT count(*) FROM produtos p JOIN usuarios u ON u.id = p.criador_id
+                WHERE p.excluido_em IS NULL AND u.email = :curator) AS products_seeded,
               (SELECT count(*) FROM produtos WHERE excluido_em IS NOT NULL) AS products_deleted,
               (SELECT count(*) FROM avaliacoes) AS reviews,
               (SELECT count(*) FROM avaliacoes WHERE comentario IS NOT NULL) AS reviews_with_comment
             """
-        )
+        ),
+        {"curator": CURATOR_EMAIL},
     ).mappings().one()
     totals = dict(row)
     totals["users_pending"] = totals["users"] - totals["users_verified"]
@@ -85,10 +88,14 @@ def _daily(session: Session, since: datetime, days: int, today: date) -> list[di
     """Séries por dia no fuso de São Paulo, com zero nos dias sem registro."""
 
     def by_day(sql: str) -> dict[date, int]:
-        return {row["day"]: row["total"] for row in _rows(session, sql, since=since, tz=TIMEZONE)}
+        return {row["day"]: row["total"] for row in _rows(session, sql, since=since, tz=TIMEZONE, curator=CURATOR_EMAIL)}
 
-    users = by_day("SELECT (criado_em AT TIME ZONE :tz)::date AS day, count(*) AS total FROM usuarios WHERE criado_em >= :since GROUP BY 1")
-    products = by_day("SELECT (criado_em AT TIME ZONE :tz)::date AS day, count(*) AS total FROM produtos WHERE criado_em >= :since GROUP BY 1")
+    # O catálogo inicial não é crescimento: nem a conta dele nem os produtos entram nas séries.
+    users = by_day("SELECT (criado_em AT TIME ZONE :tz)::date AS day, count(*) AS total FROM usuarios WHERE criado_em >= :since AND email <> :curator GROUP BY 1")
+    products = by_day(
+        "SELECT (p.criado_em AT TIME ZONE :tz)::date AS day, count(*) AS total FROM produtos p "
+        "JOIN usuarios u ON u.id = p.criador_id WHERE p.criado_em >= :since AND u.email <> :curator GROUP BY 1"
+    )
     reviews = by_day("SELECT (criado_em AT TIME ZONE :tz)::date AS day, count(*) AS total FROM avaliacoes WHERE criado_em >= :since GROUP BY 1")
     active = by_day("SELECT (criado_em AT TIME ZONE :tz)::date AS day, count(DISTINCT usuario_id) AS total FROM eventos_produto WHERE criado_em >= :since AND usuario_id IS NOT NULL GROUP BY 1")
     sessions = by_day("SELECT (criado_em AT TIME ZONE :tz)::date AS day, count(DISTINCT sessao) AS total FROM eventos_produto WHERE criado_em >= :since GROUP BY 1")
@@ -151,10 +158,10 @@ def _product_metrics(session: Session, since: datetime, now: datetime) -> dict[s
                        WHERE a.usuario_id = u.id AND a.criado_em < u.criado_em + interval '7 days'
                    )) AS activated
             FROM usuarios u
-            WHERE u.criado_em >= :since AND u.criado_em <= :cutoff
+            WHERE u.criado_em >= :since AND u.criado_em <= :cutoff AND u.email <> :curator
             """
         ),
-        {"since": since, "cutoff": now - timedelta(days=7)},
+        {"since": since, "cutoff": now - timedelta(days=7), "curator": CURATOR_EMAIL},
     ).mappings().one()
 
     active_users = _scalar(

@@ -79,6 +79,8 @@ Uma regra crítica é garantida em **mais de uma camada**. A coluna "Banco" indi
 | RN45 | Segredo do verificador | cabeçalho `X-Alerts-Token` | `require_alerts_token` | — | T50 |
 | RN48 | IP do cliente pela cadeia de proxies | — | `client_ip` (usado em `login`, `_limit_ip`, `record_events`) | `TRUSTED_PROXY_NETWORKS` | T52 |
 | RN46 | Sessão em cookie HttpOnly; Bearer tem precedência | — | `set_session_cookie`, `get_current_user`, `get_optional_user` | — | T51 |
+| RN49 | Catálogo inicial em nome do "Catálogo Merchant" | `data/catalogo-inicial.json` validado por `ProductCreate` | migração `0010_catalog_seed` (`ON CONFLICT DO NOTHING`); `_totals`, `_daily` e coorte sem a conta | `CATALOG_CURATOR_EMAIL` | T53 |
+| RN50 | Foto do produto do Open Food Facts | fora de `ProductCreate`; `image_url` em `ProductPublic` | `IMAGE_URL` no gerador aceita só os três hosts | coluna `imagem_url` (migração `0009_product_image`) | T54 |
 | RN47 | Cabeçalho `X-Merchant-Client` em escritas com cookie; cookie inválido vira anônimo | — | `session_cookie_token`, `optional_user_ignoring_errors` | — | T51 |
 
 ## 3. Requisitos não funcionais
@@ -90,7 +92,7 @@ Uma regra crítica é garantida em **mais de uma camada**. A coluna "Banco" indi
 | RNF03 | Documentação interativa OpenAPI | `/docs` com Bearer obrigatório/opcional por rota | `test_operations.py` |
 | RNF04 | Instruções claras | [README](../README.md), [deploy](deploy-render.md) | revisão |
 | RNF05 | Erros claros e códigos adequados | Envelope `{error:{code,message,details}}` em `app/errors.py` | T30 |
-| RNF06 | Regras críticas com testes automatizados | 200 testes; CI com PostgreSQL 17; smoke test diário em produção | CI |
+| RNF06 | Regras críticas com testes automatizados | 246 testes; CI com PostgreSQL 17; smoke test diário em produção | CI |
 | RNF07 | Resistência a contas em massa | Confirmação de e-mail obrigatória + limite de 10 cadastros por IP por hora, sem serviço pago | T34, T39 |
 | RNF08 | Métricas próprias e privadas | Eventos no próprio Postgres, sem terceiros; desligados com DNT, automação e fora de produção | T42, T46 |
 | RNF09 | Observabilidade sem custo por requisição | Agregação em memória, `UPSERT` a cada 30 s, falha só gera log | T44 |

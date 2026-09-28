@@ -1,0 +1,56 @@
+name: Catalog seed
+
+# Gera data/catalogo-inicial.json a partir do Open Food Facts (ADR-0017).
+# Numa branch de trabalho, roda quando o script muda e grava o arquivo na
+# própria branch, para revisão no PR. Manualmente, só publica o arquivo como
+# artefato; a main nunca recebe commits deste workflow.
+
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore:
+      - main
+    paths:
+      - scripts/build_catalog_seed.py
+      - .github/workflows/catalog-seed.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: catalog-seed-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install --requirement requirements.txt
+      - name: Build catalog from Open Food Facts
+        run: python scripts/build_catalog_seed.py
+      - name: Upload catalog
+        uses: actions/upload-artifact@v4
+        with:
+          name: catalogo-inicial
+          path: data/catalogo-inicial.json
+      - name: Commit catalog to the working branch
+        if: github.event_name == 'push' && github.ref != 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/catalogo-inicial.json
+          if git diff --cached --quiet; then
+            echo "Catálogo sem mudanças."
+          else
+            git commit -m "chore: gerar catálogo inicial a partir do Open Food Facts"
+            git push
+          fi

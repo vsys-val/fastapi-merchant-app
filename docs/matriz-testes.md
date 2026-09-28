@@ -1,6 +1,6 @@
 # Matriz mínima de testes do MVP
 
-Estado: T01–T52 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 178 testes e ignora os 22 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 200. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
+Estado: T01–T54 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 223 testes e ignora os 23 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 246. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
 
 A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos, endpoints e telas do frontend.
 
@@ -58,6 +58,8 @@ A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos,
 | T50 | RF21, RN44, RN45 | Alertas: volume mínimo, 5xx, p95 da busca e erros do navegador na última hora; bloco `alerts` no painel; segredo (404 sem configuração, 401 errado, 200 certo, fora do OpenAPI); workflow cria, atualiza e fecha uma única issue e trata API fora do ar e token recusado |
 | T51 | RN46, RN47, RNF10 | Sessão em cookie: atributos (`HttpOnly`, `SameSite=Lax`, `Path=/api`, `Max-Age`, `Secure` só em produção); leitura e escrita pelo cookie; escrita sem `X-Merchant-Client` recusada com 403; logout apaga o cookie; cookie expirado deixa a leitura pública anônima; troca de Bearer por cookie; Bearer dispensa o cabeçalho. No frontend: sem token no `localStorage`, migração do token antigo e cabeçalho em todas as chamadas |
 | T52 | RN33, RN48 | IP do cliente com as cadeias medidas em produção (direto e pelo site): cliente encontrado nos dois caminhos; `X-Forwarded-For` forjado ou inválido à esquerda não muda o resultado; saída desconhecida do site limita pelo próprio salto; sem cabeçalho usa a conexão; IPv6 normalizado; rede inválida em `TRUSTED_PROXY_NETWORKS` recusada |
+| T53 | RN49 | Catálogo inicial: conversão do Open Food Facts pelas regras da API (caixa, quantidade estruturada ou em texto, categorias por base); recusa de embalagem múltipla, GTIN inválido, sem marca, sem nome e nome igual à marca; arquivo com ODbL, ~500 produtos únicos e campos derivados iguais aos da API; migração insere uma vez, não toma posse de produto existente e reverte só o que não foi avaliado; painel exclui a conta e os produtos dela do crescimento |
+| T54 | RN50 | Foto: gerador aceita só a frente em 400 px dos três servidores de imagem (recusa `http`, outro host e outro tamanho); arquivo só com endereços válidos; `image_url` no contrato público do produto e nulo para produtos da comunidade; migração insere a foto. No frontend: miniatura, foto no detalhe, ícone quando falta ou falha, crédito CC BY-SA |
 
 ## Estratégia
 

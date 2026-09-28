@@ -22,6 +22,8 @@ As decisões 0001–0010 foram tomadas durante a ideação e a implementação d
 | [0014](0014-leitura-de-codigo-de-barras-pela-camera.md) | Leitura de código de barras pela câmera | Produto / Interface | Aceita |
 | [0015](0015-alertas-com-github-actions.md) | Alertas de produção com GitHub Actions e issue automática | Operação | Aceita |
 | [0016](0016-sessao-em-cookie-httponly.md) | Sessão do navegador em cookie HttpOnly, com a API na mesma origem do site | Segurança | Aceita |
+| [0017](0017-catalogo-inicial-open-food-facts.md) | Catálogo inicial a partir do Open Food Facts | Produto / Dados | Aceita |
+| [0018](0018-fotos-dos-produtos-open-food-facts.md) | Fotos dos produtos a partir do Open Food Facts | Produto / Interface | Aceita |
 
 ## Modelo
 
