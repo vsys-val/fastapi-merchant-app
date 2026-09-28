@@ -5,6 +5,7 @@ from unittest.mock import Mock
 import pytest
 from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy.exc import IntegrityError
+from starlette.datastructures import Headers
 
 from app import auth
 from app.errors import ApiError
@@ -21,8 +22,13 @@ def request_stub(ip="127.0.0.1", verification=False):
     settings = SimpleNamespace(
         jwt_secret=SimpleNamespace(get_secret_value=lambda: SECRET),
         email_verification_enabled=verification,
+        trusted_proxy_networks="",
     )
-    return SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(settings=settings)), client=SimpleNamespace(host=ip))
+    return SimpleNamespace(
+        app=SimpleNamespace(state=SimpleNamespace(settings=settings)),
+        client=SimpleNamespace(host=ip),
+        headers=Headers(),
+    )
 
 
 def user_stub(user_id=7, verified=True):

@@ -1,6 +1,6 @@
 # Matriz mínima de testes do MVP
 
-Estado: T01–T50 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 161 testes e ignora os 22 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 183. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
+Estado: T01–T52 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 178 testes e ignora os 22 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 200. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
 
 A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos, endpoints e telas do frontend.
 
@@ -56,6 +56,8 @@ A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos,
 | T48 | RN14, RN42 | Busca no PostgreSQL: filtro, contagem, ordem e paginação no banco; `%` e `_` literais; renomear atualiza a busca; erro de digitação devolve parecidos com `approximate`; categoria mantida; termo distante não sugere nada |
 | T49 | RN43, RF20 | Leitor: dígito verificador, leitor nativo e ZXing, permissão negada, sem câmera e sem suporte, câmera desligada ao fechar; E2E com câmera falsa lendo um EAN-13; evento `barcode_scan` aceito e métricas no painel |
 | T50 | RF21, RN44, RN45 | Alertas: volume mínimo, 5xx, p95 da busca e erros do navegador na última hora; bloco `alerts` no painel; segredo (404 sem configuração, 401 errado, 200 certo, fora do OpenAPI); workflow cria, atualiza e fecha uma única issue e trata API fora do ar e token recusado |
+| T51 | RN46, RN47, RNF10 | Sessão em cookie: atributos (`HttpOnly`, `SameSite=Lax`, `Path=/api`, `Max-Age`, `Secure` só em produção); leitura e escrita pelo cookie; escrita sem `X-Merchant-Client` recusada com 403; logout apaga o cookie; cookie expirado deixa a leitura pública anônima; troca de Bearer por cookie; Bearer dispensa o cabeçalho. No frontend: sem token no `localStorage`, migração do token antigo e cabeçalho em todas as chamadas |
+| T52 | RN33, RN48 | IP do cliente com as cadeias medidas em produção (direto e pelo site): cliente encontrado nos dois caminhos; `X-Forwarded-For` forjado ou inválido à esquerda não muda o resultado; saída desconhecida do site limita pelo próprio salto; sem cabeçalho usa a conexão; IPv6 normalizado; rede inválida em `TRUSTED_PROXY_NETWORKS` recusada |
 
 ## Estratégia
 

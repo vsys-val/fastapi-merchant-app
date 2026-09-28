@@ -11,6 +11,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from app.client_ip import client_ip
 from app.database import get_db
 from app.email import EmailMessage, password_reset_email, verification_email
 from app.errors import ApiError
@@ -47,6 +48,7 @@ from app.security import (
     rate_limit_key,
     verify_password,
 )
+from app.session_cookie import session_cookie_token
 from app.verification import consume_code, discard_codes, is_pending_expired, issue_code
 
 
@@ -83,10 +85,6 @@ def _secret(request: Request) -> str:
     return request.app.state.settings.jwt_secret.get_secret_value()
 
 
-def _client_ip(request: Request) -> str:
-    return request.client.host if request.client else "unknown"
-
-
 def _limit_ip(
     request: Request,
     session: Session,
@@ -95,7 +93,7 @@ def _limit_ip(
     window: timedelta,
     limit: int,
 ) -> None:
-    key = rate_limit_key(_secret(request), scope, _client_ip(request))
+    key = rate_limit_key(_secret(request), scope, client_ip(request))
     count = consume_attempt(session, scope=scope, key_hash=key, window=window)
     session.commit()
     if count > limit:
@@ -170,8 +168,7 @@ def create_user(payload: UserCreate, request: Request, session: Session) -> Regi
 def login(payload: LoginInput, request: Request, session: Session) -> TokenResponse:
     settings = request.app.state.settings
     secret = settings.jwt_secret.get_secret_value()
-    client_ip = request.client.host if request.client else "unknown"
-    ip_key = rate_limit_key(secret, "ip", client_ip)
+    ip_key = rate_limit_key(secret, "ip", client_ip(request))
     account_key = rate_limit_key(secret, "account", str(payload.email))
 
     ip_count = consume_attempt(session, scope="ip", key_hash=ip_key, window=IP_WINDOW)
@@ -310,14 +307,20 @@ def confirm_password_reset(
 
 def _resolve_authenticated_user(
     request: Request,
-    credentials: HTTPAuthorizationCredentials,
+    credentials: HTTPAuthorizationCredentials | str,
     session: Session,
 ) -> User:
-    if credentials.scheme.casefold() != "bearer":
+    """Usuário do token Bearer ou, quando recebe texto, do cookie de sessão."""
+
+    if isinstance(credentials, str):
+        token = credentials
+    elif credentials.scheme.casefold() != "bearer":
         raise _authentication_error()
+    else:
+        token = credentials.credentials
     try:
         claims = decode_access_token_claims(
-            credentials.credentials,
+            token,
             request.app.state.settings.jwt_secret.get_secret_value(),
         )
     except ValueError:
@@ -338,7 +341,14 @@ def get_optional_user(
     if credentials is None:
         if request.headers.get("Authorization"):
             raise _authentication_error()
-        return None
+        cookie = session_cookie_token(request)
+        if cookie is None:
+            return None
+        # Cookie vencido não impede a leitura pública: a pessoa segue como visitante.
+        try:
+            return _resolve_authenticated_user(request, cookie, session)
+        except ApiError:
+            return None
     return _resolve_authenticated_user(request, credentials, session)
 
 
@@ -348,7 +358,10 @@ def get_current_user(
     session: Session = Depends(get_db),
 ) -> User:
     if credentials is None:
-        raise _authentication_error()
+        cookie = session_cookie_token(request)
+        if cookie is None:
+            raise _authentication_error()
+        return _resolve_authenticated_user(request, cookie, session)
     return _resolve_authenticated_user(request, credentials, session)
 
 

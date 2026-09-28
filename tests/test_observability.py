@@ -148,4 +148,5 @@ def test_network_check_reports_forwarding_headers(application):
     assert response.status_code == 200
     assert response.json()["forwarded_for"] == ["203.0.113.7", "10.0.0.2"]
     assert response.json()["true_client_ip"] == "203.0.113.7"
+    assert response.json()["resolved_client_ip"] == "203.0.113.7"
     assert "/api/v1/network-check" not in schema["paths"]

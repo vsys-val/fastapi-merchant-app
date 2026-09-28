@@ -193,8 +193,44 @@ Proteção contra tentativas automatizadas:
 - conteúdo mínimo: `sub` com o ID do usuário, `iat` com o instante de emissão e `exp` com a expiração;
 - depois de uma troca de senha, o token carrega também `ver`, a versão de sessão da conta;
 - nome, e-mail, senha e outros dados privados não são incluídos;
-- não há refresh token; a única revogação antecipada é a troca de senha, que incrementa a versão de sessão e invalida todos os tokens anteriores (RN32);
-- logout é realizado no cliente pela remoção do token, sem endpoint na API.
+- não há refresh token; a única revogação antecipada é a troca de senha, que incrementa a versão de sessão e invalida todos os tokens anteriores (RN32).
+
+### Sessão do navegador (cookie)
+
+O login e a confirmação de e-mail, além de devolverem o token no corpo, gravam o mesmo token num cookie ([ADR-0016](decisoes/0016-sessao-em-cookie-httponly.md)):
+
+| Atributo | Valor |
+|---|---|
+| Nome | `merchant_session` |
+| `HttpOnly` | sim: o JavaScript da página não lê o token |
+| `SameSite` | `Lax` |
+| `Secure` | sim em produção |
+| `Path` | `/api` |
+| `Max-Age` | 86400 (a validade do token) |
+
+A API aceita duas formas de autenticação, nesta ordem:
+
+1. cabeçalho `Authorization: Bearer <token>`, para clientes de API e scripts;
+2. cookie `merchant_session`, para o navegador.
+
+Proteção contra CSRF: requisições autenticadas **pelo cookie** com método diferente de `GET`, `HEAD` e `OPTIONS` precisam do cabeçalho `X-Merchant-Client` (qualquer valor; o site envia `web`). Sem ele, a resposta é `403 Forbidden` com o código `csrf_header_required`. Um formulário de outro site não consegue enviar cabeçalhos próprios, e uma chamada `fetch` de outra origem com esse cabeçalho exige autorização CORS que a API não concede.
+
+Cookie inválido ou expirado não bloqueia leituras públicas: a requisição segue como anônima. Nas rotas que exigem conta, a resposta é `401`.
+
+#### Trocar token por sessão
+
+`POST /auth/session`
+
+Exige `Authorization: Bearer <token>` válido. Grava o cookie de sessão com esse token. Serve para migrar quem entrou antes da sessão em cookie, sem pedir a senha de novo.
+
+- `204 No Content`: cookie gravado;
+- `401 Unauthorized`: token ausente, inválido ou expirado.
+
+#### Encerrar sessão
+
+`POST /auth/logout`
+
+Apaga o cookie de sessão. Não exige autenticação e sempre responde `204 No Content`. O token em si continua válido até expirar; quem o guardou fora do cookie (cliente de API) apenas o descarta.
 
 ### Consultar a própria conta
 
