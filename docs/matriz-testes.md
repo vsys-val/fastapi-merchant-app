@@ -1,6 +1,6 @@
 # Matriz mínima de testes do MVP
 
-Estado: T01–T54 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 178 testes e ignora os 22 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 200. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
+Estado: T01–T54 possuem cobertura automatizada unitária, de serviço, HTTP ou PostgreSQL. A execução local aprova 223 testes e ignora os 23 casos que exigem o PostgreSQL 17 efêmero do GitHub Actions; o CI executa os 246. O Supabase foi validado com consultas e transações revertidas, sem resíduos. Casos com múltiplos valores usam testes parametrizados quando adequado.
 
 A [matriz de rastreabilidade](rastreabilidade.md) liga estes IDs aos requisitos, endpoints e telas do frontend.
 
