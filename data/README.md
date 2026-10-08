@@ -18,4 +18,4 @@ Catálogo inicial do Merchant: cerca de 500 produtos vendidos no Brasil, gerados
 | `source`, `source_url` | Base e página de origem |
 | `image_url` | Foto da frente da embalagem (400 px) nos servidores de imagem da base, sob **CC BY-SA**, ou `null` |
 
-**Atualizar.** Altere `scripts/build_catalog_seed.py` numa branch de trabalho. O workflow gera o arquivo de novo e o grava na própria branch. Produtos novos entram por uma nova migração; a `0009` nunca é reexecutada em quem já a aplicou.
+**Atualizar.** `catalogo-inicial.json` fica congelado: seus bytes são a entrada histórica da migração `0010_catalog_seed` e têm checksum verificado pela `0011_product_provenance`. Altere `scripts/build_catalog_seed.py` numa branch de trabalho para gerar `catalogo-candidate-v2.json`; o workflow grava esse candidato na branch para revisão. Gerar o candidato não atualiza o banco. Cada importação futura exige snapshot novo versionado e migração nova revisada; não editar ou reexecutar migrações publicadas para atualizar dados. Veja [proveniência do catálogo](../docs/catalog-provenance.md).
