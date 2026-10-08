@@ -1,6 +1,6 @@
 name: Catalog seed
 
-# Gera data/catalogo-inicial.json a partir do Open Food Facts (ADR-0017).
+# Gera data/catalogo-candidate-v2.json a partir do Open Food Facts (ADR-0017).
 # Numa branch de trabalho, roda quando o script muda e grava o arquivo na
 # própria branch, para revisão no PR. Manualmente, só publica o arquivo como
 # artefato; a main nunca recebe commits deste workflow.
@@ -40,14 +40,14 @@ jobs:
       - name: Upload catalog
         uses: actions/upload-artifact@v4
         with:
-          name: catalogo-inicial
-          path: data/catalogo-inicial.json
+          name: catalogo-candidate-v2
+          path: data/catalogo-candidate-v2.json
       - name: Commit catalog to the working branch
         if: github.event_name == 'push' && github.ref != 'refs/heads/main'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/catalogo-inicial.json
+          git add data/catalogo-candidate-v2.json
           if git diff --cached --quiet; then
             echo "Catálogo sem mudanças."
           else

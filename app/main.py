@@ -2,6 +2,8 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.datastructures import MutableHeaders
+from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 from app.config import load_settings
 from app.database import get_session_factory
@@ -12,9 +14,37 @@ from app.health import router as health_router
 from app.routes import router
 
 
+class ApiNoStoreMiddleware:
+    """Protect API responses, including errors emitted outside user middleware."""
+
+    def __init__(self, app: ASGIApp) -> None:
+        self.app = app
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        path = scope.get("path", "")
+        if scope["type"] != "http" or not (path == "/api" or path.startswith("/api/")):
+            await self.app(scope, receive, send)
+            return
+
+        async def send_no_store(message: Message) -> None:
+            if message["type"] == "http.response.start":
+                # A public catalog response may also contain the viewer's own rating.
+                # No API response is safe for storage by a browser or shared cache.
+                MutableHeaders(scope=message)["Cache-Control"] = "no-store"
+            await send(message)
+
+        await self.app(scope, receive, send_no_store)
+
+
+class MerchantAPI(FastAPI):
+    def build_middleware_stack(self) -> ASGIApp:
+        # Wrap ServerErrorMiddleware too, so unexpected 500s obey the same policy.
+        return ApiNoStoreMiddleware(super().build_middleware_stack())
+
+
 def create_app() -> FastAPI:
     settings = load_settings()
-    application = FastAPI(
+    application = MerchantAPI(
         title="FastAPI Merchant App",
         version="1.0.0",
         description=(

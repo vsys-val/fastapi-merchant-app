@@ -179,6 +179,11 @@ class Product(Base):
     )
     # Foto da embalagem no Open Food Facts (catálogo inicial, ADR-0018); sem envio pela API.
     image_url: Mapped[Optional[str]] = mapped_column("imagem_url", Text, nullable=True)
+    source: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    source_url: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    image_source: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    image_license: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    image_license_url: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     identity_key: Mapped[str] = mapped_column(
         "chave_identidade", Text, nullable=False, unique=True
     )

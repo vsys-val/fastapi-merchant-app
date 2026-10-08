@@ -235,7 +235,8 @@ def test_personal_lists_include_product_summary_and_only_active_responsibility(s
     assert reviews.items[0].id == created.id
     assert reviews.items[0].product.id == products[1].id
     assert set(reviews.items[0].product.model_dump()) == {
-        "id", "name", "brand", "variant", "quantity", "unit", "category", "barcode", "image_url"
+        "id", "name", "brand", "variant", "quantity", "unit", "category", "barcode", "image_url",
+        "source", "source_url", "image_source", "image_license", "image_license_url"
     }
     products_page = list_own_products(session, users[0], 1, 20)
     assert products_page.total == 3
