@@ -10,8 +10,8 @@ Busca os produtos vendidos no Brasil mais escaneados em três bases irmãs:
 Cada produto passa pelas mesmas regras de entrada da API (``ProductCreate``):
 nome, marca, quantidade canônica e código de barras com dígito verificador.
 Produtos repetidos pela identidade (RN08) ou pelo código são descartados.
-O resultado vai para ``data/catalogo-inicial.json`` com a atribuição exigida
-pela licença ODbL, e a migração 0010 o insere no banco.
+O resultado vai para um novo snapshot, nunca para o arquivo congelado da 0010.
+A inclusão no banco exige uma nova migração revisada.
 """
 
 from __future__ import annotations
@@ -36,7 +36,7 @@ from pydantic import ValidationError  # noqa: E402
 from app.schemas import ProductCreate  # noqa: E402
 from app.validation import build_identity_key, identity_text  # noqa: E402
 
-OUTPUT = Path(__file__).resolve().parent.parent / "data" / "catalogo-inicial.json"
+OUTPUT = Path(__file__).resolve().parent.parent / "data" / "catalogo-candidate-v2.json"
 USER_AGENT = "MerchantApp/1.0 (https://github.com/vsys-val/fastapi-merchant-app)"
 FIELDS = ",".join(
     [
@@ -314,6 +314,13 @@ def to_seed_row(source: Source, product: dict) -> dict | None:
         "source": source.name,
         "source_url": f"https://{source.host}/product/{payload.barcode}" if payload.barcode else None,
         "image_url": image_url_of(product),
+        # Project attribution, not the identity of the photographer. Version unverified.
+        "image_source": source.name if image_url_of(product) else None,
+        "image_license": (
+            "CC-BY-SA" if image_url_of(product)
+            and source.name in {"Open Food Facts", "Open Beauty Facts"} else None
+        ),
+        "image_license_url": None,
         "scans": int(product.get("unique_scans_n") or 0),
     }
 

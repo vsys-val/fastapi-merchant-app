@@ -190,6 +190,12 @@ class ProductPublic(BaseModel):
     barcode: str | None
     # Foto da embalagem; nula quando o produto não tem (ADR-0018).
     image_url: str | None = None
+    source: str | None = None
+    source_url: str | None = None
+    image_source: str | None = None
+    image_license: str | None = None
+    image_license_url: str | None = None
+
 
     @field_serializer("quantity", when_used="json")
     def serialize_quantity(self, value: Decimal) -> int | float:

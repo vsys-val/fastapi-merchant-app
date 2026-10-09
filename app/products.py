@@ -38,6 +38,12 @@ def _public_product(product: Product) -> ProductPublic:
         category=product.category,
         barcode=product.barcode,
         image_url=product.image_url,
+        source=product.source,
+        source_url=product.source_url,
+        image_source=product.image_source,
+        image_license=product.image_license,
+        image_license_url=product.image_license_url,
+
     )
 
 
